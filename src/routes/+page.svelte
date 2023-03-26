@@ -1,81 +1,31 @@
 <script>
-  import Container from "$lib/components/Container";
-  import author from "$lib/assets/author.jpeg";
+  import avatar from "$lib/assets/avatar.jpeg";
+  import Main from "$lib/components/Main/Main.svelte";
 </script>
 
-<Container>
-  <main class="main">
-    <header class="header">
-      <div class="header-left-section">
-        <h1 class="header-author-name">Orhan Tuğrul</h1>
-        <p class="header-author-title">A Software Developer who hates titles</p>
-        <p class="header-author-description">
+<Main>
+  <div class="flex flex-col items-start mx-auto max-w-2xl pb-16">
+    <div class="flex flex-col-reverse sm:flex-row items-start">
+      <div class="flex flex-col pr-8">
+        <h1
+          class="flex-bold text-3xl md:text-5xl tracking-tight mb-1 text-white"
+        >
+          Orhan Tuğrul
+        </h1>
+        <p class="mb-4 text-gray-200">A Software Developer who hates titles</p>
+        <p class="mb-16 text-gray-400">
           Highly motivated software developer with experience in building
           high-quality applications using Java, Kotlin, and JavaScript.
         </p>
       </div>
 
-      <div class="header-right-section">
-        <img alt="Orhan Tuğrul" src={author} class="header-author-picture" />
+      <div class="w-[80px] sm:w-[176px] relative mb-8 sm:mb-0 mr-auto">
+        <img
+          class="rounded-full filter grayscale"
+          alt="Orhan Tuğrul"
+          src={avatar}
+        />
       </div>
-    </header>
-  </main>
-</Container>
-
-<style lang="postcss">
-  .main {
-    @apply flex;
-    @apply flex-col;
-    @apply items-start;
-    @apply mx-auto;
-    @apply max-w-2xl;
-    @apply pb-16;
-  }
-
-  .header {
-    @apply flex;
-    @apply flex-col-reverse;
-    @apply sm:flex-row;
-    @apply items-start;
-  }
-
-  .header .header-left-section {
-    @apply flex;
-    @apply flex-col;
-    @apply pr-8;
-  }
-
-  .header .header-author-name {
-    @apply font-bold;
-    @apply text-3xl;
-    @apply md:text-5xl;
-    @apply tracking-tight;
-    @apply mb-1;
-    @apply text-white;
-  }
-
-  .header .header-author-title {
-    @apply mb-4;
-    @apply text-gray-200;
-  }
-
-  .header .header-author-description {
-    @apply mb-16;
-    @apply text-gray-400;
-  }
-
-  .header .header-right-section {
-    @apply w-[80px];
-    @apply sm:w-[176px];
-    @apply relative;
-    @apply mb-8;
-    @apply sm:mb-0;
-    @apply mr-auto;
-  }
-
-  .header .header-author-picture {
-    @apply rounded-full;
-    @apply filter;
-    @apply grayscale;
-  }
-</style>
+    </div>
+  </div>
+</Main>

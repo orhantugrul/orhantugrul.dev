@@ -1,55 +1,22 @@
-<script>
-  import Container from "$lib/components/Container";
+<script lang="ts">
   import { page } from "$app/stores";
+  import NavbarItem from "$lib/components/Navbar/NavbarItem.svelte";
 
   const navbarItems = [
-    { title: "Home", path: "/" },
-    { title: "Tech Stack", path: "/tech-stack" },
-    { title: "Contact", path: "/contact" },
+    { title: "Home", href: "/" },
+    { title: "Tech Stack", href: "/tech-stack" },
+    { title: "Contact", href: "/contact" },
   ];
 </script>
 
-<Container>
-  <nav class="navbar">
-    <div class="navbar-items">
-      {#each navbarItems as { title, path }}
-        {#if $page.route.id === path}
-          <a class={"navbar-item active"} href={path}>{title}</a>
-        {:else}
-          <a class={"navbar-item"} href={path}>{title}</a>
-        {/if}
+<nav class="flex flex-col px-8 min-w-full">
+  <div
+    class="w-full max-w-2xl py-8 sm:pb-16 flex flex-col justify-between mx-auto"
+  >
+    <ul class="flex">
+      {#each navbarItems as { title, href }}
+        <NavbarItem {title} {href} active={$page.route.id === href} />
       {/each}
-    </div>
-  </nav>
-</Container>
-
-<style lang="postcss">
-  .navbar {
-    @apply w-full;
-    @apply max-w-2xl;
-    @apply py-8;
-    @apply sm:pb-16;
-    @apply flex;
-    @apply flex-col;
-    @apply justify-between;
-    @apply mx-auto;
-  }
-
-  .navbar .navbar-items {
-    @apply flex;
-  }
-
-  .navbar .navbar-items .navbar-item {
-    @apply px-3;
-    @apply py-2;
-    @apply font-semibold;
-    @apply text-gray-600;
-    @apply hover:bg-gray-800;
-    @apply rounded-lg;
-    @apply transition-all;
-  }
-
-  .navbar .navbar-items .navbar-item.active {
-    @apply text-gray-200;
-  }
-</style>
+    </ul>
+  </div>
+</nav>

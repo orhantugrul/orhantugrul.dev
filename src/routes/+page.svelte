@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
+  import Container from "$lib/layouts/Container";
   import avatar from "$lib/assets/avatar.jpeg";
-  import Main from "$lib/components/Main/Main.svelte";
 </script>
 
-<Main>
+<Container
+  title={"Orhan Tugrul • Non-titled developer"}
+  description={"Backend developer, Java & Kotlin enthusiast."}
+>
   <div class="flex flex-col items-start mx-auto max-w-2xl pb-16">
     <div class="flex flex-col-reverse sm:flex-row items-start">
       <div class="flex flex-col pr-8">
@@ -28,4 +31,4 @@
       </div>
     </div>
   </div>
-</Main>
+</Container>

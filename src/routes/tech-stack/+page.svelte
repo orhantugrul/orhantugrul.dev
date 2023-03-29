@@ -3,6 +3,6 @@
 </script>
 
 <Container
-  title={"Contact • Orhan Tugrul"}
+  title={"Tech Stack • Orhan Tugrul"}
   description={"My current personal tech stack: Tools & Platforms"}
 />

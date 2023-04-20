@@ -2,12 +2,17 @@
   export let title: string;
   export let href: string;
   export let active: boolean;
-  $: textColor = active ? "text-gray-200" : "text-gray-600";
+
+  $: itemClass = active
+    ? "transition-all text-neutral-200 flex align-middle font-bold"
+    : "transition-all text-neutral-500 hover:text-neutral-200 flex align-middle font-bold";
 </script>
 
-<li>
-  <a
-    class={`px-3 py-2 font-semibold hover:bg-gray-800 rounded-lg transition-all ${textColor}`}
-    {href}>{title}</a
-  >
-</li>
+<a class={itemClass} {href}>
+  <span class="relative py-[5px] px-[10px]">
+    {title}
+    {#if active}
+      <div class="absolute inset-0 bg-gray-800 rounded-md z-[-1]" />
+    {/if}
+  </span>
+</a>

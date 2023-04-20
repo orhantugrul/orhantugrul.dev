@@ -3,6 +3,6 @@
 </script>
 
 <Container
-  title={"Contact • Orhan Tugrul"}
-  description={"Get in touch with me today."}
+  title={"About • Orhan Tugrul"}
+  description={"A Software Developer who hates titles."}
 />

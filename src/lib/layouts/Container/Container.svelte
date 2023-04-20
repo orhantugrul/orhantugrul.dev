@@ -2,7 +2,6 @@
   import "../../../app.css";
   import Navbar from "$lib/components/Navbar/Navbar.svelte";
   import Main from "$lib/components/Main/Main.svelte";
-  import Footer from "$lib/components/Footer/Footer.svelte";
 
   export let title: string;
   export let description: string;
@@ -17,10 +16,3 @@
 <Main>
   <slot />
 </Main>
-<Footer />
-
-<style lang="postcss">
-  :global(body) {
-    background-color: theme(colors.gray.900);
-  }
-</style>

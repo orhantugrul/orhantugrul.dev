@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import NavbarItem from "$lib/components/Navbar/NavbarItem.svelte";
+  import orhansBeanie from "$lib/assets/orhans-beanie.png";
 
   const navbarItems = [
     { title: "Home", href: "/" },
@@ -11,11 +12,11 @@
 <nav class="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
   <div class="lg:sticky lg:top-20">
     <div
-      class="ml-2 md:ml-[5px] mb-2 px-4 md:px-0 md:mb-8 space-y-10 flex flex-col md:flex-row items-start"
+      class="mb-2 px-4 md:px-0 md:mb-8 space-y-10 flex flex-col md:flex-row items-start"
     >
-      <a class="text-5xl text-neutral-200" aria-label="Orhan Tugrul" href="/"
-        >O</a
-      >
+      <a class="text-5xl text-neutral-200" aria-label="Orhan Tugrul" href="/">
+        <img width="72" height="72" src={orhansBeanie} alt="Orhan's beanie" />
+      </a>
     </div>
 
     <div

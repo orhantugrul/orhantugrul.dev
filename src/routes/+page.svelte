@@ -46,5 +46,12 @@
         href={"https://twitter.com/itsorhanbtw"}
       />
     </li>
+
+    <li>
+      <Link
+        title={"connect me on linkedin"}
+        href={"https://www.linkedin.com/in/orhantugrul/"}
+      />
+    </li>
   </ul>
 </Container>

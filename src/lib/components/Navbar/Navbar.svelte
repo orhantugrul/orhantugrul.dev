@@ -15,7 +15,13 @@
       class="mb-2 px-4 md:px-0 md:mb-8 space-y-10 flex flex-col md:flex-row items-start"
     >
       <a class="text-5xl text-neutral-200" aria-label="Orhan Tugrul" href="/">
-        <img width="72" height="72" src={orhansBeanie} alt="Orhan's beanie" />
+        <img
+          width="72"
+          height="72"
+          src={orhansBeanie}
+          title="Orhan's beanie"
+          alt="Orhan's beanie"
+        />
       </a>
     </div>
 

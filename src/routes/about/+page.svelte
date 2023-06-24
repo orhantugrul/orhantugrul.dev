@@ -6,6 +6,7 @@
     HackerRankIcon,
     OnlyFansIcon,
   } from "$lib/components/Icon";
+  import Link from "$lib/components/Link/Link.svelte";
 </script>
 
 <Container
@@ -20,9 +21,12 @@
 
   <div class="prose prose-neutral prose-invert text-neutral-200">
     <p>
-      I'm currently the <b>Software Developer at Phi Software</b>. In my role, I
-      am responsible for developing and maintaining software applications for
-      our clients. I'm currently focusing to reactive and non-blocking things.
+      I'm currently the
+      <b>
+        Software Developer at
+        <span class="text-sky-600">ITServ</span>.
+      </b> In my role, I am responsible for developing and maintaining software applications
+      for our clients. I'm currently focusing to reactive and non-blocking things.
     </p>
 
     <hr />

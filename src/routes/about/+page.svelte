@@ -22,10 +22,8 @@
   <div class="prose prose-neutral prose-invert text-neutral-200">
     <p>
       I'm currently the
-      <b>
-        Software Developer at
-        <span class="text-sky-600">ITServ</span>.
-      </b> In my role, I am responsible for developing and maintaining software applications
+      <b><span class="text-sky-600">Software Developer at ITServ</span>.</b>
+      In my role, I am responsible for developing and maintaining software applications
       for our clients. I'm currently focusing to reactive and non-blocking things.
     </p>
 

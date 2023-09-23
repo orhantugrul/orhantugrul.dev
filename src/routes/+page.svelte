@@ -43,7 +43,7 @@
     <li>
       <Link
         title={"follow me on twitter"}
-        href={"https://twitter.com/itsorhanbtw"}
+        href={"https://twitter.com/orhantuurul"}
       />
     </li>
 

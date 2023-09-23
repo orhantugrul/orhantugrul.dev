@@ -6,7 +6,6 @@
     HackerRankIcon,
     OnlyFansIcon,
   } from "$lib/components/Icon";
-  import Link from "$lib/components/Link/Link.svelte";
 </script>
 
 <Container

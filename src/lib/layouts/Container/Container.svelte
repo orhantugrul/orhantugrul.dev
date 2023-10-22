@@ -1,7 +1,5 @@
 <script lang="ts">
   import "../../../app.css";
-  import Navbar from "$lib/components/Navbar/Navbar.svelte";
-  import Main from "$lib/components/Main/Main.svelte";
 
   export let title: string;
   export let description: string;
@@ -12,7 +10,6 @@
   <meta name="description" content={description} />
 </svelte:head>
 
-<Navbar />
-<Main>
+<main class="flex flex-col flex-auto">
   <slot />
-</Main>
+</main>

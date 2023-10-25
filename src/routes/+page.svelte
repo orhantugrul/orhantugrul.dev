@@ -99,17 +99,21 @@
             <p class="text-black dark:text-white">Contact</p>
 
             <div class="grid gap-6 mt-3">
-              {#each socials as social}
+              {#each socials as { title, link }}
                 <div
                   class="grid items-start grid-cols-1 text-neutral-500 md:grid-cols-3"
                 >
                   <p class="text-neutral-400 dark:text-neutral-400">
-                    {social.title}
+                    {title}
                   </p>
 
                   <div class="w-full md:col-span-2">
                     <p class="text-black dark:text-white">
-                      <Link href={social.link}>{social.link}</Link>
+                      {#if title === "Email"}
+                        <Link href={`mailto:${link}`}>{link}</Link>
+                      {:else}
+                        <Link href={link}>{link}</Link>
+                      {/if}
                     </p>
                   </div>
                 </div>

@@ -18,9 +18,13 @@
             <div class="flex-shrink-0">
               <div class="relative">
                 <img
-                  class="object-cover w-16 h-16 lg:h-24 lg:w-24"
+                  class="object-cover w-16 h-16 border rounded-full lg:h-24 lg:w-24 border-white/10"
                   src={avatar}
-                  alt="Orhan itself"
+                  alt="Orhan himself"
+                />
+                <san
+                  class="absolute inset-0 rounded-full shadow-inner"
+                  aria-hidden="true"
                 />
               </div>
             </div>

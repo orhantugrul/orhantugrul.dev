@@ -13,12 +13,6 @@ const experiences: Experience[] = [
     date: "17.08.2023",
   },
   {
-    title: "Consulting Leasing SaaS",
-    link: "http://www.ykleasing.com.tr",
-    location: "Istanbul/Turkey",
-    date: "05.02.2023",
-  },
-  {
     title: "Consulting Treasury SaaS",
     link: "https://www.linktera.com/spinex-labs",
     location: "Istanbul/Turkey",

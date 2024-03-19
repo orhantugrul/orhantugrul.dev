@@ -6,7 +6,7 @@ export type Social = {
 const socials: Social[] = [
   {
     title: "Email",
-    link: "orhan.tugrul.61@gmail.com",
+    link: "orhantugrulsahin@gmail.com",
   },
   {
     title: "LinkedIn",

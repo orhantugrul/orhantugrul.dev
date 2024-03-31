@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/src/lib/assets/fonts/Geist.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: "GeistMono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/src/lib/assets/fonts/GeistMono.woff2) format("woff2");
+  }
+}

@@ -20,12 +20,9 @@ module.exports = {
       "9xl": ["8rem", { lineHeight: "1" }],
     },
     extend: {
-      colors: {
-        black: "#222222",
-        ...defaultTheme.colors,
-      },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist", ...defaultTheme.fontFamily.sans],
+        mono: ["GeistMono", ...defaultTheme.fontFamily.mono],
       },
     },
   },

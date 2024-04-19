@@ -1,9 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    colors: {
+      ...colors,
+      black: "#151618",
+      accent: "#666666",
+      outline: "#eaeaea",
+    },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.5rem" }],

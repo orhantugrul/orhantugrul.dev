@@ -23,13 +23,13 @@
   }
 </script>
 
-<footer class="flex border-t-[1px] border-[#2E3036]">
+<footer class="flex border-t-[1px] border-outline dark:border-outline-dark">
   <div class="flex flex-col py-4">
-    <p class="dark:text-[#CFD1D6] text-xs font-mono mb-3">
+    <p class="mb-3 font-mono text-xs text-gray dark:text-gray-dark">
       Trabzon, {trabzonTime}
     </p>
 
-    <p class="dark:text-[#CFD1D6] text-xs font-mono">
+    <p class="font-mono text-xs text-gray dark:text-gray-dark">
       © {new Date().getFullYear()} Orhan Tuğrul Şahin
     </p>
   </div>

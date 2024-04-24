@@ -7,9 +7,10 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      black: "#151618",
-      accent: "#666666",
-      outline: "#eaeaea",
+      black: "var(--color-black)",
+      bright: "var(--color-bright)",
+      gray: "var(--color-gray)",
+      outline: "var(--color-outline)",
     },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],

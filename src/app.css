@@ -18,4 +18,28 @@
     font-display: swap;
     src: url(/fonts/GeistMono.woff2) format("woff2");
   }
+
+  :root {
+    --color-black: #151618;
+    --color-bright: #efefef;
+    --color-gray: #60646f;
+    --color-outline: #e8e8e8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-gray: #cfd1d6;
+      --color-outline: #2e3036;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --color-gray: #60646f;
+    --color-outline: #e8e8e8;
+  }
+
+  :root[data-theme="dark"] {
+    --color-gray: #cfd1d6;
+    --color-outline: #2e3036;
+  }
 }

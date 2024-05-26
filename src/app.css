@@ -20,26 +20,27 @@
   }
 
   :root {
-    --color-black: #151618;
-    --color-bright: #efefef;
-    --color-gray: #60646f;
-    --color-outline: #e8e8e8;
+    --color-black: hsl(220, 7%, 9%);
+    --color-bright: hsl(0, 0%, 94%);
+    --color-resene: hsl(220, 7%, 16%);
+    --color-gray: hsl(224, 7%, 41%);
+    --color-outline: hsl(0, 0%, 91%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --color-gray: #cfd1d6;
-      --color-outline: #2e3036;
+      --color-gray: hsl(223, 8%, 83%);
+      --color-outline: hsl(225, 8%, 20%);
     }
   }
 
   :root[data-theme="light"] {
-    --color-gray: #60646f;
-    --color-outline: #e8e8e8;
+    --color-gray: hsl(224, 7%, 41%);
+    --color-outline: hsl(0, 0%, 91%);
   }
 
   :root[data-theme="dark"] {
-    --color-gray: #cfd1d6;
-    --color-outline: #2e3036;
+    --color-gray: hsl(223, 8%, 83%);
+    --color-outline: hsl(225, 8%, 20%);
   }
 }

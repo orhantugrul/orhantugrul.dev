@@ -9,7 +9,7 @@ module.exports = {
       ...colors,
       black: "var(--color-black)",
       bright: "var(--color-bright)",
-      resene: "var(--color-resene)",
+      raisin: "var(--color-raisin)",
       gray: "var(--color-gray)",
       outline: "var(--color-outline)",
     },

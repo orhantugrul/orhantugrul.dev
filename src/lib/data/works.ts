@@ -13,7 +13,7 @@ const works: Work[] = [
   {
     title: "Spinex",
     description: "Treasury solution that automates financial processes",
-    link: "https://www.linktera.com/spinex-labs",
+    link: "https://thespinex.com/",
   },
 ];
 

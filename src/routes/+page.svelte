@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Container from "$lib/layouts/Container";
   import avatar from "$lib/assets/avatar.jpeg";
   import works from "$lib/data/works";
+  import Container from "$lib/layouts/Container";
 </script>
 
 <Container
@@ -16,19 +16,10 @@
     />
 
     <div>
-      <h1 class="text-sm leading-5 text-black dark:text-bright">
+      <h1 class="mb-1 text-lg leading-5 text-black dark:text-bright">
         Orhan Tuğrul Şahin
       </h1>
-      <p class="text-sm leading-5 text-black dark:text-bright">
-        Software Developer
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.cloud4next.com/"
-        >
-          <span class="duration-[50ms] hover:border-b-[1px]">@Cloud4Next</span>
-        </a>
-      </p>
+      <p class="text-sm leading-5 text-gray">Software Developer</p>
     </div>
   </div>
 
@@ -46,40 +37,24 @@
   </div>
 
   <div class="my-5 flex flex-col">
-    <h2 class="mb-2 font-mono text-xs text-black dark:text-gray">Works</h2>
-
+    <h2 class="mb-2 font-mono text-xs text-gray">Works</h2>
     <div class="flex flex-col gap-2">
       {#each works as { title, description, link }}
-        <div class="dark:bg-resene flex flex-col bg-bright">
-          <a class="group flex items-center gap-1 dark:text-white" href={link}>
-            <h3 class="text-sm">{title}</h3>
-
-            <span
-              class="hiddendelay-150 transition ease-in-out group-hover:flex"
-            >
-              <svg
-                class="h-[14px] w-[14px]"
-                fill="none"
-                shape-rendering="geometricPrecision"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                ><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg
-              >
-            </span>
-          </a>
+        <a
+          class="dark:hover:bg-raisin -mx-2 flex flex-col rounded-md p-2 hover:bg-bright dark:text-white"
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <h3 class="text-sm">{title}</h3>
           <p class="text-sm text-gray">{description}</p>
-        </div>
+        </a>
       {/each}
     </div>
   </div>
 
   <div class="my-5 flex flex-col">
-    <h2 class="mb-2 font-mono text-xs text-black dark:text-[#CFD1D6]">
-      Contact
-    </h2>
+    <h2 class="mb-2 font-mono text-xs text-gray">Connect</h2>
 
     <div class="flex gap-4">
       <a
@@ -87,7 +62,9 @@
         rel="noopener noreferrer"
         href="mailto:orhantugrulsahin@gmail.com"
       >
-        <button class="rounded-full dark:bg-[#27292D] dark:text-[#CFD1D6]">
+        <button
+          class="rounded-full bg-bright dark:bg-[#27292D] dark:text-[#CFD1D6]"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"

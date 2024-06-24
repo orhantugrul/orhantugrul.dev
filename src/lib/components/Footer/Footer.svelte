@@ -23,14 +23,12 @@
   }
 </script>
 
-<footer class="flex border-t-[1px] border-solid border-outline">
-  <div class="flex flex-col py-4">
-    <p class="mb-3 font-mono text-xs text-gray">
-      Trabzon, {time}
-    </p>
+<footer class="flex flex-col gap-2 border-t-[1px] border-outline py-4">
+  <p class="font-mono text-xs text-gray">
+    Trabzon, {time}
+  </p>
 
-    <p class="font-mono text-xs text-gray">
-      © {new Date().getFullYear()} Orhan Tuğrul Şahin
-    </p>
-  </div>
+  <p class="font-mono text-xs text-gray">
+    © {new Date().getFullYear()} Orhan Tuğrul Şahin
+  </p>
 </footer>

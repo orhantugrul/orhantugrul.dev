@@ -18,7 +18,7 @@
     />
 
     <div>
-      <h1 class="mb-1 text-lg leading-5 text-black dark:text-bright">
+      <h1 class="mb-1 text-lg leading-5 text-black dark:text-white">
         Orhan Tuğrul Şahin
       </h1>
       <p class="text-sm leading-5 text-gray">Software Developer</p>
@@ -27,15 +27,12 @@
 
   <div class="my-5 flex flex-col">
     <h2 class="mb-2 font-mono text-xs text-gray">About</h2>
-
-    <div class="text-sm">
-      <p class="mb-2 dark:text-bright">
-        Creative, tech-savvy Software Developer with 3 years of experience in
-        building innovative solutions for clients of all sizes. I specialize in
-        developing high-performance applications using modern tools and
-        technologies.
-      </p>
-    </div>
+    <p class="dark:text-smoke mb-2 text-sm">
+      Creative, tech-savvy Software Developer with 3 years of experience in
+      building innovative solutions for clients of all sizes. I specialize in
+      developing high-performance applications using modern tools and
+      technologies.
+    </p>
 
     <div class="-mx-1 flex gap-4 md:flex-row">
       {#each socials as { title, href }}
@@ -52,14 +49,16 @@
     <div class="flex flex-col gap-6">
       {#each works as { title, description, technologies }}
         <div class="flex flex-col">
-          <h3 class="text-sm font-bold">{title}</h3>
-          <p class="mb-2 text-sm text-gray">{description}</p>
+          <h3 class="text-sm font-medium dark:text-white">{title}</h3>
+          <p class="dark:text-smoke mb-2 text-sm">{description}</p>
 
           <div class="gap flex flex-wrap gap-2">
             {#each technologies as technology}
-              <span class="rounded-full border border-outline px-2 py-1 text-xs"
-                >{technology}</span
+              <span
+                class="rounded-full border border-outline px-2 py-1 text-xs text-gray"
               >
+                {technology}
+              </span>
             {/each}
           </div>
         </div>

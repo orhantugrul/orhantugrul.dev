@@ -23,7 +23,7 @@
   }
 </script>
 
-<footer class="flex flex-col gap-2 border-t-[1px] border-outline py-4">
+<footer class="my-5 flex justify-between gap-2">
   <p class="font-mono text-xs text-gray">
     Trabzon, {time}
   </p>

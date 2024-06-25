@@ -21,8 +21,9 @@
 
   :root {
     --color-black: hsl(220, 7%, 9%);
-    --color-bright: hsl(0, 0%, 94%);
+    --color-smoke: hsl(231.43, 10.45%, 86.86%);
     --color-raisin: hsl(260, 4.23%, 13.92%);
+    --color-solitude: hsl(220, 14.29%, 95.88%);
     --color-gray: hsl(224, 7%, 41%);
     --color-outline: hsl(0, 0%, 91%);
   }

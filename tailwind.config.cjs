@@ -8,8 +8,9 @@ module.exports = {
     colors: {
       ...colors,
       black: "var(--color-black)",
-      bright: "var(--color-bright)",
+      smoke: "var(--color-smoke)",
       raisin: "var(--color-raisin)",
+      solitude: "var(--color-solitude)",
       gray: "var(--color-gray)",
       outline: "var(--color-outline)",
     },

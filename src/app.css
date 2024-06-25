@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/Geist.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: "GeistMono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/fonts/GeistMono.woff2) format("woff2");
+  }
+
+  :root {
+    --color-black: hsl(220, 7%, 9%);
+    --color-bright: hsl(0, 0%, 94%);
+    --color-raisin: hsl(260, 4.23%, 13.92%);
+    --color-gray: hsl(224, 7%, 41%);
+    --color-outline: hsl(0, 0%, 91%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-gray: hsl(0 0% 49.4%);
+      --color-outline: hsl(225, 8%, 20%);
+    }
+  }
+
+  :root[data-theme="light"] {
+    --color-gray: hsl(224, 7%, 41%);
+    --color-outline: hsl(0, 0%, 91%);
+  }
+
+  :root[data-theme="dark"] {
+    --color-gray: hsl(0 0% 49.4%);
+    --color-outline: hsl(225, 8%, 20%);
+  }
+}

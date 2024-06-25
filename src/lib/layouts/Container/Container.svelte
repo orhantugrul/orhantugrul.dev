@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Footer from "$lib/components/Footer/Footer.svelte";
   import "../../../app.css";
 
   export let title: string;
@@ -10,6 +11,7 @@
   <meta name="description" content={description} />
 </svelte:head>
 
-<main class="flex flex-col flex-auto">
+<main class="mx-auto mt-5 flex max-w-xl flex-col px-4">
   <slot />
+  <Footer />
 </main>

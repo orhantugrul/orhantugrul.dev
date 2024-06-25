@@ -1,9 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
+    colors: {
+      ...colors,
+      black: "var(--color-black)",
+      bright: "var(--color-bright)",
+      raisin: "var(--color-raisin)",
+      gray: "var(--color-gray)",
+      outline: "var(--color-outline)",
+    },
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],
       sm: ["0.875rem", { lineHeight: "1.5rem" }],
@@ -20,12 +29,9 @@ module.exports = {
       "9xl": ["8rem", { lineHeight: "1" }],
     },
     extend: {
-      colors: {
-        black: "#222222",
-        ...defaultTheme.colors,
-      },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist", ...defaultTheme.fontFamily.sans],
+        mono: ["GeistMono", ...defaultTheme.fontFamily.mono],
       },
     },
   },

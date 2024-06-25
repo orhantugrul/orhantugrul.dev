@@ -3,7 +3,7 @@
 </script>
 
 <a
-  class="underline hover:no-underline duration-200"
+  class="dark:hover:bg-raisin flex items-center gap-1 rounded px-1 hover:bg-bright dark:text-white"
   target="_blank"
   rel="noopener noreferrer"
   {href}
@@ -12,7 +12,7 @@
 
   <span class="inline-flex">
     <svg
-      class="w-[14px] h-[14px]"
+      class="h-[14px] w-[14px]"
       fill="none"
       shape-rendering="geometricPrecision"
       stroke="currentColor"

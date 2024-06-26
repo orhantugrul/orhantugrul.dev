@@ -8,7 +8,8 @@
 
 <Container
   title={"Orhan Tuğrul Şahin"}
-  description={"Software developer based on 🇹🇷"}
+  description={"Non-titled software developer with almost 4 years \
+  experience building highly scalable, high performance solutions."}
 >
   <div class="my-5 flex items-center gap-5">
     <img

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import avatar from "$lib/assets/avatar.jpeg";
+  import orhan from "$lib/assets/orhan.jpeg";
   import Link from "$lib/components/Link/Link.svelte";
   import socials from "$lib/data/socials";
   import works from "$lib/data/works";
@@ -14,7 +14,7 @@
   <div class="my-5 flex items-center gap-5">
     <img
       class="h-[60px] w-[60px] rounded-full object-cover"
-      src={avatar}
+      src={orhan}
       alt="Orhan himself"
     />
 

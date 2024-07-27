@@ -29,7 +29,7 @@
   <div class="my-5 flex flex-col">
     <h2 class="mb-2 font-mono text-xs text-gray">About</h2>
     <p class="dark:text-smoke mb-2 text-sm">
-      Creative, tech-savvy Software Developer with 3 years of experience in
+      Creative, tech-savvy Software Developer with 4 years of experience in
       building innovative solutions for clients of all sizes. I specialize in
       developing high-performance applications using modern tools and
       technologies.

@@ -16,6 +16,10 @@ const socials: Social[] = [
     title: "LinkedIn",
     href: "https://www.linkedin.com/in/orhantugrulsahin",
   },
+  {
+    title: "Resume",
+    href: "/orhans-resume.pdf",
+  },
 ];
 
 export default socials;

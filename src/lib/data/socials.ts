@@ -18,7 +18,7 @@ const socials: Social[] = [
   },
   {
     title: "Resume",
-    href: "/orhans-resume.pdf",
+    href: "/resume.pdf",
   },
 ];
 

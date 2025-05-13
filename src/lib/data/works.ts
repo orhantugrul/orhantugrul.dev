@@ -15,15 +15,13 @@ const works: Work[] = [
       share and optimize cloud resources, making business processes \
       more efficient. ",
     technologies: [
-      "Python",
-      "JavaScript",
-      "TypeScript",
-      "React.js",
+      "Flask",
       "Next.js",
       "RESTful APIs",
       "Celery",
       "Docker",
       "Redis",
+      "PostgreSQL",
       "Google Cloud",
       "AWS",
       "Microsoft Azure",
@@ -37,13 +35,12 @@ const works: Work[] = [
       both speeding up and simplifying business processes in \
       treasury departments.",
     technologies: [
-      "Java",
-      "Kotlin",
-      "JavaScript",
-      "Spring Framework",
+      "Spring Boot",
       "React.js",
       "RESTful APIs",
+      "Web Sockets",
       "Kafka",
+      "PostgreSQL",
     ],
   },
 ];

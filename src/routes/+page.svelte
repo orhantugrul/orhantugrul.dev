@@ -2,7 +2,7 @@
   import orhan from "$lib/assets/orhan.jpeg";
   import Link from "$lib/components/Link/Link.svelte";
   import socials from "$lib/data/socials";
-  import works from "$lib/data/works";
+  import experiences from "$lib/data/works";
   import Container from "$lib/layouts/Container";
 
   const title = "Orhan Tuğrul Şahin";
@@ -49,7 +49,7 @@
     <h2 class="mb-2 font-mono text-xs text-gray">Experience</h2>
 
     <div class="flex flex-col gap-6">
-      {#each works as { title, description, technologies }}
+      {#each experiences as { title, description, technologies }}
         <div class="flex flex-col">
           <h3 class="text-sm font-medium dark:text-white">{title}</h3>
           <p class="mb-2 text-sm dark:text-smoke">{description}</p>

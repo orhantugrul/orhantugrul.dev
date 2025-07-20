@@ -30,10 +30,12 @@
   <div class="my-5 flex flex-col">
     <h2 class="mb-2 font-mono text-xs text-gray">About</h2>
     <p class="mb-2 text-sm dark:text-smoke">
-      Creative, tech-savvy Software Developer with 4 years of experience in
-      building innovative solutions for clients of all sizes. I specialize in
-      developing high-performance applications using modern tools and
-      technologies.
+      Creative, tech-savvy Software developer with 4+ years developing
+      enterprise-level applications in financial services and cloud management.
+      Proven expertise in building scalable web applications, RESTful APIs, and
+      multi-cloud systems. Strong background in modern frameworks, agile
+      methodologies, and delivering high-quality solutions for mission critical
+      business operations.
     </p>
 
     <div class="-mx-1 flex gap-4 md:flex-row">

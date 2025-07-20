@@ -5,10 +5,6 @@ export type Social = {
 
 const socials: Social[] = [
   {
-    title: "Twitter",
-    href: "https://x.com/orhantuurul",
-  },
-  {
     title: "GitHub",
     href: "https://github.com/orhantugrul",
   },

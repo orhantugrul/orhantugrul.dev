@@ -31,7 +31,7 @@ jobs:
         run: bun run build
       - name: Copy wild-frequency to main build
         run: |
-          mkdir -p build/fun
+          mkdir -p build/fun/wild-frequency
           cp -r wild-frequency/build/* build/fun/wild-frequency/
       - name: Deploy
         uses: cloudflare/wrangler-action@v3

@@ -1,12 +1,13 @@
 <script lang="ts">
   import orhan from "$lib/assets/orhan.jpeg";
+  import Footer from "$lib/components/Footer";
   import Link from "$lib/components/Link/Link.svelte";
   import socials from "$lib/data/socials";
   import experiences from "$lib/data/works";
   import Container from "$lib/layouts/Container";
 
-  const title = "Orhan Tuğrul Şahin";
-  const description =
+  $: title = "Orhan Tuğrul Şahin";
+  $: description =
     "Non-titled software developer building " +
     "highly scalable, high performance solutions.";
 </script>
@@ -69,4 +70,5 @@
       {/each}
     </div>
   </div>
+  <Footer />
 </Container>

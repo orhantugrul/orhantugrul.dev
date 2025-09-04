@@ -3,7 +3,7 @@
 </script>
 
 <a
-  class="dark:hover:bg-raisin dark:text-smoke hover:bg-solitude inline-flex items-center gap-1 rounded px-1 text-black"
+  class="inline-flex items-center gap-1 rounded px-1 text-black hover:bg-solitude dark:text-smoke dark:hover:bg-raisin"
   target="_blank"
   rel="noopener noreferrer"
   {href}

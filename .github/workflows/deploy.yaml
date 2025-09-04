@@ -17,25 +17,9 @@ jobs:
         run: bun install
       - name: Build
         run: bun run build
-      - name: Checkout wild-frequency
-        uses: actions/checkout@v4
-        with:
-          repository: orhantugrul/wild-frequency
-          path: wild-frequency
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup wild-frequency
-        working-directory: wild-frequency
-        run: bun install
-      - name: Build wild-frequency
-        working-directory: wild-frequency
-        run: bun run build
-      - name: Copy wild-frequency to main build
-        run: |
-          mkdir -p build/fun/wild-frequency
-          cp -r wild-frequency/build/* build/fun/wild-frequency/
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy build --project-name=orhantugrul
+          command: pages deploy build --project-name orhantugrul

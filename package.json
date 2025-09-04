@@ -1,18 +1,8 @@
 {
   "name": "orhantugrul.dev",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "lint": "prettier --plugin-search-dir . --check . && eslint .",
-    "format": "prettier --plugin-search-dir . --write ."
-  },
   "devDependencies": {
-    "@sveltejs/adapter-static": "^2.0.3",
+    "@sveltejs/adapter-cloudflare": "^7.2.3",
     "@sveltejs/kit": "^1.30.4",
     "@tailwindcss/typography": "^0.5.12",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -31,6 +21,16 @@
     "tslib": "^2.6.2",
     "typescript": "^4.9.5",
     "vite": "^4.5.3"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
   },
   "type": "module"
 }

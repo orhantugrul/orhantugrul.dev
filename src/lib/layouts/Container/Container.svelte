@@ -16,5 +16,4 @@
 
 <main class="mx-auto my-5 flex max-w-xl flex-col px-4">
   <slot />
-  <Footer />
 </main>

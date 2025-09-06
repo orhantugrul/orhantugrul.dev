@@ -1,0 +1,27 @@
+# Robots.txt for orhantugrul.dev
+# Allow crawling everything by default
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_app/
+Disallow: /_svelte/
+
+# Sitemap location
+Sitemap: https://orhantugrul.dev/sitemap.xml
+
+# Crawl delay (optional - helps prevent overloading server)
+Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1

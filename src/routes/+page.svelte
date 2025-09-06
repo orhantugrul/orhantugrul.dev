@@ -1,36 +1,43 @@
 <script lang="ts">
-  import orhan from "$lib/assets/orhan.jpeg";
-  import Footer from "$lib/components/Footer";
-  import Link from "$lib/components/Link/Link.svelte";
-  import socials from "$lib/data/socials";
+  import orhan from "$assets/orhan.jpeg";
+  import ContactCard from "$components/contact-card.svelte";
   import experiences from "$lib/data/works";
-  import Container from "$lib/layouts/Container";
+  import Footer from "../components/footer.svelte";
 
-  $: title = "Orhan Tuğrul Şahin";
-  $: description =
+  const title = "Software Crafter | Orhan Tugrul Sahin";
+  const description =
     "Non-titled software developer building " +
     "highly scalable, high performance solutions.";
 </script>
 
-<Container {title} {description}>
-  <div class="my-5 flex items-center gap-5">
+<svelte:head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+</svelte:head>
+
+<main class="mx-auto min-h-screen max-w-2xl px-6 py-12 md:py-20">
+  <header class="mb-20 flex items-center">
     <img
-      class="h-[60px] w-[60px] rounded-full object-cover"
+      class="mr-6 h-16 w-16 rounded-full object-cover shadow-lg"
       src={orhan}
       alt="Orhan himself"
     />
-
     <div>
-      <h1 class="mb-1 text-lg leading-5 text-black dark:text-white">
-        Orhan Tuğrul Şahin
+      <h1
+        class="text-xl leading-tight font-medium text-black md:text-2xl dark:text-white"
+      >
+        Orhan Tugrul Sahin
       </h1>
-      <p class="text-sm leading-5 text-gray">Software Developer</p>
+      <p class="mt-1 text-base text-gray">Software Developer</p>
     </div>
-  </div>
-
-  <div class="my-5 flex flex-col">
-    <h2 class="mb-2 font-mono text-xs text-gray">About</h2>
-    <p class="mb-2 text-sm dark:text-smoke">
+  </header>
+  <section class="mb-24">
+    <h2 class="mb-6 text-sm font-semibold tracking-wide text-gray uppercase">
+      About
+    </h2>
+    <p
+      class="mb-12 text-base leading-relaxed text-black md:text-lg md:leading-loose dark:text-smoke"
+    >
       Creative, tech-savvy Software developer with 4+ years developing
       enterprise-level applications in financial services and cloud management.
       Proven expertise in building scalable web applications, RESTful APIs, and
@@ -38,37 +45,35 @@
       methodologies, and delivering high-quality solutions for mission critical
       business operations.
     </p>
-
-    <div class="-mx-1 flex gap-4 md:flex-row">
-      {#each socials as { title, href }}
-        <Link {href}>
-          <p class="text-sm">{title}</p>
-        </Link>
-      {/each}
-    </div>
-  </div>
-
-  <div class="my-5 flex flex-col">
-    <h2 class="mb-2 font-mono text-xs text-gray">Experience</h2>
-
-    <div class="flex flex-col gap-6">
+    <ContactCard />
+  </section>
+  <section class="mb-24">
+    <h2 class="mb-8 text-sm font-semibold tracking-wide text-gray uppercase">
+      Experience
+    </h2>
+    <div class="space-y-12">
       {#each experiences as { title, description, technologies }}
-        <div class="flex flex-col">
-          <h3 class="text-sm font-medium dark:text-white">{title}</h3>
-          <p class="mb-2 text-sm dark:text-smoke">{description}</p>
-
-          <div class="gap flex flex-wrap gap-2">
+        <article>
+          <h3 class="mb-3 text-lg font-semibold text-black dark:text-white">
+            {title}
+          </h3>
+          <p
+            class="mb-6 text-base leading-relaxed text-black md:leading-loose dark:text-smoke"
+          >
+            {description}
+          </p>
+          <div class="flex flex-wrap gap-2">
             {#each technologies as technology}
               <span
-                class="rounded-full border border-outline px-2 py-1 text-xs text-gray"
+                class="rounded-full border border-outline bg-solitude px-3 py-1.5 text-xs font-medium text-gray dark:bg-raisin"
               >
                 {technology}
               </span>
             {/each}
           </div>
-        </div>
+        </article>
       {/each}
     </div>
-  </div>
+  </section>
   <Footer />
-</Container>
+</main>

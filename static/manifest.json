@@ -1,0 +1,32 @@
+{
+  "name": "Orhan Tugrul Sahin - Software Developer",
+  "short_name": "Orhan Tugrul",
+  "description": "Software Developer & Full Stack Engineer with 4+ years experience in enterprise applications",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity", "professional"],
+  "lang": "en",
+  "dir": "ltr"
+}

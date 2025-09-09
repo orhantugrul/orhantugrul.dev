@@ -28,7 +28,7 @@
       >
         Orhan Tugrul Sahin
       </h1>
-      <p class="mt-1 text-base text-gray">Software Developer</p>
+      <p class="mt-1 text-base text-gray">Software Crafter</p>
     </div>
   </header>
   <section class="mb-24">

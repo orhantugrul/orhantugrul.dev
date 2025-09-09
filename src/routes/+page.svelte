@@ -6,7 +6,7 @@
 
   const title = "Software Crafter | Orhan Tugrul Sahin";
   const description =
-    "Non-titled software developer building " +
+    "Non-titled software crafter building " +
     "highly scalable, high performance solutions.";
 </script>
 
@@ -38,7 +38,7 @@
     <p
       class="mb-12 text-base leading-relaxed text-black md:text-lg md:leading-loose dark:text-smoke"
     >
-      Creative, tech-savvy Software developer with 4+ years developing
+      Creative, tech-savvy Software crafter with 4+ years developing
       enterprise-level applications in financial services and cloud management.
       Proven expertise in building scalable web applications, RESTful APIs, and
       multi-cloud systems. Strong background in modern frameworks, agile

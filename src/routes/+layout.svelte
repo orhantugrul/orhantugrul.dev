@@ -56,7 +56,7 @@
   <meta property="og:type" content="website" />
   <meta
     property="og:site_name"
-    content="Orhan Tugrul Sahin - Software Developer"
+    content="Orhan Tugrul Sahin - Software Crafter"
   />
   <meta property="og:locale" content="en_US" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />

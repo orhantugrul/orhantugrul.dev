@@ -45,7 +45,7 @@
 
     <div class="flex flex-col gap-3 sm:flex-row">
       <a
-        href="mailto:orhantugrulsahin@gmail.com"
+        href="mailto:hello@orhantugrul.dev"
         class="inline-flex items-center justify-center gap-2 rounded-xl border border-outline bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white dark:bg-raisin dark:text-smoke dark:hover:bg-smoke dark:hover:text-black"
       >
         <svg

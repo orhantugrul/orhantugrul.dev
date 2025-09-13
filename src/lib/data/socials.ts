@@ -13,6 +13,10 @@ const socials: Social[] = [
     href: "https://www.linkedin.com/in/orhantugrulsahin",
   },
   {
+    title: "Medium",
+    href: "https://medium.com/@orhanbytes",
+  },
+  {
     title: "Resume",
     href: "/resume.pdf",
   },

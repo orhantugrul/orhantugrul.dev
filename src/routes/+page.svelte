@@ -1,13 +1,31 @@
 <script lang="ts">
   import orhan from "$assets/orhan.jpeg";
   import ContactCard from "$components/contact-card.svelte";
+  import Footer from "$components/footer.svelte";
+  import Arrow from "$components/icons/arrow.svelte";
   import experiences from "$lib/data/works";
-  import Footer from "../components/footer.svelte";
+  import type { Post } from "$types/feed";
+  import type { PageProps } from "./$types";
+
+  let { data }: PageProps = $props();
 
   const title = "Software Crafter | Orhan Tugrul Sahin";
   const description =
     "Non-titled software crafter building " +
     "highly scalable, high performance solutions.";
+
+  function postImage(post: Post) {
+    const image = post.content.match(/<img[^>]*src="([^"]+)"[^>]*>/g)?.[0];
+    return image?.match(/src="([^"]+)"/)?.[1];
+  }
+
+  function formatDate(date: string) {
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
 </script>
 
 <svelte:head>
@@ -65,12 +83,56 @@
           <div class="flex flex-wrap gap-2">
             {#each technologies as technology}
               <span
-                class="rounded-full border border-outline bg-solitude px-3 py-1.5 text-xs font-medium text-gray dark:bg-raisin"
+                class="rounded-md bg-solitude px-2 py-1 text-xs font-medium text-gray dark:bg-raisin"
               >
                 {technology}
               </span>
             {/each}
           </div>
+        </article>
+      {/each}
+    </div>
+  </section>
+  <section class="mb-24">
+    <h2 class="mb-6 text-sm font-semibold tracking-wide text-gray uppercase">
+      Stories
+    </h2>
+    <div class="space-y-8">
+      {#each data.feed.posts.slice(0, 3) as post}
+        <article class="group">
+          <a
+            href={post.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block rounded-lg transition-all duration-200"
+          >
+            <div class="flex items-start gap-4">
+              {#if postImage(post)}
+                <div class="h-14 w-20 flex-shrink-0 overflow-hidden rounded-md">
+                  <img
+                    src={postImage(post)}
+                    alt={post.title}
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+              {/if}
+              <div class="min-w-0 flex-1">
+                <h3
+                  class="mb-2 leading-snug font-medium text-black transition-colors group-hover:text-black group-hover:opacity-80 dark:text-white"
+                >
+                  {post.title}
+                </h3>
+                <div class="flex items-center gap-3 text-sm text-gray">
+                  <time datetime={post.published}>
+                    {formatDate(post.published)}
+                  </time>
+                </div>
+              </div>
+              <Arrow
+                class="mt-1 h-4 w-4 text-black opacity-0 transition-all duration-200 group-hover:opacity-60 dark:text-white"
+              />
+            </div>
+          </a>
         </article>
       {/each}
     </div>

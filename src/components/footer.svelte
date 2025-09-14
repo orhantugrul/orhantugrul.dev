@@ -1,6 +1,7 @@
 <script lang="ts">
   import socials from "$lib/data/socials";
   import { onMount } from "svelte";
+  import Arrow from "./icons/arrow.svelte";
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -40,19 +41,7 @@
         {href}
       >
         <span class="text-xs">{title}</span>
-        <svg
-          class="h-3 w-3"
-          fill="none"
-          shape-rendering="geometricPrecision"
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
-          viewBox="0 0 24 24"
-        >
-          <path d="M7 17L17 7" />
-          <path d="M7 7h10v10" />
-        </svg>
+        <Arrow class="h-3 w-3" />
       </a>
     {/each}
   </div>

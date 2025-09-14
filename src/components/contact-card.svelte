@@ -1,4 +1,7 @@
 <script lang="ts">
+  import Calendar from "./icons/calendar.svelte";
+  import Email from "./icons/email.svelte";
+
   let card: HTMLElement;
   let mousePosition = { x: 0, y: 0 };
 
@@ -48,19 +51,7 @@
         href="mailto:hello@orhantugrul.dev"
         class="inline-flex items-center justify-center gap-2 rounded-xl border border-outline bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white dark:bg-raisin dark:text-smoke dark:hover:bg-smoke dark:hover:text-black"
       >
-        <svg
-          class="h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
+        <Email class="h-4 w-4" />
         Email me
       </a>
 
@@ -70,19 +61,7 @@
         rel="noopener noreferrer"
         class="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-gray dark:bg-smoke dark:text-black dark:hover:bg-white"
       >
-        <svg
-          class="h-4 w-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-          />
-        </svg>
+        <Calendar class="h-4 w-4" />
         Book a call
       </a>
     </div>

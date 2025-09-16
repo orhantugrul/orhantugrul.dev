@@ -4,7 +4,7 @@
   import Footer from "$components/footer.svelte";
   import Arrow from "$components/icons/arrow.svelte";
   import experiences from "$lib/data/works";
-  import type { Post } from "$types/feed";
+  import type { Element, Post } from "$types/feed";
   import type { PageProps } from "./$types";
 
   let { data }: PageProps = $props();
@@ -14,9 +14,29 @@
     "Non-titled software crafter building " +
     "highly scalable, high performance solutions.";
 
-  function postImage(post: Post) {
-    const image = post.content.match(/<img[^>]*src="([^"]+)"[^>]*>/g)?.[0];
-    return image?.match(/src="([^"]+)"/)?.[1];
+  function getCoverImageUrl(post: Post): string | undefined {
+    function findCoverImageUrl(element: Element): string | undefined {
+      if (element.tag === "img") {
+        const attribute = element.attributes?.find(
+          (attribute) => attribute.name === "src"
+        );
+        return attribute?.value;
+      }
+
+      for (const child of element.children || []) {
+        const result = findCoverImageUrl(child);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    for (const element of post.content || []) {
+      const result = findCoverImageUrl(element);
+      if (result) {
+        return result;
+      }
+    }
   }
 
   function formatDate(date: string) {
@@ -99,6 +119,7 @@
     </h2>
     <div class="space-y-8">
       {#each data.feed.posts.slice(0, 3) as post}
+        {@const coverImageUrl = getCoverImageUrl(post)}
         <article class="group">
           <a
             href={post.link}
@@ -107,10 +128,10 @@
             class="block rounded-lg transition-all duration-200"
           >
             <div class="flex items-start gap-4">
-              {#if postImage(post)}
+              {#if coverImageUrl}
                 <div class="h-14 w-20 flex-shrink-0 overflow-hidden rounded-md">
                   <img
-                    src={postImage(post)}
+                    src={coverImageUrl}
                     alt={post.title}
                     class="h-full w-full object-cover"
                   />

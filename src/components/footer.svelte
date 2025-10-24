@@ -1,7 +1,8 @@
 <script lang="ts">
-  import socials from "$lib/data/socials";
+  import { ArrowUpRight } from "@lucide/svelte";
   import { onMount } from "svelte";
-  import Arrow from "./icons/arrow.svelte";
+
+  const { socials } = $props();
 
   onMount(() => {
     const interval = setInterval(() => {
@@ -22,7 +23,7 @@
     return new Date().toLocaleString("en-US", options);
   }
 
-  $: localTime = getLocalTime();
+  let localTime = $derived.by(getLocalTime);
 </script>
 
 <footer
@@ -41,7 +42,7 @@
         {href}
       >
         <span class="text-xs">{title}</span>
-        <Arrow class="h-3 w-3" />
+        <ArrowUpRight class="h-3 w-3" />
       </a>
     {/each}
   </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Calendar from "./icons/calendar.svelte";
-  import Email from "./icons/email.svelte";
+  import { Calendar, Mail } from "@lucide/svelte";
 
   let card: HTMLElement;
   let mousePosition = { x: 0, y: 0 };
@@ -51,7 +50,7 @@
         href="mailto:hello@orhantugrul.dev"
         class="inline-flex items-center justify-center gap-2 rounded-xl border border-outline bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white dark:bg-raisin dark:text-smoke dark:hover:bg-smoke dark:hover:text-black"
       >
-        <Email class="h-4 w-4" />
+        <Mail class="h-4 w-4" />
         Email me
       </a>
 

@@ -1,23 +1,19 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { File, House } from "@lucide/svelte";
 
   interface NavItem {
     href: string;
-    icon: any;
     label: string;
   }
 
   const pages: NavItem[] = [
     {
       href: "/",
-      icon: House,
-      label: "Home",
+      label: "/about",
     },
     {
-      href: "/blog",
-      icon: File,
-      label: "Blog",
+      href: "/library",
+      label: "/library",
     },
   ];
 </script>
@@ -28,7 +24,6 @@
   >
     {#each pages as item (item.href)}
       {@const active = page.url.pathname === item.href}
-      {@const Icon = item.icon}
 
       <a
         href={item.href}
@@ -36,13 +31,8 @@
           ? 'bg-white/20 shadow-sm dark:bg-white/10'
           : 'hover:bg-white/10 dark:hover:bg-white/5'}"
       >
-        <Icon
-          class="h-4 w-4 {active
-            ? 'text-gray-900 dark:text-white'
-            : 'text-gray-600 dark:text-gray-300'}"
-        />
         <span
-          class="text-sm font-medium {active
+          class="font-mono text-sm {active
             ? 'text-gray-900 dark:text-white'
             : 'text-gray-600 dark:text-gray-300'}"
         >

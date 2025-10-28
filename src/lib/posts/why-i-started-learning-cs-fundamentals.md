@@ -21,7 +21,7 @@ It stung. A lot. But here’s the thing painful reality checks are actually gift
 
 ## It’s Never Too Late
 
-I know what you’re thinking. “Wait, you’ve been working 4 years already… isn’t it too late to go back?” Nope. Not at all. (At least science says)
+I know what you’re thinking. “Wait, you’ve been working 4 years already… isn’t it too late to go back?” Nope. Not at all (at least science says).
 
 1. [**Neuroplasticity**](https://solportal.ibe-unesco.org/articles/neuroplasticity-how-the-brain-changes-with-learning/):
    Your brain isn’t a fixed. It’s more like a smartphone with constant software updates. Neuroplasticity is the brain’s ability to reorganize itself by forming new neural connections throughout life. This means that learning new skills can physically change your brain for the better. So, yes, you can teach an old brain new tricks!

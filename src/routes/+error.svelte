@@ -19,15 +19,12 @@
   });
 </script>
 
-<div
-  class="flex min-h-screen items-center justify-center bg-black p-8 font-sans text-white"
->
+<div class="flex p-8 font-sans text-foreground">
   <div class="w-full max-w-4xl space-y-8">
     <div class="mb-12 text-8xl font-light">:(</div>
     <h1 class="mb-12 text-2xl font-light">
-      Your device ran into a problem and needs to restart. <br />
-      We're just collecting some error info, and then you can <br />
-      restart.
+      Your device ran into a problem and needs to restart. We're just collecting
+      some error info, and then you can restart.
     </h1>
     <div class="mb-12 text-2xl font-light">
       {#if progress < 100}

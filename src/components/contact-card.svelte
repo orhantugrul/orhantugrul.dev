@@ -19,7 +19,7 @@
   bind:this={card}
   role="button"
   tabindex="0"
-  class="group relative overflow-hidden rounded-2xl border border-outline bg-solitude p-8 transition-all duration-300 dark:bg-raisin"
+  class="group relative overflow-hidden rounded-xl bg-card p-10 transition-all duration-300"
   onmousemove={handleMouseMove}
 >
   <div
@@ -32,36 +32,37 @@
       );
     "
   ></div>
-
   <div class="relative z-10">
-    <div class="mb-4 flex items-center gap-3">
-      <div class="flex h-3 w-3 items-center justify-center">
-        <div class="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+    <div class="mb-6 flex items-center gap-2.5">
+      <div class="relative flex h-2.5 w-2.5 items-center justify-center">
+        <div
+          class="absolute h-full w-full animate-ping rounded-full bg-green-500/40 opacity-75"
+        ></div>
+        <div class="relative h-1.5 w-1.5 rounded-full bg-green-500"></div>
       </div>
-      <span class="text-sm font-medium text-gray">Available for work</span>
+      <span class="text-sm font-medium tracking-wide text-muted-foreground">
+        Available for work
+      </span>
     </div>
-
-    <h3 class="mb-6 text-xl font-semibold text-black dark:text-white">
+    <h3 class="mb-6 text-xl font-semibold text-foreground">
       Let's build something amazing together
     </h3>
-
-    <div class="flex flex-col gap-3 sm:flex-row">
+    <div class="flex flex-row gap-2.5">
       <a
         href="mailto:hello@orhantugrul.dev"
-        class="inline-flex items-center justify-center gap-2 rounded-xl border border-outline bg-white px-6 py-3 text-sm font-medium text-black transition-all duration-200 hover:bg-black hover:text-white dark:bg-raisin dark:text-smoke dark:hover:bg-smoke dark:hover:text-black"
+        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground transition-all duration-200 hover:border-accent-foreground/20 hover:bg-accent"
       >
         <Mail class="h-4 w-4" />
-        Email me
+        <span>Email me</span>
       </a>
-
       <a
         href="https://cal.com/orhantugrul/chitchat"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-medium text-white transition-all duration-200 hover:bg-gray dark:bg-smoke dark:text-black dark:hover:bg-white"
+        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground transition-all duration-200 hover:border-accent-foreground/20 hover:bg-accent"
       >
-        <Calendar class="h-4 w-4" />
-        Book a call
+        <Calendar class="h-4 w-4 " />
+        <span>Book a call</span>
       </a>
     </div>
   </div>

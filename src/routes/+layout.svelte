@@ -62,4 +62,6 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 </svelte:head>
 
-{@render children?.()}
+<main class="mx-auto min-h-screen max-w-2xl px-6 pt-24 pb-16">
+  {@render children?.()}
+</main>

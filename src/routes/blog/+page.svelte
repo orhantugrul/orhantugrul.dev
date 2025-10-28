@@ -40,7 +40,7 @@
       </div>
       <div class="flex flex-col">
         {#each posts as post, index}
-          <a href={`/blog/${post.slug}`} class="group/button mx-4 gap-4 py-3">
+          <a href={`/blog/${post.slug}`} class="group/button mx-8 py-2">
             <div class="flex gap-2 font-mono">
               <span class="text-sm text-muted-foreground">
                 {index === posts!.length - 1 ? "└──" : "├──"}

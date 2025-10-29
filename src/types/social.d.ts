@@ -1,4 +1,4 @@
-export interface Social {
+export type Social = {
   title: string;
   href: string;
-}
+};

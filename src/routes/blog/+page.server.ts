@@ -1,7 +1,7 @@
-import type { Post } from "$types/post";
+import type { Metadata, Post } from "$types/post";
 
-type Modules = Record<string, () => Promise<{ metadata: Omit<Post, "slug"> }>>;
-type ModuleEntry = [string, () => Promise<{ metadata: Omit<Post, "slug"> }>];
+type Modules = Record<string, () => Promise<{ metadata: Metadata }>>;
+type ModuleEntry = [string, () => Promise<{ metadata: Metadata }>];
 
 export async function load() {
   const modules = import.meta.glob("$lib/posts/*.md") as Modules;

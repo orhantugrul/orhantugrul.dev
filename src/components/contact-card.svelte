@@ -47,7 +47,7 @@
     <h3 class="mb-6 text-xl font-semibold text-foreground">
       Let's build something amazing together
     </h3>
-    <div class="flex flex-row gap-2.5">
+    <div class="flex flex-col gap-2.5 sm:flex-row">
       <a
         href="mailto:hello@orhantugrul.dev"
         class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground transition-all duration-200 hover:border-accent-foreground/20 hover:bg-accent"

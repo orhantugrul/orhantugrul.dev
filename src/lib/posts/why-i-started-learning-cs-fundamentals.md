@@ -7,7 +7,7 @@ tags: ["unemployment-journey", "career-growth"]
 
 # Why I Started Learning CS Fundamentals After 4+ Years Experience
 
-![Person sits alone](https://images.unsplash.com/photo-1618157119138-3ae9fa165fc2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170)
+![Green pine tree with light](https://images.unsplash.com/photo-1618157119138-3ae9fa165fc2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170)
 
 So there I was… 4+ years grinding in tech, thinking I had it all figured out. Then, bam! Unemployment hits like a plot twist in a Netflix series. Not exactly what I planned for my 30s (or late 20s if we’re being honest).
 

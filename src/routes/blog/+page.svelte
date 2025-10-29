@@ -47,16 +47,18 @@
               </span>
               <div class="flex min-w-0 flex-col group-hover/button:bg-muted">
                 <div class="flex items-center gap-2">
-                  <h3 class="text-sm font-medium text-foreground">
+                  <h3
+                    class="truncate text-xs font-medium text-foreground sm:text-sm"
+                  >
                     {post.slug}.md
+                    <span class="font-normal text-muted-foreground sm:text-xs">
+                      ({new Date(post.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      })})
+                    </span>
                   </h3>
-                  <span class="text-xs font-normal text-muted-foreground">
-                    ({new Date(post.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "2-digit",
-                    })})
-                  </span>
                 </div>
                 <p
                   class="truncate text-sm leading-relaxed text-muted-foreground"

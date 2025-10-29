@@ -20,7 +20,6 @@
       );
     };
 
-    updateColorScheme();
     preferredDarkSchema.addEventListener("change", updateColorScheme);
     return () => {
       preferredDarkSchema.removeEventListener("change", updateColorScheme);
@@ -46,12 +45,12 @@
   <meta
     name="theme-color"
     media="(prefers-color-scheme: light)"
-    content="hsl(0, 0%, 100%)"
+    content="oklch(1 0 0)"
   />
   <meta
     name="theme-color"
     media="(prefers-color-scheme: dark)"
-    content="hsl(220, 7%, 9%)"
+    content="oklch(0.1448 0 0)"
   />
   <meta property="og:type" content="website" />
   <meta
@@ -60,6 +59,11 @@
   />
   <meta property="og:locale" content="en_US" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <script>
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
 </svelte:head>
 
 <main class="mx-auto min-h-screen max-w-2xl px-6 pt-24 pb-16">

@@ -21,7 +21,18 @@
     <span>Back</span>
   </a>
 </header>
-<section class="mb-24">
+<section class="mb-12">
+  <div class="mb-6 flex items-center gap-3 text-sm text-muted-foreground">
+    <time dateTime={data.post.metadata.date}>
+      {new Date(data.post.metadata.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      })}
+    </time>
+    <span>·</span>
+    <span>{data.post.metadata.readingTime} min read</span>
+  </div>
   <article class="prose max-w-none lg:prose-lg dark:prose-invert">
     <data.post.content />
   </article>

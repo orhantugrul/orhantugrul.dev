@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { resolve } from "$app/paths";
   import Footer from "$components/footer.svelte";
-  import NavigationIsland from "$components/navigation-island.svelte";
+  import Navigation from "$components/navigation.svelte";
   import type { Post } from "$types/post";
   import type { PageProps } from "./$types";
 
@@ -16,7 +17,7 @@
   );
 </script>
 
-<NavigationIsland />
+<Navigation />
 <header class="mb-16">
   <h2
     class="mb-2 font-mono text-sm font-semibold tracking-wide text-muted-foreground"
@@ -28,7 +29,7 @@
   </h1>
 </header>
 <section class="mb-20">
-  {#each years as year, index}
+  {#each years as year, index (year)}
     {@const posts = postsByYears[year]}
     <div class="flex flex-col gap-3">
       <div
@@ -39,8 +40,11 @@
         <span class="text-xs">({posts!.length} posts)</span>
       </div>
       <div class="flex flex-col">
-        {#each posts as post, index}
-          <a href={`/blog/${post.slug}`} class="group/button mx-8 py-2">
+        {#each posts as { slug, description, date }, index (slug)}
+          <a
+            href={resolve("/blog/[slug]", { slug })}
+            class="group/button mx-8 py-2"
+          >
             <div class="flex gap-2 font-mono">
               <span class="text-sm text-muted-foreground">
                 {index === posts!.length - 1 ? "└──" : "├──"}
@@ -50,9 +54,9 @@
                   <h3
                     class="truncate text-xs font-medium text-foreground sm:text-sm"
                   >
-                    {post.slug}.md
+                    {slug}.md
                     <span class="font-normal text-muted-foreground sm:text-xs">
-                      ({new Date(post.date).toLocaleDateString("en-US", {
+                      ({new Date(date).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "2-digit",
@@ -63,7 +67,7 @@
                 <p
                   class="truncate text-sm leading-relaxed text-muted-foreground"
                 >
-                  {post.description}
+                  {description}
                 </p>
               </div>
             </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { resolve } from "$app/paths";
+
   let progress = $state(0);
 
   $effect(() => {
@@ -30,7 +32,7 @@
       {#if progress < 100}
         <p>{progress}% complete</p>
       {:else}
-        <a href="/" class="flex items-center gap-3 text-blue-400">
+        <a href={resolve("/")} class="flex items-center gap-3 text-blue-400">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 50"

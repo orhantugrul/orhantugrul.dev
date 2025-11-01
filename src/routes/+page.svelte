@@ -1,7 +1,7 @@
 <script lang="ts">
   import ContactCard from "$components/contact-card.svelte";
   import Footer from "$components/footer.svelte";
-  import NavigationIsland from "$components/navigation-island.svelte";
+  import Navigation from "$components/navigation.svelte";
   import type { Experience } from "$types/experience";
 
   const title = "Software Crafter | Orhan Tugrul Sahin";
@@ -74,7 +74,7 @@
   <meta name="description" content={description} />
 </svelte:head>
 
-<NavigationIsland />
+<Navigation />
 <header class="mb-16">
   <h2
     class="mb-2 font-mono text-sm font-semibold tracking-wide text-muted-foreground"
@@ -124,8 +124,7 @@
     <div
       class="absolute top-2 bottom-2 left-0 w-px bg-gradient-to-b from-muted-foreground/20 via-muted-foreground/20 to-transparent"
     ></div>
-
-    {#each experiences as { title, description, technologies }, index}
+    {#each experiences as { title, description, technologies } (title)}
       <article class="relative pb-16 pl-8 last:pb-0">
         <div
           class="absolute top-[6px] left-[-4px] h-[9px] w-[9px] rounded-full border-2 border-muted-foreground/30 bg-background"
@@ -139,7 +138,6 @@
         <p class="mb-5 max-w-xl text-[15px] leading-[1.65] text-foreground">
           {description}
         </p>
-
         <p class="text-xs font-normal text-muted-foreground">
           {technologies.join(" · ")}
         </p>

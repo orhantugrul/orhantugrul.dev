@@ -47,7 +47,7 @@
     Istanbul, {localTime}
   </p>
   <div class="flex flex-wrap gap-4">
-    {#each socials as { title, href }}
+    {#each socials as { title, href } (href)}
       <a
         class="flex items-center gap-2 text-muted-foreground hover:bg-muted"
         target="_blank"

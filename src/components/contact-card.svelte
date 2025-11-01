@@ -50,7 +50,7 @@
     <div class="flex flex-col gap-2.5 sm:flex-row">
       <a
         href="mailto:hello@orhantugrul.dev"
-        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground transition-all duration-200 hover:border-accent-foreground/20 hover:bg-accent"
+        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground hover:border-accent-foreground/20 hover:bg-accent"
       >
         <Mail class="h-4 w-4" />
         <span>Email me</span>
@@ -59,7 +59,7 @@
         href="https://cal.com/orhantugrul/chitchat"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground transition-all duration-200 hover:border-accent-foreground/20 hover:bg-accent"
+        class="flex items-center gap-2.5 rounded-lg border border-border bg-card px-5 py-2.5 font-medium text-foreground hover:border-accent-foreground/20 hover:bg-accent"
       >
         <Calendar class="h-4 w-4 " />
         <span>Book a call</span>

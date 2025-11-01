@@ -2,6 +2,7 @@
   import Footer from "$components/footer.svelte";
   import { ArrowLeft } from "@lucide/svelte";
   import type { PageProps } from "./$types";
+  import { resolve } from "$app/paths";
 
   const { data }: PageProps = $props();
 </script>
@@ -14,7 +15,7 @@
 
 <header class="mb-12">
   <a
-    href="/blog"
+    href={resolve("/blog")}
     class="inline-flex items-center gap-2 font-mono text-sm text-muted-foreground hover:bg-muted"
   >
     <ArrowLeft class="h-4 w-4" />

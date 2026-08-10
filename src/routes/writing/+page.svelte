@@ -32,7 +32,7 @@
   <meta property="og:description" content={description} />
 </svelte:head>
 
-<div class="stagger">
+<div>
   <h1 class="text-[1.5rem] font-semibold md:text-[1.75rem]">Things I wrote</h1>
   <p class="mt-3 text-fg-muted">{description}</p>
 

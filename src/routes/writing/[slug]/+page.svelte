@@ -23,7 +23,7 @@
   <meta property="article:published_time" content={metadata.date} />
 </svelte:head>
 
-<div class="stagger">
+<div>
   <a href={resolve("/writing")} class="text-meta text-fg-muted link">
     ← Writing
   </a>

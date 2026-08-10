@@ -1,6 +1,6 @@
 <script lang="ts">
-  import dark from "$lib/assets/kurye-dark.png";
-  import light from "$lib/assets/kurye.png";
+  import dark from "$lib/assets/kurye-dark.webp";
+  import light from "$lib/assets/kurye.webp";
 </script>
 
 <!--

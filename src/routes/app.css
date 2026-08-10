@@ -168,42 +168,6 @@
   }
 }
 
-/* One motion: a 6px settle on first paint, staggered across top-level blocks. */
-@keyframes enter {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .stagger > * {
-    animation: enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  .stagger > *:nth-child(1) {
-    animation-delay: 0ms;
-  }
-  .stagger > *:nth-child(2) {
-    animation-delay: 60ms;
-  }
-  .stagger > *:nth-child(3) {
-    animation-delay: 120ms;
-  }
-  .stagger > *:nth-child(4) {
-    animation-delay: 180ms;
-  }
-  .stagger > *:nth-child(5) {
-    animation-delay: 240ms;
-  }
-  .stagger > *:nth-child(n + 6) {
-    animation-delay: 300ms;
-  }
-}
-
 /* Pull the typography plugin onto our tokens and scale. */
 .prose {
   --tw-prose-body: var(--fg);
@@ -251,6 +215,12 @@
 
 .prose :where(a):hover {
   text-decoration-color: var(--accent);
+}
+
+/* The token existed but was never applied, so code in posts fell back to the
+   system mono. This is what actually puts Geist Mono on the page. */
+.prose :where(code, pre) {
+  font-family: var(--font-mono);
 }
 
 .prose :where(code)::before,

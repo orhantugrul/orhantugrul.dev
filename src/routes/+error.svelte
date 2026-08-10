@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex" />
 </svelte:head>
 
-<div class="stagger">
+<div>
   <h1 class="text-[1.5rem] font-semibold md:text-[1.75rem]">
     {page.status} — {page.error?.message ?? "Something went wrong"}
   </h1>

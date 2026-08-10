@@ -25,7 +25,7 @@
 
 <!-- Off-site and mailto hrefs throughout; nothing here for resolve() to check. -->
 <!-- eslint-disable svelte/no-navigation-without-resolve -->
-<div class="stagger">
+<div>
   <div>
     <h1 class="text-[1.5rem] leading-[1.4] font-semibold md:text-[1.75rem]">
       Hi. I'm Orhan, a software engineer building courier operations software at

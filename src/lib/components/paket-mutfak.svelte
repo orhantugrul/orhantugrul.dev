@@ -1,5 +1,5 @@
 <script lang="ts">
-  import logo from "$lib/assets/paketmutfak.png";
+  import logo from "$lib/assets/paketmutfak.webp";
 </script>
 
 <!--

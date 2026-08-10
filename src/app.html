@@ -3,12 +3,40 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#f9f7f5"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#100f0f"
+    />
+    <script>
+      // Runs before first paint so the theme never flashes. Also keeps
+      // following the OS for as long as no explicit choice is stored.
+      (function () {
+        var key = "theme";
+        try {
+          var media = window.matchMedia("(prefers-color-scheme: dark)");
+          var stored = localStorage.getItem(key);
+          document.documentElement.classList.toggle(
+            "dark",
+            stored ? stored === "dark" : media.matches
+          );
+          media.addEventListener("change", function (event) {
+            if (localStorage.getItem(key)) return;
+            document.documentElement.classList.toggle("dark", event.matches);
+          });
+        } catch (error) {
+          // Storage blocked; fall back to the light default.
+        }
+      })();
+    </script>
     %sveltekit.head%
   </head>
-  <body
-    data-sveltekit-preload-data="hover"
-    class="bg-background font-sans antialiased"
-  >
+  <body data-sveltekit-preload-data="hover">
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

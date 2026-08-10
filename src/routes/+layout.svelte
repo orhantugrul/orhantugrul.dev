@@ -1,71 +1,26 @@
 <script lang="ts">
-  import appleTouchIcon from "$assets/apple-touch-icon.png";
-  import favicon16x16 from "$assets/favicon-16x16.png";
-  import favicon32x32 from "$assets/favicon-32x32.png";
-  import favicon from "$assets/favicon.ico";
-  import { onMount } from "svelte";
-  import "../app.css";
+  import "./app.css";
+  import favicon from "$lib/assets/favicon.svg";
+  import SiteFooter from "$lib/components/site-footer.svelte";
+  import SiteNav from "$lib/components/site-nav.svelte";
+  import { site } from "$lib/data";
 
   let { children } = $props();
-
-  onMount(() => {
-    const preferredDarkSchema = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
-
-    const updateColorScheme = () => {
-      document.documentElement.classList.toggle(
-        "dark",
-        preferredDarkSchema.matches
-      );
-    };
-
-    preferredDarkSchema.addEventListener("change", updateColorScheme);
-    return () => {
-      preferredDarkSchema.removeEventListener("change", updateColorScheme);
-    };
-  });
 </script>
 
 <svelte:head>
   <link rel="icon" href={favicon} />
-  <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
-  <link rel="icon" type="image/png" sizes="32x32" href={favicon32x32} />
-  <link rel="icon" type="image/png" sizes="16x16" href={favicon16x16} />
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="author" content="Orhan Tugrul Sahin" />
-  <meta name="keywords" content="Software Crafter, Software Developer" />
-  <meta
-    name="robots"
-    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-  />
-  <meta name="googlebot" content="index, follow" />
-  <meta name="bingbot" content="index, follow" />
-  <meta name="language" content="English" />
-  <meta
-    name="theme-color"
-    media="(prefers-color-scheme: light)"
-    content="oklch(1 0 0)"
-  />
-  <meta
-    name="theme-color"
-    media="(prefers-color-scheme: dark)"
-    content="oklch(0.1448 0 0)"
-  />
-  <meta property="og:type" content="website" />
-  <meta
-    property="og:site_name"
-    content="Orhan Tugrul Sahin - Software Crafter"
-  />
-  <meta property="og:locale" content="en_US" />
+  <meta name="author" content={site.name} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <script>
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.documentElement.classList.add("dark");
-    }
-  </script>
+  <meta property="og:site_name" content="{site.name} — {site.role}" />
+  <meta property="og:locale" content="en_US" />
 </svelte:head>
 
-<main class="mx-auto min-h-screen max-w-2xl px-6 pt-24 pb-16">
-  {@render children?.()}
-</main>
+<div class="flex min-h-svh flex-col">
+  <SiteNav />
+  <main class="shell flex-1 pt-16 pb-24 md:pt-20">
+    {@render children()}
+  </main>
+  <SiteFooter />
+</div>

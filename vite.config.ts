@@ -47,6 +47,9 @@ export default defineConfig({
           filename.split(/[/\\]/).includes("node_modules") ? undefined : true,
       },
       adapter: adapter(),
+      // `entries` in the [slug] route is the source of truth for what gets
+      // prerendered, so an uncrawled route just means nothing is published.
+      prerender: { handleUnseenRoutes: "warn" },
       preprocess: [
         mdsvex({
           extensions: [".svx", ".md"],

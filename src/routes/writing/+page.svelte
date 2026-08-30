@@ -1,27 +1,19 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
-  import Dot from "$lib/components/dot.svelte";
-  import { site } from "$lib/data";
-  import { formatDate } from "$lib/posts";
-  import type { Post } from "$lib/types";
-  import type { PageProps } from "./$types";
+  import type { Writing } from "$lib/types";
+  import { formatDate, writings } from "$lib/writings";
 
-  let { data }: PageProps = $props();
-
-  const title = `Writing — ${site.name}`;
+  const title = "Writing — Orhan Tugrul Sahin";
   const description = "Notes to my future self, published by accident.";
 
-  // Posts arrive newest first, so same-year posts are already contiguous.
-  let grouped = $derived.by(() => {
-    const years: [number, Post[]][] = [];
-    for (const post of data.posts) {
-      const year = new Date(post.date).getFullYear();
-      const current = years.at(-1);
-      if (current?.[0] === year) current[1].push(post);
-      else years.push([year, [post]]);
-    }
-    return years;
-  });
+  // Writings arrive newest first, so same-year ones are already contiguous.
+  const grouped: [number, Writing[]][] = [];
+  for (const writing of writings) {
+    const year = new Date(writing.date).getFullYear();
+    const current = grouped.at(-1);
+    if (current?.[0] === year) current[1].push(writing);
+    else grouped.push([year, [writing]]);
+  }
 </script>
 
 <svelte:head>
@@ -33,26 +25,36 @@
 </svelte:head>
 
 <div>
-  <h1 class="text-[1.5rem] font-semibold md:text-[1.75rem]">Things I wrote</h1>
-  <p class="mt-3 text-fg-muted">{description}</p>
+  <h1 class="font-display text-[1.5rem] font-semibold md:text-[1.75rem]">
+    Things I wrote
+  </h1>
+  <p class="mt-3 text-muted-foreground">{description}</p>
 
-  {#each grouped as [year, posts] (year)}
+  {#each grouped as [year, yearly] (year)}
     <section class="mt-14">
-      <h2 class="mb-6 label text-fg-muted">{year}</h2>
+      <h2
+        class="mb-6 font-display text-label font-medium text-muted-foreground uppercase tabular-nums"
+      >
+        {year}
+      </h2>
       <ul class="space-y-8">
-        {#each posts as { slug, title: postTitle, description: summary, date, readingTime } (slug)}
+        {#each yearly as { slug, title: writingTitle, description: summary, date, readingTime } (slug)}
           <li>
             <a
               href={resolve("/writing/[slug]", { slug })}
-              class="font-medium link">{postTitle}</a
+              class="font-medium underline decoration-border-strong decoration-1 underline-offset-3 transition-colors duration-150 hover:decoration-primary"
             >
-            <p class="mt-1 text-fg-muted">{summary}</p>
+              {writingTitle}
+            </a>
+            <p class="mt-1 text-muted-foreground">{summary}</p>
             <p
-              class="mt-1 flex items-center gap-2 text-meta text-fg-muted
-                     tabular-nums"
+              class="mt-1 flex items-center gap-2 text-meta text-muted-foreground tabular-nums"
             >
               <time datetime={date}>{formatDate(date)}</time>
-              <Dot />
+              <span
+                class="inline-block size-0.75 shrink-0 rounded-full bg-muted-foreground/50"
+                aria-hidden="true"
+              ></span>
               <span>{readingTime} min read</span>
             </p>
           </li>
@@ -61,7 +63,7 @@
     </section>
   {/each}
 
-  {#if data.posts.length === 0}
-    <p class="mt-8 text-fg-muted">Nothing published yet.</p>
+  {#if writings.length === 0}
+    <p class="mt-8 text-muted-foreground">Nothing published yet.</p>
   {/if}
 </div>

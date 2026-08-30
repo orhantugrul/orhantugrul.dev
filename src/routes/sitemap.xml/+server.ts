@@ -1,16 +1,15 @@
-import { site } from "$lib/data";
-import { listPosts } from "$lib/posts";
+import { writings } from "$lib/writings";
 
 export const prerender = true;
 
 export async function GET() {
-  const posts = await listPosts();
+  const origin = "https://orhantugrul.dev";
 
   const entries = [
-    { loc: site.url },
-    { loc: `${site.url}/writing` },
-    ...posts.map(({ slug, date }) => ({
-      loc: `${site.url}/writing/${slug}`,
+    { loc: origin },
+    { loc: `${origin}/writing` },
+    ...writings.map(({ slug, date }) => ({
+      loc: `${origin}/writing/${slug}`,
       lastmod: date,
     })),
   ];
@@ -25,9 +24,9 @@ export async function GET() {
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls}
-</urlset>`,
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${urls}
+    </urlset>`,
     { headers: { "content-type": "application/xml" } }
   );
 }

@@ -1,18 +1,19 @@
 <script lang="ts">
-  import { toggleTheme } from "$lib/theme";
+  const STORAGE_KEY = "theme";
+
+  function toggleTheme() {
+    const dark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem(STORAGE_KEY, dark ? "dark" : "light");
+  }
 </script>
 
-<!--
-  Both icons ship in the markup and CSS picks one off the `.dark` class, which
-  the inline script sets before paint. No state, no hydration mismatch.
--->
 <button
   type="button"
   onclick={toggleTheme}
   aria-label="Toggle color scheme"
   title="Toggle color scheme"
   class="flex size-9 cursor-pointer items-center justify-center rounded-full
-         text-fg-muted transition duration-150 hover:bg-bg-subtle hover:text-fg
+         text-muted-foreground transition duration-150 hover:bg-muted hover:text-foreground
          active:scale-90"
 >
   <svg

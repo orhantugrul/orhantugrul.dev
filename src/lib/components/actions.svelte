@@ -1,24 +1,30 @@
 <script lang="ts">
-  import { actions } from "$lib/data";
+  import type { Link } from "$lib/types";
   import Arrow from "./icons/arrow.svelte";
+
+  const actions: Link[] = [
+    {
+      label: "Chit chat with me",
+      href: "https://cal.com/orhantugrul/chitchat",
+      primary: true,
+    },
+    { label: "Email me", href: "mailto:hello@orhantugrul.dev" },
+  ];
 </script>
 
-<!-- Plain inline links, the way the dead-simple sites do it. No chrome. -->
-<!-- Both actions are an off-site booking page or a mailto, so there is no
-     internal route for resolve() to check. -->
-<!-- eslint-disable svelte/no-navigation-without-resolve -->
 <div class="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-  {#each actions as { label, href, external, primary } (href)}
+  {#each actions as { label, href, primary } (href)}
     <a
       {href}
-      target={external ? "_blank" : null}
-      rel={external ? "noopener noreferrer" : null}
-      class="inline-flex items-baseline gap-1.5 link {primary
-        ? 'font-medium text-accent'
-        : ''}"
+      target="_blank"
+      rel="external noopener noreferrer"
+      class={[
+        "inline-flex items-baseline gap-1.5 underline decoration-border-strong decoration-1 underline-offset-3 transition-colors duration-150 hover:decoration-primary",
+        primary && "font-medium text-primary",
+      ]}
     >
       {label}
-      <Arrow class="text-fg-muted" />
+      <Arrow class="text-muted-foreground" />
     </a>
   {/each}
 </div>

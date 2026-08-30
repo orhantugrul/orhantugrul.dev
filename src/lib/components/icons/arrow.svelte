@@ -3,7 +3,7 @@
 </script>
 
 <svg
-  class="inline-block {className}"
+  class={["inline-block", className]}
   width="10"
   height="10"
   viewBox="0 0 10 10"

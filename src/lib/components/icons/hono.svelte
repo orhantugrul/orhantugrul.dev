@@ -5,7 +5,7 @@
 </script>
 
 <svg
-  class="shrink-0 {className}"
+  class={["shrink-0", className]}
   viewBox="0 0 24 24"
   fill="currentColor"
   aria-hidden="true"

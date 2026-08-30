@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  class="bg-background scheme-light motion-safe:scroll-smooth dark:scheme-dark"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,7 +39,10 @@
     </script>
     %sveltekit.head%
   </head>
-  <body data-sveltekit-preload-data="hover">
+  <body
+    data-sveltekit-preload-data="hover"
+    class="bg-background font-sans text-body text-foreground antialiased selection:bg-primary selection:text-background **:focus-visible:outline-2 **:focus-visible:outline-offset-3 **:focus-visible:outline-primary **:motion-reduce:animate-none **:motion-reduce:transition-none"
+  >
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

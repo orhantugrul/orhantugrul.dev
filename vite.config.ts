@@ -1,3 +1,4 @@
+import { execSync } from "node:child_process";
 import { toString } from "mdast-util-to-string";
 import { mdsvex } from "mdsvex";
 import tailwindcss from "@tailwindcss/vite";
@@ -37,7 +38,19 @@ function readingTime() {
   };
 }
 
+/** Cloudflare's build hands over the commit; a local build asks git. */
+function commit(): string {
+  if (process.env.WORKERS_CI_COMMIT_SHA)
+    return process.env.WORKERS_CI_COMMIT_SHA;
+  try {
+    return execSync("git rev-parse HEAD").toString().trim();
+  } catch {
+    return "unknown";
+  }
+}
+
 export default defineConfig({
+  define: { __COMMIT__: JSON.stringify(commit()) },
   plugins: [
     tailwindcss(),
     sveltekit({
@@ -49,7 +62,7 @@ export default defineConfig({
       adapter: adapter(),
       // `entries` in the [slug] route is the source of truth for what gets
       // prerendered, so an uncrawled route just means nothing is published.
-      prerender: { handleUnseenRoutes: "warn" },
+      prerender: { handleUnseenRoutes: "ignore" },
       preprocess: [
         mdsvex({
           extensions: [".svx", ".md"],

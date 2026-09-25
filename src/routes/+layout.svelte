@@ -2,7 +2,6 @@
   import "./app.css";
   import favicon from "$lib/assets/favicon.svg";
   import Footer from "$lib/components/footer.svelte";
-  import Navigation from "$lib/components/navigation.svelte";
 
   const { children } = $props();
 </script>
@@ -19,11 +18,10 @@
   <meta property="og:locale" content="en_US" />
 </svelte:head>
 
-<div class="flex min-h-svh flex-col">
-  <Navigation />
-  <main
-    class="mx-auto w-full max-w-[40rem] flex-1 px-6 pt-16 pb-24 md:px-10 md:pt-20"
-  >
+<div
+  class="relative mx-auto flex min-h-svh max-w-185 flex-col border-x border-rule"
+>
+  <main class="flex flex-1 flex-col *:last:flex-1">
     {@render children()}
   </main>
   <Footer />

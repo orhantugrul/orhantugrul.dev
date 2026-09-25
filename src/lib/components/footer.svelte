@@ -1,34 +1,33 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import ThemeToggle from "./theme-toggle.svelte";
+  import NowPlaying from "./now-playing.svelte";
 
-  function currentTime() {
-    return new Date().toLocaleTimeString("en-GB", {
-      timeZone: "Europe/Istanbul",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
+  // The files a crawler or a model reads instead of the page.
+  const files = ["sitemap.xml", "robots.txt", "llms.txt"];
 
-  let time = $state("");
-  const year = new Date().getFullYear();
-
-  onMount(() => {
-    time = currentTime();
-    const interval = setInterval(() => (time = currentTime()), 30_000);
-    return () => clearInterval(interval);
-  });
+  const commit = __COMMIT__;
+  const commitUrl = `https://github.com/orhantugrul/orhantugrul.dev/commit/${commit}`;
 </script>
 
-<footer class="mx-auto w-full max-w-[40rem] px-6 pb-12 md:px-10">
-  <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-    <p class="text-meta text-muted-foreground tabular-nums">
-      Istanbul
-      {#if time}<span>{time}</span>{/if}
-    </p>
-    <div class="flex items-center gap-4">
-      <ThemeToggle />
-      <p class="text-meta text-muted-foreground tabular-nums">{year}</p>
-    </div>
+<footer class="flex flex-col gap-6.5 px-8 pt-8 pb-5.5">
+  <NowPlaying />
+  <div
+    class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 font-mono text-[11.5px] tracking-[0.06em] text-faint"
+  >
+    <nav aria-label="Site files" class="flex flex-wrap gap-x-4.5 gap-y-1">
+      {#each files as file (file)}
+        <a
+          href="/{file}"
+          rel="external"
+          class="link-hover hover:text-foreground">{file}</a
+        >
+      {/each}
+    </nav>
+    <a
+      href={commitUrl}
+      target="_blank"
+      rel="external noopener noreferrer"
+      class="link-hover tabular-nums hover:text-foreground"
+      >build {commit.slice(0, 7)}</a
+    >
   </div>
 </footer>

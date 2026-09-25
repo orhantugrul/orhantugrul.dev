@@ -1,34 +1,33 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
+  import ThemeToggle from "./theme-toggle.svelte";
 
   const pages = $derived([
     {
-      label: "Home",
+      label: "home",
       href: resolve("/"),
       active: page.route.id === "/",
     },
     {
-      label: "Writing",
+      label: "writing",
       href: resolve("/writing"),
       active: page.route.id?.startsWith("/writing") ?? false,
     },
   ]);
 </script>
 
-<nav class="mx-auto flex w-full max-w-160 justify-end gap-6 px-6 pt-8 md:px-10">
-  {#each pages as { label, href, active } (href)}
-    <a
-      {href}
-      aria-current={active ? "page" : null}
-      class={[
-        "text-meta transition-colors duration-150",
-        active
-          ? "text-foreground"
-          : "text-muted-foreground hover:text-foreground",
-      ]}
-    >
-      {label}
-    </a>
-  {/each}
-</nav>
+<span class="flex items-center gap-4">
+  <nav class="flex gap-4.5">
+    {#each pages as { label, href, active } (href)}
+      <a
+        {href}
+        aria-current={active ? "page" : null}
+        class="link-hover font-mono text-[12px] text-dim hover:text-foreground aria-[current=page]:text-foreground"
+      >
+        {label}
+      </a>
+    {/each}
+  </nav>
+  <ThemeToggle />
+</span>

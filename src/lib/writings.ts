@@ -36,11 +36,3 @@ export const writings: Writing[] = Object.entries(frontmatter)
 export function findWriting(slug: string) {
   return content.get(slug);
 }
-
-export function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  });
-}

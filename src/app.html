@@ -1,39 +1,40 @@
 <!doctype html>
-<html
-  lang="en"
-  class="bg-background scheme-light motion-safe:scroll-smooth dark:scheme-dark"
->
+<html lang="en" class="scheme-dark motion-safe:scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
-      content="#f9f7f5"
+      content="#f6f6f4"
     />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
-      content="#100f0f"
+      content="#0b0c0e"
     />
     <script>
-      // Runs before first paint so the theme never flashes. Also keeps
-      // following the OS for as long as no explicit choice is stored.
+      // Runs before first paint so the theme never flashes. Dark is the
+      // default; `.light` is the override. Follows the OS for as long as
+      // no explicit choice is stored.
       (function () {
         var key = "theme";
         try {
-          var media = window.matchMedia("(prefers-color-scheme: dark)");
+          var media = window.matchMedia("(prefers-color-scheme: light)");
           var stored = localStorage.getItem(key);
-          document.documentElement.classList.toggle(
-            "dark",
-            stored ? stored === "dark" : media.matches
-          );
+          function apply(light) {
+            document.documentElement.classList.toggle("light", light);
+            document.documentElement.style.colorScheme = light
+              ? "light"
+              : "dark";
+          }
+          apply(stored ? stored === "light" : media.matches);
           media.addEventListener("change", function (event) {
             if (localStorage.getItem(key)) return;
-            document.documentElement.classList.toggle("dark", event.matches);
+            apply(event.matches);
           });
         } catch (error) {
-          // Storage blocked; fall back to the light default.
+          // Storage blocked; stay on the dark default.
         }
       })();
     </script>
@@ -41,7 +42,7 @@
   </head>
   <body
     data-sveltekit-preload-data="hover"
-    class="bg-background font-sans text-body text-foreground antialiased selection:bg-primary selection:text-background **:focus-visible:outline-2 **:focus-visible:outline-offset-3 **:focus-visible:outline-primary **:motion-reduce:animate-none **:motion-reduce:transition-none"
+    class="antialiased **:motion-reduce:animate-none **:motion-reduce:transition-none"
   >
     <div style="display: contents">%sveltekit.body%</div>
   </body>

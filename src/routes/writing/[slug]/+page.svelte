@@ -1,6 +1,6 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
-  import { formatDate } from "$lib/writings";
+  import Navigation from "$lib/components/navigation.svelte";
   import type { PageProps } from "./$types";
 
   let { data }: PageProps = $props();
@@ -20,55 +20,29 @@
   <meta property="article:published_time" content={metadata.date} />
 </svelte:head>
 
-<div>
+<header class="flex h-16 shrink-0 items-center justify-end px-8">
+  <Navigation />
+</header>
+
+<article class="border-b border-rule px-8 pt-16 pb-18">
+  <!-- quiet mono back button — never breadcrumb paths -->
   <a
+    class="link-hover mb-6.5 inline-block font-mono text-[12px] text-faint hover:text-foreground"
     href={resolve("/writing")}
-    class="text-meta text-muted-foreground underline decoration-border-strong decoration-1 underline-offset-3 transition-colors duration-150 hover:decoration-primary"
   >
-    ← Writing
+    ← back
   </a>
-  <article class="mt-12">
-    <h1
-      class="font-display text-[1.5rem] leading-[1.3] font-semibold text-balance md:text-[1.75rem]"
-    >
-      {metadata.title}
-    </h1>
-    <p
-      class="mt-3 flex flex-wrap items-center gap-2 text-meta text-muted-foreground tabular-nums"
-    >
-      <time datetime={metadata.date}>{formatDate(metadata.date)}</time>
-      <span
-        class="inline-block size-0.75 shrink-0 rounded-full bg-muted-foreground/50"
-        aria-hidden="true"
-      ></span>
-      <span>{metadata.readingTime} min read</span>
-      {#if metadata.tags?.length}
-        <span
-          class="inline-block size-0.75 shrink-0 rounded-full bg-muted-foreground/50"
-          aria-hidden="true"
-        ></span>
-        <span>{metadata.tags.join(", ")}</span>
-      {/if}
-    </p>
-    <div
-      class="prose mt-12 max-w-none
-             prose-headings:font-display prose-headings:font-semibold
-             prose-headings:tracking-[-0.015em]
-             prose-h2:mt-12 prose-h2:text-xl prose-h3:text-body
-             prose-a:decoration-border-strong prose-a:decoration-1
-             prose-a:underline-offset-3 prose-a:transition-colors
-             prose-a:duration-150 prose-a:hover:decoration-primary
-             prose-code:font-mono prose-code:before:content-none
-             prose-code:after:content-none prose-pre:rounded
-             prose-pre:border prose-pre:border-border
-             prose-pre:text-[0.8125rem] prose-img:rounded-[3px]
-             prose-img:border prose-img:border-border
-             [&_:not(pre)>code]:rounded-[3px] [&_:not(pre)>code]:border
-             [&_:not(pre)>code]:border-border [&_:not(pre)>code]:bg-muted
-             [&_:not(pre)>code]:px-[0.32em] [&_:not(pre)>code]:py-[0.1em]
-             [&_:not(pre)>code]:text-[0.875em]"
-    >
-      <data.content />
-    </div>
-  </article>
-</div>
+  <h1
+    class="max-w-[24ch] text-[27px] leading-[1.3] font-medium tracking-[-0.022em] text-balance"
+  >
+    {metadata.title}
+  </h1>
+  <p class="mt-3.5 font-mono text-[12px] text-faint tabular-nums">
+    <time datetime={metadata.date}>{metadata.date.slice(0, 10)}</time>
+    · {metadata.readingTime} min read
+  </p>
+
+  <div class="prose">
+    <data.content />
+  </div>
+</article>

@@ -1,12 +1,14 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
+  import Navigation from "$lib/components/navigation.svelte";
   import type { Writing } from "$lib/types";
-  import { formatDate, writings } from "$lib/writings";
+  import { writings } from "$lib/writings";
 
   const title = "Writing — Orhan Tugrul Sahin";
-  const description = "Notes to my future self, published by accident.";
+  const description = writings.length
+    ? "Notes to my future self, published by accident."
+    : "A place for notes, ideas, and things worth remembering.";
 
-  // Writings arrive newest first, so same-year ones are already contiguous.
   const grouped: [number, Writing[]][] = [];
   for (const writing of writings) {
     const year = new Date(writing.date).getFullYear();
@@ -14,6 +16,17 @@
     if (current?.[0] === year) current[1].push(writing);
     else grouped.push([year, [writing]]);
   }
+
+  function monthDay(date: string): string {
+    return date.slice(5, 10);
+  }
+
+  /* list rows: date · title · meta */
+  const row =
+    "link-hover grid grid-cols-[7.5em_1fr_auto] items-baseline gap-4.5 py-3.5 opacity-82 hover:opacity-100 max-sm:grid-cols-[1fr_auto]";
+  const rowLabel =
+    "font-mono text-[12px] whitespace-nowrap text-faint tabular-nums max-sm:hidden";
+  const rowMeta = "font-mono text-[11.5px] whitespace-nowrap text-faint";
 </script>
 
 <svelte:head>
@@ -24,46 +37,45 @@
   <meta property="og:description" content={description} />
 </svelte:head>
 
-<div>
-  <h1 class="font-display text-[1.5rem] font-semibold md:text-[1.75rem]">
-    Things I wrote
+<header class="flex h-16 shrink-0 items-center justify-end px-8">
+  <Navigation />
+</header>
+
+<section class="border-b border-rule px-8 pt-10 pb-14">
+  <h1 class="text-[24px] font-medium tracking-[-0.02em]">
+    {writings.length ? "Things I wrote" : "Writing"}
   </h1>
-  <p class="mt-3 text-muted-foreground">{description}</p>
+  <p class="mt-2.5 max-w-[50ch] text-dim">{description}</p>
 
   {#each grouped as [year, yearly] (year)}
-    <section class="mt-14">
-      <h2
-        class="mb-6 font-display text-label font-medium text-muted-foreground uppercase tabular-nums"
-      >
-        {year}
-      </h2>
-      <ul class="space-y-8">
-        {#each yearly as { slug, title: writingTitle, description: summary, date, readingTime } (slug)}
-          <li>
-            <a
-              href={resolve("/writing/[slug]", { slug })}
-              class="font-medium underline decoration-border-strong decoration-1 underline-offset-3 transition-colors duration-150 hover:decoration-primary"
-            >
-              {writingTitle}
-            </a>
-            <p class="mt-1 text-muted-foreground">{summary}</p>
-            <p
-              class="mt-1 flex items-center gap-2 text-meta text-muted-foreground tabular-nums"
-            >
-              <time datetime={date}>{formatDate(date)}</time>
-              <span
-                class="inline-block size-0.75 shrink-0 rounded-full bg-muted-foreground/50"
-                aria-hidden="true"
-              ></span>
-              <span>{readingTime} min read</span>
-            </p>
-          </li>
-        {/each}
-      </ul>
-    </section>
+    <p class="mt-10 mb-1.5 font-mono text-[11px] tracking-[0.14em] text-faint">
+      {year}
+    </p>
+    <ul>
+      {#each yearly as { slug, title: writingTitle, date, readingTime } (slug)}
+        <li class="border-b border-rule last:border-0">
+          <a href={resolve("/writing/[slug]", { slug })} class={row}>
+            <span class={rowLabel}>{monthDay(date)}</span>
+            <span class="font-medium">{writingTitle}</span>
+            <span class={rowMeta}>{readingTime} min</span>
+          </a>
+        </li>
+      {/each}
+    </ul>
   {/each}
 
   {#if writings.length === 0}
-    <p class="mt-8 text-muted-foreground">Nothing published yet.</p>
+    <div class="mt-11 border-t border-rule pt-7">
+      <p class="text-[16px] font-medium tracking-[-0.012em]">
+        Nothing published—yet.
+      </p>
+      <p class="mt-2.5 max-w-[52ch] text-pretty text-dim">
+        I’m collecting thoughts on building products, engineering decisions, and
+        the lessons worth keeping. The first one will arrive here soon.
+      </p>
+      <p class="mt-5 font-mono text-[11px] tracking-[0.04em] text-faint">
+        First note / in progress
+      </p>
+    </div>
   {/if}
-</div>
+</section>

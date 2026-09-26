@@ -204,12 +204,16 @@
       class="w-55 light:hidden"
       src={kuryeDark}
       alt="The Kurye courier app mid-shift: a live delivery map above a sheet showing delivery progress, the queued orders, and the current drop-off."
+      width="739"
+      height="1510"
       loading="lazy"
     />
     <img
       class="hidden w-55 light:block"
       src={kuryeLight}
       alt="The Kurye courier app mid-shift: a live delivery map above a sheet showing delivery progress, the queued orders, and the current drop-off."
+      width="739"
+      height="1510"
       loading="lazy"
     />
 

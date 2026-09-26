@@ -1,3 +1,4 @@
+import { playlists } from "$lib/server/playlists";
 import { writings } from "$lib/writings";
 
 export const prerender = true;
@@ -11,6 +12,11 @@ export async function GET() {
     ...writings.map(({ slug, date }) => ({
       loc: `${origin}/writing/${slug}`,
       lastmod: date,
+    })),
+    { loc: `${origin}/playlists` },
+    ...(await playlists()).map(({ slug, updated }) => ({
+      loc: `${origin}/playlists/${slug}`,
+      lastmod: updated.slice(0, 10),
     })),
   ];
 

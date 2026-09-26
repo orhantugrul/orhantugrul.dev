@@ -1,3 +1,4 @@
+import { playlists } from "$lib/server/playlists";
 import { writings } from "$lib/writings";
 
 export const prerender = true;
@@ -13,6 +14,13 @@ export async function GET() {
     )
     .join("\n");
 
+  const mixes = (await playlists())
+    .map(
+      ({ title, note, url, tracks }) =>
+        `- [${title}](${url}): ${note ? `${note}, ` : ""}${tracks.length} tracks`
+    )
+    .join("\n");
+
   const body = `# Orhan Tugrul Sahin
 
 > Software engineer in Istanbul building thoughtful products and dependable systems.
@@ -23,12 +31,15 @@ Orhan builds software at Paket Mutfak, from the app a courier holds at the door 
 
 ${list || "- Nothing published yet."}
 
+## Playlists
+
+${mixes || "- None yet."}
+
 ## Elsewhere
 
 - [GitHub](https://github.com/orhantugrul)
 - [X](https://x.com/orhantuurul)
 - [LinkedIn](https://www.linkedin.com/in/orhantugrul)
-- [Spotify](https://open.spotify.com/user/gntu0y8a2id5en2bh6hvxheo2)
 - [Email](mailto:hello@orhantugrul.dev)
 `;
 

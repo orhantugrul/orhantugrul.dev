@@ -13,6 +13,10 @@
       media="(prefers-color-scheme: dark)"
       content="#0b0c0e"
     />
+    <!-- Follows the OS without JavaScript; the script below swaps it to
+         match the site's own theme once one is known. -->
+    <link rel="icon" id="favicon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <script>
       // Runs before first paint so the theme never flashes. Dark is the
       // default; `.light` is the override. Follows the OS for as long as
@@ -27,6 +31,9 @@
             document.documentElement.style.colorScheme = light
               ? "light"
               : "dark";
+            document.getElementById("favicon").href = light
+              ? "/favicon-light.svg"
+              : "/favicon-dark.svg";
           }
           apply(stored ? stored === "light" : media.matches);
           media.addEventListener("change", function (event) {

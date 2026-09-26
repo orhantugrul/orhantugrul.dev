@@ -5,6 +5,9 @@
     const root = document.documentElement;
     const light = root.classList.toggle("light");
     root.style.colorScheme = light ? "light" : "dark";
+    (document.getElementById("favicon") as HTMLLinkElement).href = light
+      ? "/favicon-light.svg"
+      : "/favicon-dark.svg";
     localStorage.setItem("theme", light ? "light" : "dark");
   }
 </script>

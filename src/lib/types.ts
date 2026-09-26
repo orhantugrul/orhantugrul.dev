@@ -8,7 +8,7 @@ export type WritingMetadata = {
 
 export type Writing = WritingMetadata & { slug: string };
 
-/** What the footer's record shows, as served by `/api/now-playing`. */
+/** What the Spotify row in Connect shows, as served by `/api/now-playing`. */
 export type NowPlaying = {
   state: "playing" | "paused" | "offline";
   track: string;

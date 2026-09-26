@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { resolve } from "$app/paths";
   import { ArrowUpRight } from "@lucide/svelte";
   import kuryeDark from "$lib/assets/kurye-dark.webp";
@@ -8,13 +9,14 @@
   import LinkedInIcon from "$lib/components/icons/linkedin.svelte";
   import PaketMutfakIcon from "$lib/components/icons/paket-mutfak.svelte";
   import SpinexIcon from "$lib/components/icons/spinex.svelte";
-  import SpotifyIcon from "$lib/components/icons/spotify.svelte";
   import XIcon from "$lib/components/icons/x.svelte";
   import YapiKrediIcon from "$lib/components/icons/yapi-kredi.svelte";
   import Dither from "$lib/components/dither.svelte";
   import Istanbul from "$lib/components/istanbul.svelte";
   import Navigation from "$lib/components/navigation.svelte";
   import { writings } from "$lib/writings";
+  import Spotify from "$lib/components/icons/spotify.svelte";
+  import { player } from "$lib/now-playing.svelte";
 
   const title = "Orhan Tugrul Sahin — Software Engineer";
   const description =
@@ -71,10 +73,15 @@
     },
     {
       label: "Spotify",
-      icon: SpotifyIcon,
+      icon: Spotify,
       href: "https://open.spotify.com/user/gntu0y8a2id5en2bh6hvxheo2",
+      path: "/orhantugrul",
     },
   ] as const;
+
+  // The Spotify row shows what is playing once the first answer is in.
+  onMount(() => player.use());
+  const song = $derived(player.data);
 
   const recent = writings.slice(0, 3);
 
@@ -309,9 +316,10 @@
   <span class="{label} mb-7 block">Connect</span>
   <ul class="space-y-1">
     {#each connectLinks as { label: network, href, icon: Icon } (href)}
+      {@const live = network === "Spotify" ? song : null}
       <li>
         <a
-          {href}
+          href={live?.state === "playing" ? live.url : href}
           target="_blank"
           rel="external noopener noreferrer"
           class="{row} {rowLink} group max-sm:grid-cols-[1.5rem_minmax(0,1fr)_0.875rem]"
@@ -320,7 +328,36 @@
             <Icon class="size-4" />
           </span>
           <span class="font-medium max-sm:hidden">{network}</span>
-          <span class="truncate text-dim">{pathOf(href)}</span>
+          {#if live}
+            <span class="flex min-w-0 items-center gap-2">
+              <span class="flex h-2.5 items-end gap-[1.5px]" aria-hidden="true">
+                {#each [0, -0.4, -0.75] as delay (delay)}
+                  <span
+                    class={[
+                      "h-full w-0.5 origin-bottom",
+                      live.state === "playing"
+                        ? "animate-eq bg-[#1db954]"
+                        : "scale-y-30 bg-faint",
+                    ]}
+                    style:animation-delay="{delay}s"
+                  ></span>
+                {/each}
+              </span>
+              <span class="truncate">
+                <span class="sr-only"
+                  >{live.state === "playing"
+                    ? "Now playing:"
+                    : live.state === "paused"
+                      ? "Paused:"
+                      : "Last played:"}</span
+                >
+                {live.track}
+                <span class="text-dim">· {live.artist}</span>
+              </span>
+            </span>
+          {:else}
+            <span class="truncate text-dim">{pathOf(href)}</span>
+          {/if}
           <ArrowUpRight
             class="{rowLift} col-start-5 size-3.5 text-faint max-sm:col-start-3"
           />

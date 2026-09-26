@@ -1,15 +1,10 @@
 import { json } from "@sveltejs/kit";
+import { accessToken, type Secrets } from "$lib/server/spotify";
 import type { NowPlaying } from "$lib/types";
 import type { RequestHandler } from "./$types";
 
 // The one route the worker answers live; everything else is prebuilt.
 export const prerender = false;
-
-type Secrets = {
-  SPOTIFY_CLIENT_ID?: string;
-  SPOTIFY_CLIENT_SECRET?: string;
-  SPOTIFY_REFRESH_TOKEN?: string;
-};
 
 type Track = {
   name: string;
@@ -18,45 +13,6 @@ type Track = {
   artists: { name: string }[];
   album: { name: string; images: { url: string; width: number }[] };
 };
-
-// An access token lasts an hour; an isolate that stays warm reuses it.
-let token: { value: string; expires: number } | null = null;
-
-async function accessToken(secrets: Required<Secrets>, fetcher: typeof fetch) {
-  if (token && token.expires > Date.now() + 60_000) return token.value;
-  const response = await fetcher("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      authorization: `Basic ${btoa(`${secrets.SPOTIFY_CLIENT_ID}:${secrets.SPOTIFY_CLIENT_SECRET}`)}`,
-      "content-type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      grant_type: "refresh_token",
-      refresh_token: secrets.SPOTIFY_REFRESH_TOKEN,
-    }),
-  });
-  if (!response.ok) throw new Error(`token: ${response.status}`);
-  const body: { access_token: string; expires_in: number } =
-    await response.json();
-  token = {
-    value: body.access_token,
-    expires: Date.now() + body.expires_in * 1000,
-  };
-  return token.value;
-}
-
-/** Only Spotify's own https URLs reach the page's `href` and `src`. */
-function trusted(url: string | undefined, host: string): string | null {
-  if (!url) return null;
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === "https:" && parsed.hostname === host
-      ? url
-      : null;
-  } catch {
-    return null;
-  }
-}
 
 function shape(
   track: Track,
@@ -72,10 +28,8 @@ function shape(
     track: track.name,
     artist: track.artists.map((artist) => artist.name).join(", "),
     album: track.album.name,
-    cover: trusted(cover?.url, "i.scdn.co"),
-    url:
-      trusted(track.external_urls.spotify, "open.spotify.com") ??
-      "https://open.spotify.com",
+    cover: cover?.url ?? null,
+    url: track.external_urls.spotify,
     length: track.duration_ms,
     progress,
     at,

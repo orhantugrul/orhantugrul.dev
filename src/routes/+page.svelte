@@ -123,6 +123,11 @@
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content="https://orhantugrul.dev" />
+  <meta property="og:image" content="https://orhantugrul.dev/og/home.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://orhantugrul.dev/og/home.png" />
 </svelte:head>
 
 <header

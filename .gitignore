@@ -32,3 +32,6 @@ worker-configuration.d.ts
 .claude-scratch/
 .claude/settings.local.json
 .claude/worktrees/
+
+# Share cards, drawn by scripts/og.ts on every dev and build
+static/og/

@@ -18,6 +18,17 @@
   <meta property="og:description" content={metadata.description} />
   <meta property="og:url" content={url} />
   <meta property="article:published_time" content={metadata.date} />
+  <meta
+    property="og:image"
+    content={`https://orhantugrul.dev/og/writing-${data.slug}.png`}
+  />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    name="twitter:image"
+    content={`https://orhantugrul.dev/og/writing-${data.slug}.png`}
+  />
 </svelte:head>
 
 <header class="flex h-16 shrink-0 items-center justify-end px-8">

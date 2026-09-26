@@ -4,7 +4,7 @@
   import kuryeDark from "$lib/assets/kurye-dark.webp";
   import kuryeLight from "$lib/assets/kurye.webp";
   import GitHubIcon from "$lib/components/icons/github.svelte";
-  import ItservIcon from "$lib/components/icons/itserv.svelte";
+  import Itoc360Icon from "$lib/components/icons/itoc360.svelte";
   import LinkedInIcon from "$lib/components/icons/linkedin.svelte";
   import PaketMutfakIcon from "$lib/components/icons/paket-mutfak.svelte";
   import SpinexIcon from "$lib/components/icons/spinex.svelte";
@@ -33,9 +33,9 @@
     {
       period: "2024",
       role: "Software Engineer",
-      company: "ITServ Technology",
-      icon: ItservIcon,
-      href: "https://www.itservtechnology.com/",
+      company: "ITOC360",
+      icon: Itoc360Icon,
+      href: "https://www.itoc360.com/",
     },
     {
       period: "2023",

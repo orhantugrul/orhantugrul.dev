@@ -12,7 +12,6 @@
   import XIcon from "$lib/components/icons/x.svelte";
   import YapiKrediIcon from "$lib/components/icons/yapi-kredi.svelte";
   import Dither from "$lib/components/dither.svelte";
-  import Istanbul from "$lib/components/istanbul.svelte";
   import Navigation from "$lib/components/navigation.svelte";
   import { writings } from "$lib/writings";
   import Spotify from "$lib/components/icons/spotify.svelte";
@@ -154,7 +153,7 @@
           Hi, I’m Orhan
         </h1>
         <p class="mt-1.5 text-[13.5px] tracking-[-0.012em] text-dim">
-          Software engineer in <Istanbul />
+          Software engineer in Istanbul
         </p>
 
         <div

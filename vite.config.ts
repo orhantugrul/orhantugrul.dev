@@ -49,8 +49,22 @@ function commit(): string {
   }
 }
 
+/** When that commit was made, as an ISO date; empty when git can't say. */
+function committed(sha: string): string {
+  try {
+    return execSync(`git log -1 --format=%cI ${sha}`).toString().trim();
+  } catch {
+    return "";
+  }
+}
+
+const sha = commit();
+
 export default defineConfig({
-  define: { __COMMIT__: JSON.stringify(commit()) },
+  define: {
+    __COMMIT__: JSON.stringify(sha),
+    __COMMITTED__: JSON.stringify(committed(sha)),
+  },
   plugins: [
     tailwindcss(),
     sveltekit({

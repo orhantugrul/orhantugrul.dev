@@ -15,7 +15,6 @@
   --panel-2: #131518;
   --accent: #7aa7f2;
   --prose-ink: #c4c5c9;
-  --code-s: #9ece8c;
   --sel: rgba(122, 167, 242, 0.3);
 }
 
@@ -29,7 +28,6 @@
   --panel-2: #efefec;
   --accent: #2f5fb0;
   --prose-ink: #393c41;
-  --code-s: #3f7d33;
   --sel: rgba(47, 95, 176, 0.16);
 }
 
@@ -40,7 +38,6 @@
   --color-faint: var(--faint);
   --color-rule: var(--rule);
   --color-panel: var(--panel);
-  --color-accent: var(--accent);
 
   --font-sans:
     "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -87,11 +84,6 @@
     outline-offset: 2px;
     border-radius: 2px;
   }
-}
-
-.no-trans,
-.no-trans * {
-  transition: none !important;
 }
 
 @layer components {

@@ -35,11 +35,6 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content="https://orhantugrul.dev/og/writing.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://orhantugrul.dev/og/writing.png" />
 </svelte:head>
 
 <header class="flex h-16 shrink-0 items-center justify-end px-8">

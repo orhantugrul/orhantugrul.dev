@@ -14,11 +14,6 @@
       href: resolve("/writing"),
       active: page.route.id?.startsWith("/writing") ?? false,
     },
-    {
-      label: "playlists",
-      href: resolve("/playlists"),
-      active: page.route.id?.startsWith("/playlists") ?? false,
-    },
   ]);
 </script>
 

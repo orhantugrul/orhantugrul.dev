@@ -17,7 +17,7 @@ export async function GET() {
   const mixes = (await playlists())
     .map(
       ({ title, note, url, tracks }) =>
-        `- [${title}](${url}): ${note ? `${note}, ` : ""}${tracks.length} tracks`
+        `- [${title}](${url}): ${note ? `${note}, ` : ""}${tracks} tracks`
     )
     .join("\n");
 

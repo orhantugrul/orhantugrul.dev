@@ -6,7 +6,9 @@ export type WritingMetadata = {
   tags: string[];
 };
 
-export type Writing = WritingMetadata & { slug: string };
+export type Writing = WritingMetadata & {
+  slug: string;
+};
 
 /** What the Spotify row in Connect shows, as served by `/api/now-playing`. */
 export type NowPlaying = {
@@ -26,24 +28,14 @@ export type NowPlaying = {
 
 /** One public playlist, read from Spotify when the site is built. */
 export type Playlist = {
-  slug: string;
   /** Catalogue number, counting from the oldest playlist. */
   number: number;
   title: string;
   /** The playlist's description on Spotify, as plain text. */
   note: string;
-  cover: string | null;
   url: string;
   /** ISO dates of the first and the latest track added. */
   started: string;
   updated: string;
-  tracks: PlaylistTrack[];
-};
-
-export type PlaylistTrack = {
-  title: string;
-  artist: string;
-  /** In ms. */
-  length: number;
-  url: string;
+  tracks: number;
 };

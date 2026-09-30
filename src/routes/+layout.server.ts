@@ -11,10 +11,10 @@ export const load: LayoutServerLoad = async () => {
   return {
     latest: latest
       ? {
-          slug: latest.slug,
+          url: latest.url,
           number: latest.number,
           title: latest.title,
-          tracks: latest.tracks.length,
+          tracks: latest.tracks,
           updated: latest.updated,
         }
       : null,

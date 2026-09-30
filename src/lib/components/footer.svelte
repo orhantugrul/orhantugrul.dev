@@ -1,9 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { resolve } from "$app/paths";
 
   type Latest = {
-    slug: string;
+    url: string;
     number: number;
     title: string;
     tracks: number;
@@ -111,7 +110,9 @@
     <div class={cell}>
       <span class={label}>Latest playlist</span>
       <a
-        href={resolve("/playlists/[slug]", { slug: latest.slug })}
+        href={latest.url}
+        target="_blank"
+        rel="external noopener noreferrer"
         class="link-hover line-clamp-2 self-start text-[16px] leading-tight font-medium tracking-[-0.01em] hover:text-foreground"
         >{latest.title}</a
       >

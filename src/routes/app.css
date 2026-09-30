@@ -47,6 +47,7 @@
 
   --animate-eq: eq 1.1s ease-in-out infinite;
   --animate-curblink: curblink 1.1s steps(1) infinite;
+  --animate-tick: tick 1s steps(1) infinite;
 
   @keyframes eq {
     0%,
@@ -55,6 +56,11 @@
     }
     50% {
       transform: scaleY(1);
+    }
+  }
+  @keyframes tick {
+    50% {
+      opacity: 0.2;
     }
   }
   @keyframes curblink {

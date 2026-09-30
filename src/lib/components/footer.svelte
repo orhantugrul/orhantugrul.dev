@@ -85,7 +85,16 @@
 >
   <div class={cell}>
     <span class={label}>Local time</span>
-    <span class={big}>{time ?? "—"}</span>
+    {#if time}
+      {@const [hours, minutes] = time.split(":")}
+      <!-- The colon ticks once a second, so the clock reads as live. -->
+      <span class={big}
+        >{hours}<span class="animate-tick motion-reduce:animate-none">:</span
+        >{minutes}</span
+      >
+    {:else}
+      <span class={big}>—</span>
+    {/if}
     <span class={value}>{today ? `${today} · ` : ""}UTC+3</span>
   </div>
   <div class={cell}>

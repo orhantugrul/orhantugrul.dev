@@ -1,7 +1,7 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
-  import Zsh from "$lib/components/zsh/zsh.svelte";
+  import Bios from "$lib/components/bios/bios.svelte";
 
   const is404 = $derived(page.status === 404);
   const reqPath = $derived(
@@ -15,7 +15,7 @@
 </svelte:head>
 
 {#if is404}
-  <Zsh path={reqPath} />
+  <Bios path={reqPath} />
 {:else}
   <section
     class="border-b border-rule px-8 pt-27.5 pb-37.5 font-mono text-[12.5px] text-faint"

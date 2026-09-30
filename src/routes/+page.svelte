@@ -75,7 +75,6 @@
       label: "Spotify",
       icon: Spotify,
       href: "https://open.spotify.com/user/gntu0y8a2id5en2bh6hvxheo2",
-      path: "/orhantugrul",
     },
   ] as const;
 
@@ -320,7 +319,7 @@
       {@const live = network === "Spotify" ? song : null}
       <li>
         <a
-          href={live?.state === "playing" ? live.url : href}
+          {href}
           target="_blank"
           rel="external noopener noreferrer"
           class="{row} {rowLink} group max-sm:grid-cols-[1.5rem_minmax(0,1fr)_0.875rem]"
@@ -330,21 +329,33 @@
           </span>
           <span class="font-medium max-sm:hidden">{network}</span>
           {#if live}
-            <span class="flex min-w-0 items-center gap-2">
-              <span class="flex h-2.5 items-end gap-[1.5px]" aria-hidden="true">
+            <!-- The bars carry the state: moving while it plays, frozen mid-move
+                 when paused, flat once the player is closed. -->
+            <span class="flex min-w-0 items-center gap-2.5">
+              <span
+                class="flex h-2.5 shrink-0 items-end gap-[1.5px]"
+                aria-hidden="true"
+              >
                 {#each [0, -0.4, -0.75] as delay (delay)}
                   <span
                     class={[
-                      "h-full w-0.5 origin-bottom",
-                      live.state === "playing"
-                        ? "animate-eq bg-[#1db954]"
-                        : "scale-y-30 bg-faint",
+                      "h-full w-0.5 origin-bottom transition-transform duration-300",
+                      live.state === "offline"
+                        ? "scale-y-20 bg-faint"
+                        : "animate-eq",
+                      live.state === "playing" && "bg-[#1db954]",
+                      live.state === "paused" && "bg-dim [animation-play-state:paused]",
                     ]}
                     style:animation-delay="{delay}s"
                   ></span>
                 {/each}
               </span>
-              <span class="truncate">
+              <span
+                class={[
+                  "truncate",
+                  live.state === "offline" ? "text-dim" : "text-foreground",
+                ]}
+              >
                 <span class="sr-only"
                   >{live.state === "playing"
                     ? "Now playing:"
@@ -353,7 +364,6 @@
                       : "Last played:"}</span
                 >
                 {live.track}
-                <span class="text-dim">· {live.artist}</span>
               </span>
             </span>
           {:else}

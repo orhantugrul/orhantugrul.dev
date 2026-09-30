@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { resolve } from "$app/paths";
-  import { ArrowUpRight } from "@lucide/svelte";
+  import { ArrowRight, ArrowUpRight } from "@lucide/svelte";
   import kuryeDark from "$lib/assets/kurye-dark.webp";
   import kuryeLight from "$lib/assets/kurye.webp";
   import GitHubIcon from "$lib/components/icons/github.svelte";
@@ -13,7 +13,8 @@
   import YapiKrediIcon from "$lib/components/icons/yapi-kredi.svelte";
   import Dither from "$lib/components/dither.svelte";
   import Navigation from "$lib/components/navigation.svelte";
-  import { writings } from "$lib/writings";
+  import Unpublished from "$lib/components/unpublished.svelte";
+  import { published, writings } from "$lib/writings";
   import Spotify from "$lib/components/icons/spotify.svelte";
   import { player } from "$lib/now-playing.svelte";
 
@@ -83,10 +84,6 @@
   const song = $derived(player.data);
 
   const recent = writings.slice(0, 3);
-
-  function shortDate(date: string): string {
-    return date.slice(0, 10);
-  }
 
   /** The username is already in the link, so no row declares it twice. */
   function pathOf(href: string): string {
@@ -247,34 +244,40 @@
 </section>
 
 <section class={section}>
-  <span class="{label} mb-7 block">Writing</span>
+  <div class="mb-7 flex items-baseline justify-between">
+    <span class={label}>Writing</span>
+    <a
+      href={resolve("/writing")}
+      class="link-hover group flex items-center gap-1.5 font-mono text-[12px] text-dim hover:text-foreground"
+    >
+      See all
+      <ArrowRight class="size-3.5 text-faint {rowLift}" />
+    </a>
+  </div>
   {#if writings.length > 0}
     <ul class="space-y-1">
-      {#each recent as { slug, title: writingTitle, date, readingTime } (slug)}
-        <li class="last:border-0">
+      {#each recent as { slug, date, title: writingTitle, readingTime } (slug)}
+        <li>
           <a
             href={resolve("/writing/[slug]", { slug })}
-            class="{row} {rowLink} max-sm:grid-cols-[minmax(0,1fr)_auto]"
+            class="{row} {rowLink} group max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
           >
-            <span class="{rowMono} col-start-2 tabular-nums max-sm:hidden"
-              >{shortDate(date)}</span
+            <span class="{rowMono} col-start-2 tabular-nums max-sm:col-start-1"
+              >{published(date)}</span
             >
-            <span class="font-medium">{writingTitle}</span>
+            <span class="truncate font-medium">{writingTitle}</span>
             <span class={rowMeta}>{readingTime} min</span>
+            <ArrowRight class="{rowLift} size-3.5 text-faint" />
           </a>
         </li>
       {/each}
     </ul>
   {:else}
-    <div class="py-7">
-      <p class="text-[16px] font-medium tracking-[-0.012em]">
-        Notes are taking shape.
-      </p>
-      <p class="mt-2.5 max-w-[52ch] text-pretty text-dim">
-        I’m collecting thoughts on building products, engineering decisions, and
-        the lessons worth keeping. The first one will land here soon.
-      </p>
-    </div>
+    <Unpublished
+      list="space-y-1"
+      class="{row} opacity-82 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
+      gutter
+    />
   {/if}
 </section>
 

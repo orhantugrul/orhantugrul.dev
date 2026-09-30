@@ -29,6 +29,15 @@ export const writings: Writing[] = Object.entries(frontmatter)
   .map(([path, metadata]) => ({ ...metadata, slug: slugOf(path) }))
   .sort((left, right) => Date.parse(right.date) - Date.parse(left.date));
 
+/** "Sep 2026": the month a writing went out, as its rows show it. */
+export function published(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 /**
  * Undefined when nothing owns that slug. Callers turn that into a 404, which
  * keeps a genuine failure inside a writing module a 500 with its own stack.

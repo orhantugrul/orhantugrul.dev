@@ -7,7 +7,9 @@ import type { LayoutServerLoad } from "./$types";
 export const load: LayoutServerLoad = async () => {
   if (!building) return { latest: null };
   const all = await playlists().catch(() => []);
-  const latest = all.toSorted((a, b) => b.updated.localeCompare(a.updated))[0];
+  const latest = all.toSorted((left, right) =>
+    right.updated.localeCompare(left.updated)
+  )[0];
   return {
     latest: latest
       ? {
@@ -15,7 +17,6 @@ export const load: LayoutServerLoad = async () => {
           number: latest.number,
           title: latest.title,
           tracks: latest.tracks,
-          updated: latest.updated,
         }
       : null,
   };

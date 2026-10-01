@@ -4,22 +4,8 @@ const POLL_INTERVAL = 30_000;
 
 class Player {
   data = $state<NowPlaying | null>(null);
-  now = $state(Date.now());
 
-  position = $derived(
-    this.data
-      ? Math.min(
-          this.data.length,
-          this.data.state === "playing"
-            ? this.data.progress + (this.now - this.data.sampledAt)
-            : this.data.progress
-        )
-      : 0
-  );
-
-  #users = 0;
   #loading = false;
-  #stop: (() => void) | undefined;
 
   async load() {
     if (this.#loading) return;
@@ -37,26 +23,25 @@ class Player {
     this.#loading = false;
   }
 
+  /** Polls until the returned cleanup runs. */
   use() {
-    if (this.#users++ === 0) {
-      this.load();
-      const poll = setInterval(
-        () => document.hidden || this.load(),
-        POLL_INTERVAL
-      );
-      const clock = setInterval(() => {
-        this.now = Date.now();
-        // The song ran out before the next poll: ask what came after it.
-        if (this.data?.state === "playing" && this.position >= this.data.length)
-          this.load();
-      }, 1000);
-      this.#stop = () => {
-        clearInterval(poll);
-        clearInterval(clock);
-      };
-    }
+    this.load();
+    const poll = setInterval(
+      () => document.hidden || this.load(),
+      POLL_INTERVAL
+    );
+    // The song ran out before the next poll: ask what came after it.
+    const songEnd = setInterval(() => {
+      const data = this.data;
+      if (
+        data?.state === "playing" &&
+        data.progress + (Date.now() - data.sampledAt) >= data.length
+      )
+        this.load();
+    }, 1000);
     return () => {
-      if (--this.#users === 0) this.#stop?.();
+      clearInterval(poll);
+      clearInterval(songEnd);
     };
   }
 }

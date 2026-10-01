@@ -1,5 +1,5 @@
-import type { Writing, WritingMetadata } from "$lib/types";
 import type { Component } from "svelte";
+import type { Writing, WritingMetadata } from "$lib/types";
 
 function slugOf(path: string): string {
   return path.split("/").pop()!.replace(".md", "");

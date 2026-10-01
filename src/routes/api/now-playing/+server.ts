@@ -9,9 +9,7 @@ export const prerender = false;
 type Track = {
   name: string;
   duration_ms: number;
-  external_urls: { spotify: string };
-  artists: { name: string }[];
-  album: { name: string; images: { url: string; width: number }[] };
+  album?: object;
 };
 
 function shape(
@@ -20,16 +18,9 @@ function shape(
   progress: number,
   sampledAt: number
 ): NowPlaying {
-  // The 300px image: enough for the dither, a fraction of the 640px one.
-  const images = [...track.album.images].sort((a, b) => a.width - b.width);
-  const cover = images.find((image) => image.width >= 300) ?? images.at(-1);
   return {
     state,
     track: track.name,
-    artist: track.artists.map((artist) => artist.name).join(", "),
-    album: track.album.name,
-    cover: cover?.url ?? null,
-    url: track.external_urls.spotify,
     length: track.duration_ms,
     progress,
     sampledAt,
@@ -93,6 +84,7 @@ const LAST_ANSWER_KEY = "https://orhantugrul.dev/api/now-playing/last";
 // lookup per data centre answers all of them, well inside Spotify's limits.
 const FRESH_ANSWER_KEY = "https://orhantugrul.dev/api/now-playing/fresh";
 const FRESH_SECONDS = 10;
+const ONE_YEAR_SECONDS = 31_536_000;
 
 const stored = (value: unknown, seconds: number) =>
   new Response(JSON.stringify(value), {
@@ -110,13 +102,12 @@ export const GET: RequestHandler = async ({ platform, fetch }) => {
   const fresh = await cache?.match(FRESH_ANSWER_KEY);
   if (fresh) return json(await fresh.json(), { headers });
 
-  let answer: NowPlaying | null = null;
-  try {
-    answer = await ask((platform?.env ?? {}) as Secrets, fetch);
-  } catch {}
+  let answer = await ask((platform?.env ?? {}) as Secrets, fetch).catch(
+    () => null
+  );
 
   if (answer) {
-    keep(LAST_ANSWER_KEY, answer, 31_536_000);
+    keep(LAST_ANSWER_KEY, answer, ONE_YEAR_SECONDS);
   } else {
     const remembered = await cache?.match(LAST_ANSWER_KEY);
     if (remembered) {

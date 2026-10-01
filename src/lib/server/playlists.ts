@@ -8,7 +8,7 @@ type SpotifyPlaylist = {
   description: string;
   public: boolean;
   owner: { id: string };
-  external_urls: { spotify: string };
+  external_urls: { spotify: `https://${string}` };
 };
 
 type Item = {
@@ -72,8 +72,8 @@ async function press(): Promise<Playlist[]> {
   );
 
   return pressed
-    .sort((a, b) => a.started.localeCompare(b.started))
-    .map((playlist, i) => ({ ...playlist, number: i + 1 }));
+    .sort((left, right) => left.started.localeCompare(right.started))
+    .map((playlist, index) => ({ ...playlist, number: index + 1 }));
 }
 
 /** Spotify sends descriptions as escaped HTML, links included. */

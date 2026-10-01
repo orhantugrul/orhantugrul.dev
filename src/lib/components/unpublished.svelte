@@ -1,11 +1,13 @@
 <script lang="ts">
-  let {
-    class: className = "",
-    list = "",
+  import type { ClassValue } from "svelte/elements";
+
+  const {
+    class: className,
+    row,
     gutter = false,
   }: {
-    class?: string;
-    list?: string;
+    class?: ClassValue;
+    row?: ClassValue;
     /** Leave the home page's icon column empty, as the writing rows do. */
     gutter?: boolean;
   } = $props();
@@ -17,25 +19,23 @@
     { date: "Jyl 2O2b", title: "Wrot cumes ofter", time: "7 mun" },
     { date: "Moy 2O2b", title: "Tho quaue wath ipunoons sobs", time: "5 mun" },
   ];
-  const veil = "blur-[4.5px] select-none";
 </script>
 
-<ul class={list}>
+<ul class={className}>
   {#each rows as { date, title, time }, index (index)}
     <li>
       {#if index === 0}<span class="sr-only">Nothing published yet</span>{/if}
-      <p class={className} aria-hidden="true">
+      <p class={["blur-xs select-none", row]} aria-hidden="true">
         {#if gutter}<span class="max-sm:hidden"></span>{/if}
         <span
-          class="{veil} font-mono text-[12px] whitespace-nowrap text-subtle-foreground tabular-nums"
+          class="font-mono text-xs whitespace-nowrap text-subtle-foreground tabular-nums"
           >{date}</span
         >
         <span
-          class="{veil} min-w-0 truncate font-medium text-muted-foreground opacity-75"
+          class="min-w-0 truncate font-medium text-muted-foreground opacity-75"
           >{title}</span
         >
-        <span
-          class="{veil} font-mono text-[11.5px] whitespace-nowrap text-subtle-foreground"
+        <span class="font-mono text-xs whitespace-nowrap text-subtle-foreground"
           >{time}</span
         >
       </p>

@@ -18,6 +18,6 @@
   class="cursor-pointer text-muted-foreground hover:text-foreground"
   onclick={toggleTheme}
 >
-  <Sun class="light:hidden" size={14} strokeWidth={1.8} />
-  <Moon class="hidden light:block" size={14} strokeWidth={1.8} />
+  <Sun class="size-3.5 light:hidden" strokeWidth={1.8} />
+  <Moon class="hidden size-3.5 light:block" strokeWidth={1.8} />
 </button>

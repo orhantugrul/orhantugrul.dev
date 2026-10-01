@@ -1,5 +1,5 @@
-import { findWriting, writings } from "$lib/writings";
 import { error } from "@sveltejs/kit";
+import { findWriting, writings } from "$lib/writings";
 import type { EntryGenerator, PageLoad } from "./$types";
 
 export const entries: EntryGenerator = () =>

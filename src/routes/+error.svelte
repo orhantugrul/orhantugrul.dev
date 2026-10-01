@@ -2,6 +2,7 @@
   import { resolve } from "$app/paths";
   import { page } from "$app/state";
   import Bios from "$lib/components/bios/bios.svelte";
+  import Link from "$lib/components/link.svelte";
 
   const is404 = $derived(page.status === 404);
   const requestedPath = $derived(
@@ -18,19 +19,17 @@
   <Bios path={requestedPath} />
 {:else}
   <section
-    class="border-b border-border px-8 pt-27.5 pb-37.5 font-mono text-[12.5px] text-subtle-foreground"
+    class="border-b border-border px-8 pt-28 pb-36 font-mono text-xs text-subtle-foreground"
   >
     <p class="text-muted-foreground">$ GET /{requestedPath}</p>
     <p class="mt-1.5">
       HTTP {page.status}: {page.error?.message ?? "Something went wrong"}
     </p>
-    <p class="mt-8.5">
-      <a
-        class="inline-block text-[12px] transition hover:text-foreground"
+    <p class="mt-8">
+      <Link
         href={resolve("/")}
+        class="inline-block transition hover:text-foreground">← home</Link
       >
-        ← home
-      </a>
     </p>
   </section>
 {/if}

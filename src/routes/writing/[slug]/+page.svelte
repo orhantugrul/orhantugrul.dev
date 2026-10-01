@@ -1,13 +1,15 @@
 <script lang="ts">
   import { resolve } from "$app/paths";
+  import Link from "$lib/components/link.svelte";
   import Navigation from "$lib/components/navigation.svelte";
+  import { published } from "$lib/writings";
   import type { PageProps } from "./$types";
 
-  let { data }: PageProps = $props();
+  const { data }: PageProps = $props();
 
-  let metadata = $derived(data.metadata);
-  let title = $derived(`${metadata.title} — Orhan Tugrul Sahin`);
-  let url = $derived(`https://orhantugrul.dev/writing/${data.slug}`);
+  const metadata = $derived(data.metadata);
+  const title = $derived(`${metadata.title} — Orhan Tugrul Sahin`);
+  const url = $derived(`https://orhantugrul.dev/writing/${data.slug}`);
 </script>
 
 <svelte:head>
@@ -24,20 +26,17 @@
   <Navigation />
 </header>
 
-<article class="border-b border-border px-8 pt-16 pb-18">
-  <a
-    class="mb-6.5 inline-block font-mono text-[12px] text-subtle-foreground transition hover:text-foreground"
+<article class="border-b border-border px-8 py-16">
+  <Link
     href={resolve("/writing")}
+    class="mb-6 inline-block font-mono text-xs text-subtle-foreground transition hover:text-foreground"
+    >← back</Link
   >
-    ← back
-  </a>
-  <h1
-    class="max-w-[24ch] text-[27px] leading-[1.3] font-medium tracking-[-0.022em] text-balance"
-  >
+  <h1 class="max-w-sm text-2xl font-medium text-balance">
     {metadata.title}
   </h1>
-  <p class="mt-3.5 font-mono text-[12px] text-subtle-foreground tabular-nums">
-    <time datetime={metadata.date}>{metadata.date.slice(0, 10)}</time>
+  <p class="mt-4 font-mono text-xs text-subtle-foreground tabular-nums">
+    <time datetime={metadata.date}>{published(metadata.date)}</time>
     · {metadata.readingTime} min read
   </p>
 

@@ -30,6 +30,25 @@
   --selection: color-mix(in srgb, var(--color-blue-700) 16%, transparent);
 }
 
+@theme {
+  --text-*: initial;
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.90625rem;
+  --text-base--line-height: 1.65;
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.6;
+  --text-lg--letter-spacing: -0.01em;
+  --text-xl: 1.125rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.25;
+  --text-2xl--letter-spacing: -0.025em;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.2;
+  --text-3xl--letter-spacing: -0.035em;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -37,6 +56,7 @@
   --color-subtle-foreground: var(--subtle-foreground);
   --color-border: var(--border);
   --color-card: var(--card);
+  --color-muted: var(--muted);
   --color-ring: var(--ring);
   --color-selection: var(--selection);
   --font-sans:
@@ -63,13 +83,13 @@
 
 @layer components {
   .prose {
-    margin-top: 40px;
-    max-width: 60ch;
+    margin-top: --spacing(10);
+    max-width: var(--container-lg);
   }
 
   .prose p {
     color: var(--prose-foreground);
-    margin-top: 18px;
+    margin-top: --spacing(4);
     text-wrap: pretty;
   }
 
@@ -91,8 +111,8 @@
   }
 
   .prose h2 {
-    margin-top: 44px;
-    font-size: 16px;
+    margin-top: --spacing(10);
+    font-size: var(--text-lg);
     font-weight: 500;
     letter-spacing: -0.01em;
   }
@@ -101,12 +121,12 @@
     content: "## ";
     color: var(--subtle-foreground);
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: var(--text-sm);
   }
 
   .prose h3 {
-    margin-top: 32px;
-    font-size: 14.5px;
+    margin-top: --spacing(8);
+    font-size: var(--text-base);
     font-weight: 500;
   }
 
@@ -114,20 +134,20 @@
     content: "### ";
     color: var(--subtle-foreground);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 
   .prose ul,
   .prose ol {
-    margin-top: 18px;
+    margin-top: --spacing(4);
   }
 
   .prose ul li,
   .prose ol li {
     color: var(--prose-foreground);
-    padding-left: 20px;
+    padding-left: --spacing(5);
     position: relative;
-    margin-top: 8px;
+    margin-top: --spacing(2);
   }
 
   .prose ul li::before {
@@ -148,12 +168,12 @@
     left: 0;
     color: var(--subtle-foreground);
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: var(--text-xs);
   }
 
   .prose blockquote {
-    margin-top: 18px;
-    padding-left: 18px;
+    margin-top: --spacing(4);
+    padding-left: --spacing(4);
     border-left: 2px solid var(--border);
     color: var(--muted-foreground);
   }
@@ -163,19 +183,19 @@
     font-size: 0.88em;
     background: var(--muted);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1.5px 5px;
+    border-radius: var(--radius-sm);
+    padding: --spacing(0.5) --spacing(1.5);
   }
 
   .prose pre {
-    margin-top: 22px;
+    margin-top: --spacing(6);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     background: var(--card);
     overflow-x: auto;
-    padding: 16px;
+    padding: --spacing(4);
     font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-size: var(--text-xs);
     line-height: 1.7;
     color: var(--prose-foreground);
   }
@@ -188,13 +208,13 @@
   }
 
   .prose img {
-    margin-top: 22px;
+    margin-top: --spacing(6);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
   }
 
   .prose hr {
-    margin-top: 32px;
+    margin-top: --spacing(8);
     border: 0;
     border-top: 1px solid var(--border);
   }

@@ -30,7 +30,7 @@
 </svelte:head>
 
 <div
-  class="relative mx-auto flex min-h-svh max-w-185 flex-col border-x border-border"
+  class="relative mx-auto flex min-h-svh max-w-3xl flex-col border-x border-border"
 >
   <main class="flex flex-1 flex-col *:last:flex-1">
     {@render children()}

@@ -4,7 +4,6 @@
     list = "",
     gutter = false,
   }: {
-    /** Each row's classes, so the rows share the published list's grid. */
     class?: string;
     list?: string;
     /** Leave the home page's icon column empty, as the writing rows do. */

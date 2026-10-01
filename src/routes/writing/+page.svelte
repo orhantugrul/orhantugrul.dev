@@ -10,7 +10,6 @@
     ? "Notes to my future self, published by accident."
     : "A place for notes, ideas, and things worth remembering.";
 
-  /* rows: date · title · reading time · arrow */
   const row =
     "grid grid-cols-[6.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-4 py-3 opacity-82 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem] max-sm:gap-3";
   const rowLabel =

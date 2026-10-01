@@ -25,7 +25,6 @@
 </header>
 
 <article class="border-b border-border px-8 pt-16 pb-18">
-  <!-- quiet mono back button — never breadcrumb paths -->
   <a
     class="mb-6.5 inline-block font-mono text-[12px] text-subtle-foreground transition hover:text-foreground"
     href={resolve("/writing")}

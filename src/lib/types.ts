@@ -10,7 +10,6 @@ export type Writing = WritingMetadata & {
   slug: string;
 };
 
-/** What the Spotify row in Connect shows, as served by `/api/now-playing`. */
 export type NowPlaying = {
   state: "playing" | "paused" | "offline";
   track: string;
@@ -20,13 +19,12 @@ export type NowPlaying = {
   url: string;
   /** Track length, in ms. */
   length: number;
-  /** Playhead when `at` was sampled, in ms. */
+  /** Playhead when `sampledAt` was sampled, in ms. */
   progress: number;
   /** Epoch ms: when progress was read, or when an offline track last played. */
-  at: number;
+  sampledAt: number;
 };
 
-/** One public playlist, read from Spotify when the site is built. */
 export type Playlist = {
   /** Catalogue number, counting from the oldest playlist. */
   number: number;

@@ -4,7 +4,7 @@
   import Bios from "$lib/components/bios/bios.svelte";
 
   const is404 = $derived(page.status === 404);
-  const reqPath = $derived(
+  const requestedPath = $derived(
     decodeURIComponent(page.url.pathname).replace(/^\//, "") || "index"
   );
 </script>
@@ -15,12 +15,12 @@
 </svelte:head>
 
 {#if is404}
-  <Bios path={reqPath} />
+  <Bios path={requestedPath} />
 {:else}
   <section
     class="border-b border-border px-8 pt-27.5 pb-37.5 font-mono text-[12.5px] text-subtle-foreground"
   >
-    <p class="text-muted-foreground">$ GET /{reqPath}</p>
+    <p class="text-muted-foreground">$ GET /{requestedPath}</p>
     <p class="mt-1.5">
       HTTP {page.status}: {page.error?.message ?? "Something went wrong"}
     </p>

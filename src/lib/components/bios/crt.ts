@@ -16,7 +16,7 @@ uniform float uTime;
 uniform float uDpr;
 uniform float uMotion;
 
-const vec3 BEZEL = vec3(0.012, 0.013, 0.015);
+const vec3 BEZEL = vec3(0.0);
 
 vec2 curve(vec2 p) {
   p = p * 2.0 - 1.0;
@@ -80,32 +80,30 @@ export type Tube = {
   dispose(): void;
 };
 
-/** The CRT, or the plain screen when WebGL isn't available. */
 export function tube(canvas: HTMLCanvasElement): Tube {
   const gl = canvas.getContext("webgl", { antialias: false, alpha: false });
   return gl ? crt(canvas, gl) : flat(canvas);
 }
 
-/** Matches the canvas to its box at up to 2x; true when the size changed. */
 function fit(canvas: HTMLCanvasElement) {
-  const dpr = Math.min(devicePixelRatio, 2);
-  const w = Math.round(canvas.clientWidth * dpr);
-  const h = Math.round(canvas.clientHeight * dpr);
-  const resized = canvas.width !== w || canvas.height !== h;
+  const pixelRatio = Math.min(devicePixelRatio, 2);
+  const width = Math.round(canvas.clientWidth * pixelRatio);
+  const height = Math.round(canvas.clientHeight * pixelRatio);
+  const resized = canvas.width !== width || canvas.height !== height;
   if (resized) {
-    canvas.width = w;
-    canvas.height = h;
+    canvas.width = width;
+    canvas.height = height;
   }
-  return { resized, dpr };
+  return { resized, pixelRatio };
 }
 
 function flat(canvas: HTMLCanvasElement): Tube {
-  const ctx = canvas.getContext("2d")!;
+  const context = canvas.getContext("2d")!;
   return {
     draw(source, fresh) {
       const { resized } = fit(canvas);
       if (fresh || resized) {
-        ctx.drawImage(source, 0, 0, canvas.width, canvas.height);
+        context.drawImage(source, 0, 0, canvas.width, canvas.height);
       }
     },
     dispose() {},
@@ -148,16 +146,15 @@ function crt(canvas: HTMLCanvasElement, gl: WebGLRenderingContext): Tube {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-  const uRes = gl.getUniformLocation(program, "uRes");
-  const uSrc = gl.getUniformLocation(program, "uSrc");
-  const uTime = gl.getUniformLocation(program, "uTime");
-  const uDpr = gl.getUniformLocation(program, "uDpr");
-  const uMotion = gl.getUniformLocation(program, "uMotion");
+  const resolutionUniform = gl.getUniformLocation(program, "uRes");
+  const sourceSizeUniform = gl.getUniformLocation(program, "uSrc");
+  const timeUniform = gl.getUniformLocation(program, "uTime");
+  const pixelRatioUniform = gl.getUniformLocation(program, "uDpr");
+  const motionUniform = gl.getUniformLocation(program, "uMotion");
 
   return {
     draw(source, fresh, seconds, motion) {
-      const { resized, dpr } = fit(canvas);
-      // A still tube with nothing new to show doesn't need redrawing.
+      const { resized, pixelRatio } = fit(canvas);
       if (!motion && !fresh && !resized) return;
       if (resized) gl.viewport(0, 0, canvas.width, canvas.height);
       if (fresh) {
@@ -170,11 +167,11 @@ function crt(canvas: HTMLCanvasElement, gl: WebGLRenderingContext): Tube {
           source
         );
       }
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform2f(uSrc, source.width, source.height);
-      gl.uniform1f(uTime, seconds);
-      gl.uniform1f(uDpr, dpr);
-      gl.uniform1f(uMotion, motion ? 1 : 0);
+      gl.uniform2f(resolutionUniform, canvas.width, canvas.height);
+      gl.uniform2f(sourceSizeUniform, source.width, source.height);
+      gl.uniform1f(timeUniform, seconds);
+      gl.uniform1f(pixelRatioUniform, pixelRatio);
+      gl.uniform1f(motionUniform, motion ? 1 : 0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     },
     dispose() {

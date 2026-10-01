@@ -1,7 +1,6 @@
 import type { Writing, WritingMetadata } from "$lib/types";
 import type { Component } from "svelte";
 
-/** Slug comes off the filename, so no writing declares its own. */
 function slugOf(path: string): string {
   return path.split("/").pop()!.replace(".md", "");
 }
@@ -15,7 +14,6 @@ const frontmatter = import.meta.glob<WritingMetadata>("./writings/*.md", {
   import: "metadata",
 });
 
-/** Lazy, so a writing's content is a chunk that loads when it is opened. */
 const content = new Map(
   Object.entries(
     import.meta.glob<{ default: Component; metadata: WritingMetadata }>(
@@ -24,12 +22,10 @@ const content = new Map(
   ).map(([path, load]) => [slugOf(path), load])
 );
 
-/** Newest first, resolved at build time — every page can just import it. */
 export const writings: Writing[] = Object.entries(frontmatter)
   .map(([path, metadata]) => ({ ...metadata, slug: slugOf(path) }))
   .sort((left, right) => Date.parse(right.date) - Date.parse(left.date));
 
-/** "Sep 2026": the month a writing went out, as its rows show it. */
 export function published(date: string): string {
   return new Date(date).toLocaleDateString("en-US", {
     month: "short",

@@ -18,11 +18,6 @@ type Item = {
 
 let pressing: Promise<Playlist[]> | null = null;
 
-/**
- * The public playlists on my Spotify profile, oldest first. They are read
- * once per build and baked into the footer and llms.txt, so a new one shows up with
- * the next deploy. Without credentials the list is empty.
- */
 export function playlists(): Promise<Playlist[]> {
   return (pressing ??= press());
 }
@@ -48,13 +43,15 @@ async function press(): Promise<Playlist[]> {
   const { items } = await get<{ items: SpotifyPlaylist[] }>(
     "me/playlists?limit=50"
   );
-  const mine = items.filter((p) => p.public && p.owner.id === me.id);
+  const mine = items.filter(
+    (playlist) => playlist.public && playlist.owner.id === me.id
+  );
 
   const pressed = await Promise.all(
-    mine.map(async (p) => {
+    mine.map(async (playlist) => {
       const added: Item[] = [];
       let next: string | null =
-        `playlists/${p.id}/items?limit=50&fields=next,items(added_at,track(type))`;
+        `playlists/${playlist.id}/items?limit=50&fields=next,items(added_at,track(type))`;
       while (next) {
         const page: { next: string | null; items: Item[] } = await get(next);
         added.push(...page.items);
@@ -64,9 +61,9 @@ async function press(): Promise<Playlist[]> {
       const kept = added.filter((item) => item.track?.type === "track");
       const dates = kept.map((item) => item.added_at).sort();
       return {
-        title: p.name,
-        note: plain(p.description),
-        url: p.external_urls.spotify,
+        title: playlist.name,
+        note: plain(playlist.description),
+        url: playlist.external_urls.spotify,
         started: dates[0] ?? "",
         updated: dates.at(-1) ?? "",
         tracks: kept.length,
@@ -83,10 +80,10 @@ async function press(): Promise<Playlist[]> {
 function plain(html: string): string {
   return html
     .replace(/<[^>]*>/g, "")
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) =>
-      String.fromCodePoint(parseInt(hex, 16))
+    .replace(/&#x([0-9a-f]+);/gi, (_, hexadecimal) =>
+      String.fromCodePoint(parseInt(hexadecimal, 16))
     )
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+    .replace(/&#(\d+);/g, (_, decimal) => String.fromCodePoint(Number(decimal)))
     .replaceAll("&quot;", '"')
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">")

@@ -78,13 +78,11 @@
     },
   ] as const;
 
-  // The Spotify row shows what is playing once the first answer is in.
   onMount(() => player.use());
   const song = $derived(player.data);
 
   const recent = writings.slice(0, 3);
 
-  /** The username is already in the link, so no row declares it twice. */
   function pathOf(href: string): string {
     return new URL(href).pathname.replace(/\/$/, "");
   }
@@ -120,7 +118,7 @@
   // re-measuring all four.
   const callout =
     "absolute flex items-center gap-2.5 font-mono text-[11px] whitespace-nowrap text-muted-foreground max-sm:hidden";
-  const lead =
+  const leader =
     "relative block h-px w-9.5 bg-subtle-foreground after:absolute after:top-[-3px] after:h-[7px] after:w-px after:bg-subtle-foreground after:content-['']";
 </script>
 
@@ -218,13 +216,13 @@
     />
 
     <span class="{callout} top-[166px] right-[calc(50%_+_118px)]">
-      live position<i class="{lead} after:right-0" aria-hidden="true"></i>
+      live position<i class="{leader} after:right-0" aria-hidden="true"></i>
     </span>
     <span class="{callout} top-[307px] left-[calc(50%_+_118px)]">
-      <i class="{lead} after:left-0" aria-hidden="true"></i>batch progress
+      <i class="{leader} after:left-0" aria-hidden="true"></i>batch progress
     </span>
     <span class="{callout} top-[401px] left-[calc(50%_+_118px)]">
-      <i class="{lead} after:left-0" aria-hidden="true"></i>one tap to nav
+      <i class="{leader} after:left-0" aria-hidden="true"></i>one tap to nav
     </span>
   </div>
   <p class="mt-4 font-mono text-[11.5px] text-muted-foreground sm:hidden">

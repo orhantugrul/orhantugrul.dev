@@ -10,9 +10,8 @@
 
   const { latest }: { latest: Latest | null } = $props();
 
-  const ZONE = "Europe/Istanbul";
+  const TIME_ZONE = "Europe/Istanbul";
 
-  // The files a crawler or a model reads instead of the page.
   const files = ["sitemap.xml", "robots.txt", "llms.txt"];
 
   const commit = __COMMIT__;
@@ -21,7 +20,7 @@
   const date = committed?.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
-    timeZone: ZONE,
+    timeZone: TIME_ZONE,
   });
 
   // The page is prerendered, so the clock and how long ago are worked out
@@ -42,8 +41,8 @@
 
     if (committed) {
       // Calendar days on Istanbul's clock, so last night's commit is yesterday.
-      const day = (d: Date) =>
-        Date.parse(d.toLocaleDateString("en-CA", { timeZone: ZONE }));
+      const day = (date: Date) =>
+        Date.parse(date.toLocaleDateString("en-CA", { timeZone: TIME_ZONE }));
       const days = Math.round((day(new Date()) - day(committed)) / 864e5);
       age = days < 1 ? "today" : days === 1 ? "yesterday" : `${days} days ago`;
     }
@@ -58,7 +57,7 @@
     now?.toLocaleTimeString("en-GB", {
       hour: "2-digit",
       minute: "2-digit",
-      timeZone: ZONE,
+      timeZone: TIME_ZONE,
     })
   );
   const today = $derived(
@@ -66,14 +65,14 @@
       weekday: "short",
       month: "short",
       day: "numeric",
-      timeZone: ZONE,
+      timeZone: TIME_ZONE,
     })
   );
 
   const cell = "flex min-w-0 flex-col gap-2.5";
   const label =
     "font-mono text-[10.5px] leading-[1.75] tracking-[0.08em] text-subtle-foreground uppercase";
-  const big = "font-mono text-[18px] leading-none tabular-nums";
+  const figure = "font-mono text-[18px] leading-none tabular-nums";
   const value = "font-mono text-[12px] leading-[1.6] text-muted-foreground";
 </script>
 
@@ -87,13 +86,12 @@
     <span class={label}>Local time</span>
     {#if time}
       {@const [hours, minutes] = time.split(":")}
-      <!-- The colon ticks once a second, so the clock reads as live. -->
-      <span class={big}
+      <span class={figure}
         >{hours}<span class="animate-blink motion-reduce:animate-none">:</span
         >{minutes}</span
       >
     {:else}
-      <span class={big}>—</span>
+      <span class={figure}>—</span>
     {/if}
     <span class={value}>{today ? `${today} · ` : ""}UTC+3</span>
   </div>
@@ -101,13 +99,13 @@
     <span class={label}>Revision</span>
     {#if commit === "unknown"}
       <!-- Built without git: no hash to show or link to. -->
-      <span class={big}>—</span>
+      <span class={figure}>—</span>
     {:else}
       <a
         href={commitUrl}
         target="_blank"
         rel="external noopener noreferrer"
-        class="self-start transition {big} hover:text-foreground"
+        class="self-start transition {figure} hover:text-foreground"
         >{commit.slice(0, 7)}</a
       >
     {/if}

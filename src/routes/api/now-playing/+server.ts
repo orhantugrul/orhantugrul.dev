@@ -18,7 +18,7 @@ function shape(
   track: Track,
   state: NowPlaying["state"],
   progress: number,
-  at: number
+  sampledAt: number
 ): NowPlaying {
   // The 300px image: enough for the dither, a fraction of the 640px one.
   const images = [...track.album.images].sort((a, b) => a.width - b.width);
@@ -32,11 +32,10 @@ function shape(
     url: track.external_urls.spotify,
     length: track.duration_ms,
     progress,
-    at,
+    sampledAt,
   };
 }
 
-/** Asks Spotify what is on, or what played last; null when it can't say. */
 async function ask(
   secrets: Secrets,
   fetcher: typeof fetch
@@ -48,14 +47,14 @@ async function ask(
   )
     return null;
 
-  const auth = {
+  const authorizationHeaders = {
     authorization: `Bearer ${await accessToken(secrets as Required<Secrets>, fetcher)}`,
   };
 
   // 204 means nothing is loaded in any player; a podcast has no `album`.
   const current = await fetcher(
     "https://api.spotify.com/v1/me/player/currently-playing",
-    { headers: auth }
+    { headers: authorizationHeaders }
   );
   // Rate limited or failing: don't spend a second call finding out again.
   if (current.status >= 400) throw new Error(`player: ${current.status}`);
@@ -76,7 +75,7 @@ async function ask(
 
   const recent = await fetcher(
     "https://api.spotify.com/v1/me/player/recently-played?limit=1",
-    { headers: auth }
+    { headers: authorizationHeaders }
   );
   if (!recent.ok) return null;
   const body: { items: { track: Track; played_at: string }[] } =
@@ -89,10 +88,10 @@ async function ask(
 
 // The last answer Spotify gave, kept in the edge cache so a failed or empty
 // lookup still has a record to show instead of an empty footer.
-const LAST = "https://orhantugrul.dev/api/now-playing/last";
+const LAST_ANSWER_KEY = "https://orhantugrul.dev/api/now-playing/last";
 // Every open tab polls this route. A short shared cache means one Spotify
 // lookup per data centre answers all of them, well inside Spotify's limits.
-const FRESH = "https://orhantugrul.dev/api/now-playing/fresh";
+const FRESH_ANSWER_KEY = "https://orhantugrul.dev/api/now-playing/fresh";
 const FRESH_SECONDS = 10;
 
 const stored = (value: unknown, seconds: number) =>
@@ -104,24 +103,22 @@ export const GET: RequestHandler = async ({ platform, fetch }) => {
   const headers = { "cache-control": "no-store" };
   const cache = (platform?.caches as { default?: Cache } | undefined)?.default;
   const keep = (url: string, value: unknown, seconds: number) => {
-    const put = cache?.put(url, stored(value, seconds));
-    if (put) platform?.ctx.waitUntil(put);
+    const cacheWrite = cache?.put(url, stored(value, seconds));
+    if (cacheWrite) platform?.ctx.waitUntil(cacheWrite);
   };
 
-  const fresh = await cache?.match(FRESH);
+  const fresh = await cache?.match(FRESH_ANSWER_KEY);
   if (fresh) return json(await fresh.json(), { headers });
 
   let answer: NowPlaying | null = null;
   try {
     answer = await ask((platform?.env ?? {}) as Secrets, fetch);
-  } catch {
-    // Spotify being down falls through to the remembered record.
-  }
+  } catch {}
 
   if (answer) {
-    keep(LAST, answer, 31_536_000);
+    keep(LAST_ANSWER_KEY, answer, 31_536_000);
   } else {
-    const remembered = await cache?.match(LAST);
+    const remembered = await cache?.match(LAST_ANSWER_KEY);
     if (remembered) {
       const last: NowPlaying = await remembered.json();
       // Whatever it was doing then, it is not playing now.
@@ -129,6 +126,6 @@ export const GET: RequestHandler = async ({ platform, fetch }) => {
     }
   }
 
-  keep(FRESH, answer, FRESH_SECONDS);
+  keep(FRESH_ANSWER_KEY, answer, FRESH_SECONDS);
   return json(answer, { headers });
 };

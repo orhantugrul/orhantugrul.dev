@@ -25,7 +25,6 @@
     const terminal = new Terminal();
     const screen = tube(canvas);
 
-    // Everything on screen follows from these and the clock.
     let mode: "test" | "setup" | "boot" = "test";
     let started = performance.now();
     let selected = 0;
@@ -36,21 +35,24 @@
       mode === "test" && elapsed(now) >= TEST_DONE;
 
     const view = (now: number) => {
-      const visit = { path: missing, cols: terminal.cols, touch };
+      const visit = { path: missing, columns: terminal.columns, touch };
       if (mode === "setup") return setup(visit, selected, failed);
       if (mode === "boot") return booting(list[selected].name);
       return selftest(elapsed(now), visit);
     };
 
     let leaving = 0;
-    const boot = (i: number) => {
-      selected = i;
-      if (!list[i].ready) {
+    const boot = (deviceIndex: number) => {
+      selected = deviceIndex;
+      if (!list[deviceIndex].ready) {
         failed = true;
         return;
       }
       mode = "boot";
-      leaving = window.setTimeout(() => goto(hrefs[i]), motion ? 700 : 0);
+      leaving = window.setTimeout(
+        () => goto(hrefs[deviceIndex]),
+        motion ? 700 : 0
+      );
     };
     const enterSetup = () => {
       mode = "setup";
@@ -61,24 +63,26 @@
       started = -Infinity;
     };
 
-    const onKey = (e: KeyboardEvent) => {
-      if (e.target instanceof HTMLAnchorElement || mode === "boot") return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLAnchorElement || mode === "boot") return;
       const now = performance.now();
-      if (e.key === "Escape") {
-        e.preventDefault();
+      if (event.key === "Escape") {
+        event.preventDefault();
         if (mode === "setup") leaveSetup();
         else enterSetup();
-      } else if (e.key === "Enter") {
-        e.preventDefault();
+      } else if (event.key === "Enter") {
+        event.preventDefault();
         if (mode === "setup") boot(selected);
         else if (waiting(now)) boot(0);
       } else if (
         mode === "setup" &&
-        (e.key === "ArrowUp" || e.key === "ArrowDown")
+        (event.key === "ArrowUp" || event.key === "ArrowDown")
       ) {
-        e.preventDefault();
-        const n = list.length;
-        selected = (selected + (e.key === "ArrowUp" ? n - 1 : 1)) % n;
+        event.preventDefault();
+        const deviceCount = list.length;
+        selected =
+          (selected + (event.key === "ArrowUp" ? deviceCount - 1 : 1)) %
+          deviceCount;
         failed = false;
       }
     };
@@ -87,7 +91,7 @@
     // row boots from it.
     let hold = 0;
     let held = false;
-    const onDown = () => {
+    const onPointerDown = () => {
       if (!waiting(performance.now())) return;
       hold = window.setTimeout(() => {
         hold = 0;
@@ -95,7 +99,7 @@
         enterSetup();
       }, 600);
     };
-    const onUp = (e: PointerEvent) => {
+    const onPointerUp = (event: PointerEvent) => {
       if (held) {
         held = false;
       } else if (hold) {
@@ -103,14 +107,15 @@
         hold = 0;
         boot(0);
       } else if (mode === "setup") {
-        const i = terminal.rowAt(e.clientY, innerHeight) - DEVICE_ROW;
-        if (i >= 0 && i < list.length) boot(i);
+        const deviceIndex =
+          terminal.rowAt(event.clientY, innerHeight) - DEVICE_ROW;
+        if (deviceIndex >= 0 && deviceIndex < list.length) boot(deviceIndex);
       }
     };
 
     // A BIOS has no mouse, so the pointer hides until it moves.
     let idle = 0;
-    const onMove = () => {
+    const onPointerMove = () => {
       canvas.style.cursor = "";
       clearTimeout(idle);
       idle = window.setTimeout(() => (canvas.style.cursor = "none"), 1500);
@@ -138,11 +143,11 @@
     const overflow = root.style.overflow;
     root.style.overflow = "hidden";
     canvas.style.cursor = "none";
-    addEventListener("keydown", onKey);
+    addEventListener("keydown", onKeyDown);
     addEventListener("resize", resize);
-    canvas.addEventListener("pointerdown", onDown);
-    canvas.addEventListener("pointerup", onUp);
-    canvas.addEventListener("pointermove", onMove);
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("pointermove", onPointerMove);
 
     let alive = true;
     fonts().then(() => {
@@ -157,17 +162,17 @@
       cancelAnimationFrame(frame);
       [hold, idle, leaving].forEach(clearTimeout);
       root.style.overflow = overflow;
-      removeEventListener("keydown", onKey);
+      removeEventListener("keydown", onKeyDown);
       removeEventListener("resize", resize);
-      canvas.removeEventListener("pointerdown", onDown);
-      canvas.removeEventListener("pointerup", onUp);
-      canvas.removeEventListener("pointermove", onMove);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointermove", onPointerMove);
       screen.dispose();
     };
   };
 </script>
 
-<div class="fixed inset-0 z-50 bg-[#030304]">
+<div class="fixed inset-0 z-50 bg-black">
   <canvas
     {@attach bios}
     class="block size-full touch-none select-none"

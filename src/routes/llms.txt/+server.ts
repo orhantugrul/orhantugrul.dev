@@ -5,7 +5,6 @@ export const prerender = true;
 
 const origin = "https://orhantugrul.dev";
 
-// The site in plain Markdown for language models, per llmstxt.org.
 export async function GET() {
   const list = writings
     .map(

@@ -1,8 +1,7 @@
 import type { NowPlaying } from "$lib/types";
 
-const POLL = 30_000;
+const POLL_INTERVAL = 30_000;
 
-/** What Spotify is playing, for the Connect row. Polls only while used. */
 class Player {
   data = $state<NowPlaying | null>(null);
   now = $state(Date.now());
@@ -12,7 +11,7 @@ class Player {
       ? Math.min(
           this.data.length,
           this.data.state === "playing"
-            ? this.data.progress + (this.now - this.data.at)
+            ? this.data.progress + (this.now - this.data.sampledAt)
             : this.data.progress
         )
       : 0
@@ -38,11 +37,13 @@ class Player {
     this.#loading = false;
   }
 
-  /** Polls while at least one component uses it; returns the release. */
   use() {
     if (this.#users++ === 0) {
       this.load();
-      const poll = setInterval(() => document.hidden || this.load(), POLL);
+      const poll = setInterval(
+        () => document.hidden || this.load(),
+        POLL_INTERVAL
+      );
       const clock = setInterval(() => {
         this.now = Date.now();
         // The song ran out before the next poll: ask what came after it.

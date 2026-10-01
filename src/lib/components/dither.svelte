@@ -49,7 +49,7 @@ void main() {
   gl_FragColor = vec4(uInk * a, a);
 }`;
 
-  const CELL = 2;
+  const CELL_SIZE = 2;
 
   const dither: Attachment<HTMLCanvasElement> = (canvas) => {
     const gl = canvas.getContext("webgl", { antialias: false });
@@ -83,9 +83,9 @@ void main() {
     gl.enableVertexAttribArray(position);
     gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
-    const uSize = gl.getUniformLocation(program, "uSize");
-    const uTime = gl.getUniformLocation(program, "uTime");
-    const uInk = gl.getUniformLocation(program, "uInk");
+    const sizeUniform = gl.getUniformLocation(program, "uSize");
+    const timeUniform = gl.getUniformLocation(program, "uTime");
+    const inkUniform = gl.getUniformLocation(program, "uInk");
 
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     // Start mid-drift so the first frame is already a composed field.
@@ -95,7 +95,7 @@ void main() {
     let visible = false;
 
     const draw = () => {
-      gl.uniform1f(uTime, elapsed);
+      gl.uniform1f(timeUniform, elapsed);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
@@ -108,16 +108,16 @@ void main() {
     const ink = () => {
       probe.fillStyle = getComputedStyle(canvas).color;
       probe.fillRect(0, 0, 1, 1);
-      const [r, g, b] = probe.getImageData(0, 0, 1, 1).data;
-      gl.uniform3f(uInk, r / 255, g / 255, b / 255);
+      const [red, green, blue] = probe.getImageData(0, 0, 1, 1).data;
+      gl.uniform3f(inkUniform, red / 255, green / 255, blue / 255);
       draw();
     };
 
     const resize = () => {
-      canvas.width = Math.max(1, Math.round(canvas.clientWidth / CELL));
-      canvas.height = Math.max(1, Math.round(canvas.clientHeight / CELL));
+      canvas.width = Math.max(1, Math.round(canvas.clientWidth / CELL_SIZE));
+      canvas.height = Math.max(1, Math.round(canvas.clientHeight / CELL_SIZE));
       gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uSize, canvas.width, canvas.height);
+      gl.uniform2f(sizeUniform, canvas.width, canvas.height);
       draw();
     };
 

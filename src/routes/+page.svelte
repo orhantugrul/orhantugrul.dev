@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { resolve } from "$app/paths";
   import { ArrowRight, ArrowUpRight } from "@lucide/svelte";
   import kuryeDark from "$lib/assets/kurye-dark.webp";
@@ -9,13 +8,16 @@
   import LinkedInIcon from "$lib/components/icons/linkedin.svelte";
   import PaketMutfakIcon from "$lib/components/icons/paket-mutfak.svelte";
   import SpinexIcon from "$lib/components/icons/spinex.svelte";
+  import SpotifyIcon from "$lib/components/icons/spotify.svelte";
   import XIcon from "$lib/components/icons/x.svelte";
   import YapiKrediIcon from "$lib/components/icons/yapi-kredi.svelte";
+  import Callout from "$lib/components/callout.svelte";
   import Dither from "$lib/components/dither.svelte";
+  import Equalizer from "$lib/components/equalizer.svelte";
+  import Link from "$lib/components/link.svelte";
   import Navigation from "$lib/components/navigation.svelte";
   import Unpublished from "$lib/components/unpublished.svelte";
   import { published, writings } from "$lib/writings";
-  import Spotify from "$lib/components/icons/spotify.svelte";
   import { player } from "$lib/now-playing.svelte";
 
   const title = "Orhan Tugrul Sahin — Software Engineer";
@@ -53,73 +55,44 @@
       icon: SpinexIcon,
       href: "https://www.thespinex.com/",
     },
-  ];
+  ] as const;
 
   const connectLinks = [
     {
       label: "GitHub",
       icon: GitHubIcon,
       href: "https://github.com/orhantugrul",
+      handle: "/orhantugrul",
     },
     {
       label: "X (Twitter)",
       icon: XIcon,
       href: "https://x.com/orhantuurul",
+      handle: "/orhantuurul",
     },
     {
       label: "LinkedIn",
       icon: LinkedInIcon,
       href: "https://www.linkedin.com/in/orhantugrul",
+      handle: "/in/orhantugrul",
     },
     {
       label: "Spotify",
-      icon: Spotify,
+      icon: SpotifyIcon,
       href: "https://open.spotify.com/user/gntu0y8a2id5en2bh6hvxheo2",
+      handle: "/user/gntu0y8a2id5en2bh6hvxheo2",
     },
   ] as const;
 
-  onMount(() => player.use());
-  const song = $derived(player.data);
+  const stateLabels = {
+    playing: "Now playing:",
+    paused: "Paused:",
+    offline: "Last played:",
+  };
+
+  $effect(() => player.use());
 
   const recent = writings.slice(0, 3);
-
-  function pathOf(href: string): string {
-    return new URL(href).pathname.replace(/\/$/, "");
-  }
-
-  const section = "border-b border-border px-8 pt-10 pb-14";
-  const label =
-    "font-mono text-[11px] font-medium tracking-[0.1em] uppercase text-subtle-foreground";
-  // One row shape for every list below: icon gutter, label, body, a mono
-  // token, then a fixed slot for the outbound mark — so both the token and
-  // the arrow keep their own rail. Sections opt cells out on small screens,
-  // never resize them.
-  const row =
-    "grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5";
-  const rowLink = "transition opacity-82 hover:opacity-100";
-  const rowIcon = "flex h-5 items-center text-subtle-foreground";
-  const rowMono =
-    "font-mono text-[12px] whitespace-nowrap text-subtle-foreground";
-  const rowMeta =
-    "font-mono text-[11.5px] whitespace-nowrap text-subtle-foreground";
-  const rowLift = "transition-colors duration-150 group-hover:text-foreground";
-  // Inline links carry an underline at rest; rows rely on hover alone, since
-  // there the whole row is the target.
-  const underline =
-    "underline decoration-foreground/40 decoration-1 underline-offset-[0.25em] transition-colors group-hover:decoration-foreground";
-
-  // Callouts on the Kurye capture. Each label sits at a fixed offset from the
-  // panel's centre line and its leader ends in a tick where it meets the
-  // device, the way a dimension line lands on an edge. The `top` values are
-  // measured off the capture, not guessed: it is 739x1510, so at w-55 it
-  // renders 449.5px tall under the panel's 36px of padding, and the bands land
-  // at 0.309 (map), 0.623 ("0/4 delivered") and 0.832 (Start Route). The crop
-  // at max-h-111 slices through the tab icons at 0.908. A new screenshot means
-  // re-measuring all four.
-  const callout =
-    "absolute flex items-center gap-2.5 font-mono text-[11px] whitespace-nowrap text-muted-foreground max-sm:hidden";
-  const leader =
-    "relative block h-px w-9.5 bg-subtle-foreground after:absolute after:top-[-3px] after:h-[7px] after:w-px after:bg-subtle-foreground after:content-['']";
 </script>
 
 <svelte:head>
@@ -132,60 +105,56 @@
 </svelte:head>
 
 <header
-  class="relative min-h-122 overflow-hidden border-b border-border md:min-h-132"
+  class="relative min-h-120 overflow-hidden border-b border-border md:min-h-128"
 >
   <Dither />
 
-  <div class="relative z-2 flex min-h-122 flex-col px-8 md:min-h-132">
+  <div class="relative z-2 flex min-h-120 flex-col px-8 md:min-h-128">
     <div class="flex h-16 shrink-0 items-center justify-end">
       <Navigation />
     </div>
-    <div class="flex flex-1 items-center pb-11 md:pb-14">
+    <div class="flex flex-1 items-center pb-12 md:pb-16">
       <div class="w-full">
-        <h1
-          class="text-[26px] leading-tight font-medium tracking-[-0.04em] sm:text-[30px]"
-        >
-          Hi, I’m Orhan
-        </h1>
-        <p
-          class="mt-1.5 text-[13.5px] tracking-[-0.012em] text-muted-foreground"
-        >
+        <h1 class="text-2xl font-medium sm:text-3xl">Hi, I’m Orhan</h1>
+        <p class="mt-1.5 text-sm text-muted-foreground">
           Software engineer in Istanbul
         </p>
-
         <div
-          class="mt-7 max-w-[52ch] space-y-3.5 text-[15px] leading-[1.6] tracking-[-0.012em] text-pretty text-muted-foreground sm:text-[16px]"
+          class="mt-8 max-w-lg space-y-4 text-base text-pretty text-muted-foreground sm:text-lg"
         >
           <p>
-            I build software at <a
+            I build software at <Link
               href={paketMutfakUrl}
-              target="_blank"
-              rel="external noopener noreferrer"
-              class="group font-medium whitespace-nowrap text-foreground opacity-82 transition hover:opacity-100"
+              class="group font-medium whitespace-nowrap text-foreground opacity-80 transition hover:opacity-100"
               ><PaketMutfakIcon
                 class="mr-1 inline size-[0.95em] align-[-0.12em]"
-              /><span class={underline}>Paket Mutfak</span></a
+              /><span
+                class="underline decoration-foreground/40 decoration-1 underline-offset-4 transition-colors group-hover:decoration-foreground"
+                >Paket Mutfak</span
+              ></Link
             >, from the app a courier holds at the door to the service behind it
             that keeps dispatch, orders and payments in step.
           </p>
           <p>Before this, treasury and leasing systems for banks.</p>
         </div>
 
-        <p
-          class="mt-7 max-w-[52ch] text-[13px] text-pretty text-muted-foreground"
-        >
-          If that sounds familiar, <a
+        <p class="mt-8 max-w-lg text-sm text-pretty text-muted-foreground">
+          If that sounds familiar, <Link
             href="https://cal.com/orhantugrul/chitchat"
-            target="_blank"
-            rel="external noopener noreferrer"
-            class="group font-medium text-foreground opacity-82 transition hover:opacity-100"
-            ><span class={underline}>book a chat</span></a
+            class="group font-medium whitespace-nowrap text-foreground opacity-80 transition hover:opacity-100"
+            ><span
+              class="underline decoration-foreground/40 decoration-1 underline-offset-4 transition-colors group-hover:decoration-foreground"
+              >book a chat</span
+            ></Link
           >
           or
-          <a
+          <Link
             href="mailto:hello@orhantugrul.dev"
-            class="group font-medium text-foreground opacity-82 transition hover:opacity-100"
-            ><span class={underline}>say hello</span></a
+            class="group font-medium whitespace-nowrap text-foreground opacity-80 transition hover:opacity-100"
+            ><span
+              class="underline decoration-foreground/40 decoration-1 underline-offset-4 transition-colors group-hover:decoration-foreground"
+              >say hello</span
+            ></Link
           >.
         </p>
       </div>
@@ -193,10 +162,14 @@
   </div>
 </header>
 
-<section class={section}>
-  <span class="{label} mb-7 block">Recent work</span>
+<section class="border-b border-border px-8 py-12">
+  <h2
+    class="mb-8 font-mono text-2xs font-medium tracking-widest text-subtle-foreground uppercase"
+  >
+    Recent work
+  </h2>
   <div
-    class="relative flex max-h-111 items-start justify-center overflow-hidden rounded-[10px] bg-card pt-9"
+    class="relative flex max-h-102 items-start justify-center overflow-hidden"
   >
     <img
       class="w-55 light:hidden"
@@ -215,93 +188,104 @@
       loading="lazy"
     />
 
-    <span class="{callout} top-[166px] right-[calc(50%_+_118px)]">
-      live position<i class="{leader} after:right-0" aria-hidden="true"></i>
-    </span>
-    <span class="{callout} top-[307px] left-[calc(50%_+_118px)]">
-      <i class="{leader} after:left-0" aria-hidden="true"></i>batch progress
-    </span>
-    <span class="{callout} top-[401px] left-[calc(50%_+_118px)]">
-      <i class="{leader} after:left-0" aria-hidden="true"></i>one tap to nav
-    </span>
+    <!-- Tops are measured off the 739x1510 capture at w-55; a new screenshot
+         means re-measuring them. -->
+    <Callout side="left" class="top-32.5">live position</Callout>
+    <Callout side="right" class="top-67.75">batch progress</Callout>
+    <Callout side="right" class="top-91.25">one tap to nav</Callout>
   </div>
-  <p class="mt-4 font-mono text-[11.5px] text-muted-foreground sm:hidden">
+  <p class="mt-4 font-mono text-xs text-muted-foreground sm:hidden">
     live position · batch progress · one tap to nav
   </p>
-  <div class="mt-6.5 flex items-baseline gap-3">
-    <h3 class="text-[16px] font-medium tracking-[-0.01em]">Kurye</h3>
+  <h3 class="mt-8 text-lg font-medium">Kurye</h3>
+  <div class="mt-3 space-y-3 text-pretty text-muted-foreground">
+    <p class="text-lg text-foreground">
+      Kurye is the app couriers at Paket Mutfak work their shift from. One
+      screen holds the orders assigned to them, the route between them, and what
+      is left of the batch.
+    </p>
+    <p>
+      The handover at the door is where the job used to stall. A card payment
+      now reaches the terminal the courier already carries with the order
+      attached to it, and the phone does not wait for the card to clear, so
+      nobody stands at a door watching a spinner.
+    </p>
+    <p>
+      The money has to be right every time. When a terminal goes quiet mid
+      payment, the system finds out what actually happened instead of guessing,
+      so no customer is charged twice and no delivery ends with money nobody can
+      account for.
+    </p>
   </div>
-  <p class="mt-3 max-w-[58ch]">
-    Kurye is the app couriers at Paket Mutfak work their shift from. One screen
-    holds the orders assigned to them, the route between them, and what is left
-    of the batch.
-  </p>
-  <p class="mt-3 max-w-[58ch] text-muted-foreground">
-    The handover at the door is where the job used to stall. A card payment now
-    reaches the terminal the courier already carries with the order attached to
-    it, and the phone does not wait for the card to clear, so nobody stands at a
-    door watching a spinner.
-  </p>
-  <p class="mt-3 max-w-[58ch] text-muted-foreground">
-    The money has to be right every time. When a terminal goes quiet mid
-    payment, the system finds out what actually happened instead of guessing, so
-    no customer is charged twice and no delivery ends with money nobody can
-    account for.
-  </p>
 </section>
 
-<section class={section}>
-  <div class="mb-7 flex items-baseline justify-between">
-    <span class={label}>Writing</span>
-    <a
+<section class="border-b border-border px-8 py-12">
+  <div class="mb-8 flex items-baseline justify-between">
+    <h2
+      class="font-mono text-2xs font-medium tracking-widest text-subtle-foreground uppercase"
+    >
+      Writing
+    </h2>
+    <Link
       href={resolve("/writing")}
-      class="group flex items-center gap-1.5 font-mono text-[12px] text-muted-foreground transition hover:text-foreground"
+      class="group flex items-center gap-1.5 font-mono text-xs text-muted-foreground transition hover:text-foreground"
     >
       See all
-      <ArrowRight class="size-3.5 text-subtle-foreground {rowLift}" />
-    </a>
+      <ArrowRight
+        class="size-3.5 text-subtle-foreground transition-colors group-hover:text-foreground"
+      />
+    </Link>
   </div>
   {#if writings.length > 0}
     <ul class="space-y-1">
       {#each recent as { slug, date, title: writingTitle, readingTime } (slug)}
         <li>
-          <a
+          <Link
             href={resolve("/writing/[slug]", { slug })}
-            class="{row} {rowLink} group max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
+            class="group grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5 opacity-80 transition hover:opacity-100 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
           >
-            <span class="{rowMono} col-start-2 tabular-nums max-sm:col-start-1"
+            <span
+              class="col-start-2 font-mono text-xs whitespace-nowrap text-subtle-foreground tabular-nums max-sm:col-start-1"
               >{published(date)}</span
             >
             <span class="truncate font-medium">{writingTitle}</span>
-            <span class={rowMeta}>{readingTime} min</span>
-            <ArrowRight class="{rowLift} size-3.5 text-subtle-foreground" />
-          </a>
+            <span
+              class="font-mono text-xs whitespace-nowrap text-subtle-foreground"
+              >{readingTime} min</span
+            >
+            <ArrowRight
+              class="-col-end-1 row-start-1 size-3.5 text-subtle-foreground transition-colors group-hover:text-foreground"
+            />
+          </Link>
         </li>
       {/each}
     </ul>
   {:else}
     <Unpublished
-      list="space-y-1"
-      class="{row} opacity-82 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
+      class="space-y-1"
+      row="grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5 opacity-80 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem]"
       gutter
     />
   {/if}
 </section>
 
-<section class={section}>
-  <span class="{label} mb-7 block">Experience</span>
+<section class="border-b border-border px-8 py-12">
+  <h2
+    class="mb-8 font-mono text-2xs font-medium tracking-widest text-subtle-foreground uppercase"
+  >
+    Experience
+  </h2>
   <ul class="space-y-1">
     {#each experiences as { period, role, company, href, icon: Icon } (company)}
       <li>
-        <a
+        <Link
           {href}
-          target="_blank"
-          rel="external noopener noreferrer"
-          class="{row} {rowLink} group max-sm:grid-cols-[1.5rem_minmax(0,1fr)_auto_0.875rem] max-sm:gap-y-0"
+          class="group grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5 opacity-80 transition hover:opacity-100 max-sm:grid-cols-[1.5rem_minmax(0,1fr)_auto_0.875rem] max-sm:gap-y-0"
         >
-          <span class="{rowIcon} {rowLift}">
-            <Icon class="size-4" />
-          </span>
+          <span
+            class="flex h-5 items-center text-subtle-foreground transition-colors group-hover:text-foreground"
+            ><Icon class="size-4" /></span
+          >
           <span class="truncate font-medium text-foreground max-sm:col-start-2"
             >{company}</span
           >
@@ -309,57 +293,41 @@
             class="truncate text-muted-foreground max-sm:col-start-2 max-sm:row-start-2"
             >{role}</span
           >
-          <span class="{rowMeta} max-sm:col-start-3 max-sm:row-start-1"
+          <span
+            class="font-mono text-xs whitespace-nowrap text-subtle-foreground max-sm:col-start-3 max-sm:row-start-1"
             >{period}</span
           >
           <ArrowUpRight
-            class="{rowLift} size-3.5 text-subtle-foreground max-sm:col-start-4 max-sm:row-start-1"
+            class="-col-end-1 row-start-1 size-3.5 text-subtle-foreground transition-colors group-hover:text-foreground"
           />
-        </a>
+        </Link>
       </li>
     {/each}
   </ul>
 </section>
 
-<section class={section} id="connect">
-  <span class="{label} mb-7 block">Connect</span>
+<section id="connect" class="border-b border-border px-8 py-12">
+  <h2
+    class="mb-8 font-mono text-2xs font-medium tracking-widest text-subtle-foreground uppercase"
+  >
+    Connect
+  </h2>
   <ul class="space-y-1">
-    {#each connectLinks as { label: network, href, icon: Icon } (href)}
-      {@const live = network === "Spotify" ? song : null}
+    {#each connectLinks as { label, href, handle, icon: Icon } (href)}
+      {@const live = Icon === SpotifyIcon ? player.data : null}
       <li>
-        <a
+        <Link
           {href}
-          target="_blank"
-          rel="external noopener noreferrer"
-          class="{row} {rowLink} group max-sm:grid-cols-[1.5rem_minmax(0,1fr)_0.875rem]"
+          class="group grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5 opacity-80 transition hover:opacity-100 max-sm:grid-cols-[1.5rem_minmax(0,1fr)_0.875rem]"
         >
-          <span class="{rowIcon} {rowLift}">
-            <Icon class="size-4" />
-          </span>
-          <span class="font-medium max-sm:hidden">{network}</span>
+          <span
+            class="flex h-5 items-center text-subtle-foreground transition-colors group-hover:text-foreground"
+            ><Icon class="size-4" /></span
+          >
+          <span class="font-medium max-sm:hidden">{label}</span>
           {#if live}
-            <!-- The bars carry the state: moving while it plays, frozen mid-move
-                 when paused, flat once the player is closed. -->
             <span class="flex min-w-0 items-center gap-2.5">
-              <span
-                class="flex h-2.5 shrink-0 items-end gap-[1.5px]"
-                aria-hidden="true"
-              >
-                {#each [0, -0.4, -0.75] as delay (delay)}
-                  <span
-                    class={[
-                      "h-full w-0.5 origin-bottom transition-transform duration-300",
-                      live.state === "offline"
-                        ? "scale-y-20 bg-subtle-foreground"
-                        : "animate-equalizer",
-                      live.state === "playing" && "bg-[#1db954]",
-                      live.state === "paused" &&
-                        "bg-muted-foreground [animation-play-state:paused]",
-                    ]}
-                    style:animation-delay="{delay}s"
-                  ></span>
-                {/each}
-              </span>
+              <Equalizer state={live.state} />
               <span
                 class={[
                   "truncate",
@@ -368,23 +336,17 @@
                     : "text-foreground",
                 ]}
               >
-                <span class="sr-only"
-                  >{live.state === "playing"
-                    ? "Now playing:"
-                    : live.state === "paused"
-                      ? "Paused:"
-                      : "Last played:"}</span
-                >
+                <span class="sr-only">{stateLabels[live.state]}</span>
                 {live.track}
               </span>
             </span>
           {:else}
-            <span class="truncate text-muted-foreground">{pathOf(href)}</span>
+            <span class="truncate text-muted-foreground">{handle}</span>
           {/if}
           <ArrowUpRight
-            class="{rowLift} col-start-5 size-3.5 text-subtle-foreground max-sm:col-start-3"
+            class="-col-end-1 row-start-1 size-3.5 text-subtle-foreground transition-colors group-hover:text-foreground"
           />
-        </a>
+        </Link>
       </li>
     {/each}
   </ul>

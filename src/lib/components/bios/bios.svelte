@@ -1,0 +1,192 @@
+<script lang="ts">
+  import type { Attachment } from "svelte/attachments";
+  import { goto } from "$app/navigation";
+  import { resolve } from "$app/paths";
+  import {
+    booting,
+    DEVICE_ROW,
+    devices,
+    selftest,
+    setup,
+    TEST_DONE,
+  } from "./screens";
+  import { tube } from "./crt";
+  import { fonts, Terminal } from "./terminal";
+
+  /** The path the visitor asked for, without its leading slash. */
+  const { path }: { path: string } = $props();
+
+  const BOOT_DELAY = 700;
+  const LONG_PRESS = 600;
+  const CURSOR_HIDE_DELAY = 1500;
+  const CURSOR_BLINK = 530;
+
+  const bios: Attachment<HTMLCanvasElement> = (canvas) => {
+    const missing = "/" + path;
+    const list = devices(missing);
+    const motion = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const touch = matchMedia("(hover: none)").matches;
+    const terminal = new Terminal();
+    const screen = tube(canvas);
+
+    let mode: "test" | "setup" | "boot" = "test";
+    let started = performance.now();
+    let selected = 0;
+    let failed = false;
+
+    const elapsed = (now: number) => (motion ? now - started : Infinity);
+    const waiting = (now: number) =>
+      mode === "test" && elapsed(now) >= TEST_DONE;
+
+    const view = (now: number) => {
+      const visit = { path: missing, columns: terminal.columns, touch };
+      if (mode === "setup") return setup(visit, selected, failed);
+      if (mode === "boot") return booting(list[selected].name);
+      return selftest(elapsed(now), visit);
+    };
+
+    let leaving = 0;
+    const boot = (deviceIndex: number) => {
+      selected = deviceIndex;
+      const { href } = list[deviceIndex];
+      if (!href) {
+        failed = true;
+        return;
+      }
+      mode = "boot";
+      leaving = window.setTimeout(() => goto(href), motion ? BOOT_DELAY : 0);
+    };
+    const enterSetup = () => {
+      mode = "setup";
+      failed = false;
+    };
+    const leaveSetup = () => {
+      mode = "test";
+      started = -Infinity;
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLAnchorElement || mode === "boot") return;
+      const now = performance.now();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        if (mode === "setup") leaveSetup();
+        else enterSetup();
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        if (mode === "setup") boot(selected);
+        else if (waiting(now)) boot(0);
+      } else if (
+        mode === "setup" &&
+        (event.key === "ArrowUp" || event.key === "ArrowDown")
+      ) {
+        event.preventDefault();
+        const deviceCount = list.length;
+        selected =
+          (selected + (event.key === "ArrowUp" ? deviceCount - 1 : 1)) %
+          deviceCount;
+        failed = false;
+      }
+    };
+
+    // A tap continues and a long press enters setup; in setup, a tap on a
+    // row boots from it.
+    let hold = 0;
+    let held = false;
+    const onPointerDown = () => {
+      if (!waiting(performance.now())) return;
+      hold = window.setTimeout(() => {
+        hold = 0;
+        held = true;
+        enterSetup();
+      }, LONG_PRESS);
+    };
+    const onPointerUp = (event: PointerEvent) => {
+      if (held) {
+        held = false;
+      } else if (hold) {
+        clearTimeout(hold);
+        hold = 0;
+        boot(0);
+      } else if (mode === "setup") {
+        const deviceIndex =
+          terminal.rowAt(event.clientY, innerHeight) - DEVICE_ROW;
+        if (deviceIndex >= 0 && deviceIndex < list.length) boot(deviceIndex);
+      }
+    };
+
+    // A BIOS has no mouse, so the pointer hides until it moves.
+    let idle = 0;
+    const onPointerMove = () => {
+      canvas.style.cursor = "";
+      clearTimeout(idle);
+      idle = window.setTimeout(
+        () => (canvas.style.cursor = "none"),
+        CURSOR_HIDE_DELAY
+      );
+    };
+
+    // The terminal is redrawn only when the frame's content changes; the
+    // tube keeps flickering either way.
+    let frame = 0;
+    let last = "";
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      const shown = view(now);
+      const blink = Math.floor(now / CURSOR_BLINK) % 2 === 0;
+      const key = JSON.stringify(shown) + blink + terminal.canvas.width;
+      const fresh = key !== last;
+      if (fresh) {
+        terminal.draw(shown, blink);
+        last = key;
+      }
+      screen.draw(terminal.canvas, fresh, now / 1000, motion);
+    };
+
+    const resize = () => terminal.resize(innerWidth, innerHeight);
+    const root = document.documentElement;
+    const overflow = root.style.overflow;
+    root.style.overflow = "hidden";
+    canvas.style.cursor = "none";
+    addEventListener("keydown", onKeyDown);
+    addEventListener("resize", resize);
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("pointermove", onPointerMove);
+
+    let alive = true;
+    fonts().then(() => {
+      if (!alive) return;
+      resize();
+      started = performance.now();
+      frame = requestAnimationFrame(tick);
+    });
+
+    return () => {
+      alive = false;
+      cancelAnimationFrame(frame);
+      [hold, idle, leaving].forEach(clearTimeout);
+      root.style.overflow = overflow;
+      removeEventListener("keydown", onKeyDown);
+      removeEventListener("resize", resize);
+      canvas.removeEventListener("pointerdown", onPointerDown);
+      canvas.removeEventListener("pointerup", onPointerUp);
+      canvas.removeEventListener("pointermove", onPointerMove);
+      screen.dispose();
+    };
+  };
+</script>
+
+<div class="fixed inset-0 z-50 bg-black">
+  <canvas
+    {@attach bios}
+    class="block size-full touch-none select-none"
+    aria-hidden="true"
+  ></canvas>
+  <div class="sr-only">
+    <h1>Page not found</h1>
+    <p>/{path} could not be found.</p>
+    <a href={resolve("/")}>Continue to the home page</a>
+    <a href={resolve("/writing")}>Read the writing</a>
+  </div>
+</div>

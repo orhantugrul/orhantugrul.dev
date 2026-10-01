@@ -2,53 +2,50 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
 
-/* Console: dark by default; `.light` on <html> flips the whole token set. */
 @custom-variant light (&:where(.light, .light *));
 
 :root {
-  --bg: #0b0c0e;
-  --ink: #e8e8e6;
-  --dim: #8b8e94;
-  --faint: #5c5f66;
-  --rule: color-mix(in srgb, var(--ink) 10%, transparent);
-  --panel: #0f1113;
-  --panel-2: #131518;
-  --accent: #7aa7f2;
-  --prose-ink: #c4c5c9;
-  --sel: rgba(122, 167, 242, 0.3);
+  --background: var(--color-zinc-950);
+  --foreground: var(--color-zinc-200);
+  --muted-foreground: var(--color-zinc-400);
+  --subtle-foreground: var(--color-zinc-600);
+  --border: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --card: var(--color-zinc-900);
+  --muted: var(--color-zinc-900);
+  --ring: var(--color-blue-400);
+  --prose-foreground: var(--color-zinc-300);
+  --selection: color-mix(in srgb, var(--color-blue-400) 30%, transparent);
 }
 
 .light {
-  --bg: #f6f6f4;
-  --ink: #17181a;
-  --dim: #5c6167;
-  --faint: #989ca3;
-  --rule: color-mix(in srgb, var(--ink) 12%, transparent);
-  --panel: #fcfcfb;
-  --panel-2: #efefec;
-  --accent: #2f5fb0;
-  --prose-ink: #393c41;
-  --sel: rgba(47, 95, 176, 0.16);
+  --background: var(--color-zinc-100);
+  --foreground: var(--color-zinc-900);
+  --muted-foreground: var(--color-zinc-600);
+  --subtle-foreground: var(--color-zinc-400);
+  --border: color-mix(in srgb, var(--foreground) 12%, transparent);
+  --card: var(--color-zinc-50);
+  --muted: var(--color-zinc-200);
+  --ring: var(--color-blue-700);
+  --prose-foreground: var(--color-zinc-700);
+  --selection: color-mix(in srgb, var(--color-blue-700) 16%, transparent);
 }
 
 @theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--ink);
-  --color-dim: var(--dim);
-  --color-faint: var(--faint);
-  --color-rule: var(--rule);
-  --color-panel: var(--panel);
-
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-ring: var(--ring);
+  --color-selection: var(--selection);
   --font-sans:
     "Geist Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --animate-equalizer: equalizer 1.1s ease-in-out infinite;
+  --animate-blink: blink 1s steps(1) infinite;
 
-  --default-transition-duration: 120ms;
-
-  --animate-eq: eq 1.1s ease-in-out infinite;
-  --animate-tick: tick 1s steps(1) infinite;
-
-  @keyframes eq {
+  @keyframes equalizer {
     0%,
     100% {
       transform: scaleY(0.35);
@@ -57,160 +54,148 @@
       transform: scaleY(1);
     }
   }
-  @keyframes tick {
+  @keyframes blink {
     50% {
       opacity: 0.2;
     }
   }
 }
 
-@layer base {
-  ::selection {
-    background: var(--sel);
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-sans);
-    font-size: 14.5px;
-    line-height: 1.65;
-  }
-
-  a:focus-visible,
-  button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-}
-
 @layer components {
-  .link-hover {
-    transition-property: color, opacity, text-decoration-color;
-    transition-duration: 150ms;
-    transition-timing-function: ease-out;
-  }
-  /* Inline links carry an underline at rest; rows and nav rely on hover alone,
-     since there the whole row is the target. Offset is em-based so it tracks
-     whatever size the surrounding text is. */
-  .link-underline,
-  .prose a {
-    text-decoration-line: underline;
-    text-decoration-color: color-mix(in srgb, var(--ink) 40%, transparent);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.25em;
-    transition: text-decoration-color 150ms ease-out;
-  }
-  .link-hover:hover .link-underline,
-  .prose a:hover {
-    text-decoration-color: var(--ink);
-  }
-
   .prose {
     margin-top: 40px;
     max-width: 60ch;
   }
+
   .prose p {
-    color: var(--prose-ink);
+    color: var(--prose-foreground);
     margin-top: 18px;
     text-wrap: pretty;
   }
+
   .prose a {
-    color: var(--ink);
+    color: var(--foreground);
+    text-decoration-line: underline;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--foreground) 40%,
+      transparent
+    );
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color 150ms ease-out;
   }
+
+  .prose a:hover {
+    text-decoration-color: var(--foreground);
+  }
+
   .prose h2 {
     margin-top: 44px;
     font-size: 16px;
     font-weight: 500;
     letter-spacing: -0.01em;
   }
+
   .prose h2::before {
     content: "## ";
-    color: var(--faint);
+    color: var(--subtle-foreground);
     font-family: var(--font-mono);
     font-size: 13px;
   }
+
   .prose h3 {
     margin-top: 32px;
     font-size: 14.5px;
     font-weight: 500;
   }
+
   .prose h3::before {
     content: "### ";
-    color: var(--faint);
+    color: var(--subtle-foreground);
     font-family: var(--font-mono);
     font-size: 12px;
   }
+
   .prose ul,
   .prose ol {
     margin-top: 18px;
   }
+
   .prose ul li,
   .prose ol li {
-    color: var(--prose-ink);
+    color: var(--prose-foreground);
     padding-left: 20px;
     position: relative;
     margin-top: 8px;
   }
+
   .prose ul li::before {
     content: "–";
     position: absolute;
     left: 0;
-    color: var(--faint);
+    color: var(--subtle-foreground);
   }
+
   .prose ol {
     counter-reset: item;
   }
+
   .prose ol li::before {
     counter-increment: item;
     content: counter(item) ".";
     position: absolute;
     left: 0;
-    color: var(--faint);
+    color: var(--subtle-foreground);
     font-family: var(--font-mono);
     font-size: 12px;
   }
+
   .prose blockquote {
     margin-top: 18px;
     padding-left: 18px;
-    border-left: 2px solid var(--rule);
-    color: var(--dim);
+    border-left: 2px solid var(--border);
+    color: var(--muted-foreground);
   }
+
   .prose code {
     font-family: var(--font-mono);
     font-size: 0.88em;
-    background: var(--panel-2);
-    border: 1px solid var(--rule);
+    background: var(--muted);
+    border: 1px solid var(--border);
     border-radius: 4px;
     padding: 1.5px 5px;
   }
+
   .prose pre {
     margin-top: 22px;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--border);
     border-radius: 8px;
-    background: var(--panel);
+    background: var(--card);
     overflow-x: auto;
     padding: 16px;
     font-family: var(--font-mono);
     font-size: 12.5px;
     line-height: 1.7;
-    color: var(--prose-ink);
+    color: var(--prose-foreground);
   }
+
   .prose pre code {
     background: none;
     border: 0;
     padding: 0;
     font-size: inherit;
   }
+
   .prose img {
     margin-top: 22px;
-    border: 1px solid var(--rule);
+    border: 1px solid var(--border);
     border-radius: 8px;
   }
+
   .prose hr {
     margin-top: 32px;
     border: 0;
-    border-top: 1px solid var(--rule);
+    border-top: 1px solid var(--border);
   }
 }

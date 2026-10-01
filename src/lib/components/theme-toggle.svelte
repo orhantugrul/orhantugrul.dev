@@ -15,7 +15,7 @@
 <button
   type="button"
   aria-label="Toggle theme"
-  class="cursor-pointer text-dim hover:text-foreground"
+  class="cursor-pointer text-muted-foreground hover:text-foreground"
   onclick={toggleTheme}
 >
   <Sun class="light:hidden" size={14} strokeWidth={1.8} />

@@ -24,10 +24,10 @@
   <Navigation />
 </header>
 
-<article class="border-b border-rule px-8 pt-16 pb-18">
+<article class="border-b border-border px-8 pt-16 pb-18">
   <!-- quiet mono back button — never breadcrumb paths -->
   <a
-    class="link-hover mb-6.5 inline-block font-mono text-[12px] text-faint hover:text-foreground"
+    class="mb-6.5 inline-block font-mono text-[12px] text-subtle-foreground transition hover:text-foreground"
     href={resolve("/writing")}
   >
     ← back
@@ -37,7 +37,7 @@
   >
     {metadata.title}
   </h1>
-  <p class="mt-3.5 font-mono text-[12px] text-faint tabular-nums">
+  <p class="mt-3.5 font-mono text-[12px] text-subtle-foreground tabular-nums">
     <time datetime={metadata.date}>{metadata.date.slice(0, 10)}</time>
     · {metadata.readingTime} min read
   </p>

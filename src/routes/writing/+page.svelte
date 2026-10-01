@@ -14,8 +14,9 @@
   const row =
     "grid grid-cols-[6.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-4 py-3 opacity-82 max-sm:grid-cols-[5em_minmax(0,1fr)_auto_0.875rem] max-sm:gap-3";
   const rowLabel =
-    "font-mono text-[12px] whitespace-nowrap text-faint tabular-nums";
-  const rowMeta = "font-mono text-[11.5px] whitespace-nowrap text-faint";
+    "font-mono text-[12px] whitespace-nowrap text-subtle-foreground tabular-nums";
+  const rowMeta =
+    "font-mono text-[11.5px] whitespace-nowrap text-subtle-foreground";
 </script>
 
 <svelte:head>
@@ -30,11 +31,11 @@
   <Navigation />
 </header>
 
-<section class="border-b border-rule px-8 pt-10 pb-14">
+<section class="border-b border-border px-8 pt-10 pb-14">
   <h1 class="text-[24px] font-medium tracking-[-0.02em]">
     {writings.length ? "Things I wrote" : "Writing"}
   </h1>
-  <p class="mt-2.5 max-w-[50ch] text-dim">{description}</p>
+  <p class="mt-2.5 max-w-[50ch] text-muted-foreground">{description}</p>
 
   {#if writings.length > 0}
     <ul class="mt-10">
@@ -42,13 +43,13 @@
         <li>
           <a
             href={resolve("/writing/[slug]", { slug })}
-            class="{row} link-hover group hover:opacity-100"
+            class="{row} group transition hover:opacity-100"
           >
             <span class={rowLabel}>{published(date)}</span>
             <span class="truncate font-medium">{writingTitle}</span>
             <span class={rowMeta}>{readingTime} min</span>
             <ArrowRight
-              class="size-3.5 text-faint transition-colors duration-150 group-hover:text-foreground"
+              class="size-3.5 text-subtle-foreground transition-colors duration-150 group-hover:text-foreground"
             />
           </a>
         </li>

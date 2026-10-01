@@ -89,20 +89,26 @@
     return new URL(href).pathname.replace(/\/$/, "");
   }
 
-  const section = "border-b border-rule px-8 pt-10 pb-14";
+  const section = "border-b border-border px-8 pt-10 pb-14";
   const label =
-    "font-mono text-[11px] font-medium tracking-[0.1em] uppercase text-faint";
+    "font-mono text-[11px] font-medium tracking-[0.1em] uppercase text-subtle-foreground";
   // One row shape for every list below: icon gutter, label, body, a mono
   // token, then a fixed slot for the outbound mark — so both the token and
   // the arrow keep their own rail. Sections opt cells out on small screens,
   // never resize them.
   const row =
     "grid grid-cols-[1.5rem_9.5em_minmax(0,1fr)_auto_0.875rem] items-center gap-3 py-2.5";
-  const rowLink = "link-hover opacity-82 hover:opacity-100";
-  const rowIcon = "flex h-5 items-center text-faint";
-  const rowMono = "font-mono text-[12px] whitespace-nowrap text-faint";
-  const rowMeta = "font-mono text-[11.5px] whitespace-nowrap text-faint";
+  const rowLink = "transition opacity-82 hover:opacity-100";
+  const rowIcon = "flex h-5 items-center text-subtle-foreground";
+  const rowMono =
+    "font-mono text-[12px] whitespace-nowrap text-subtle-foreground";
+  const rowMeta =
+    "font-mono text-[11.5px] whitespace-nowrap text-subtle-foreground";
   const rowLift = "transition-colors duration-150 group-hover:text-foreground";
+  // Inline links carry an underline at rest; rows rely on hover alone, since
+  // there the whole row is the target.
+  const underline =
+    "underline decoration-foreground/40 decoration-1 underline-offset-[0.25em] transition-colors group-hover:decoration-foreground";
 
   // Callouts on the Kurye capture. Each label sits at a fixed offset from the
   // panel's centre line and its leader ends in a tick where it meets the
@@ -113,9 +119,9 @@
   // at max-h-111 slices through the tab icons at 0.908. A new screenshot means
   // re-measuring all four.
   const callout =
-    "absolute flex items-center gap-2.5 font-mono text-[11px] whitespace-nowrap text-dim max-sm:hidden";
+    "absolute flex items-center gap-2.5 font-mono text-[11px] whitespace-nowrap text-muted-foreground max-sm:hidden";
   const lead =
-    "relative block h-px w-9.5 bg-faint after:absolute after:top-[-3px] after:h-[7px] after:w-px after:bg-faint after:content-['']";
+    "relative block h-px w-9.5 bg-subtle-foreground after:absolute after:top-[-3px] after:h-[7px] after:w-px after:bg-subtle-foreground after:content-['']";
 </script>
 
 <svelte:head>
@@ -128,7 +134,7 @@
 </svelte:head>
 
 <header
-  class="relative min-h-122 overflow-hidden border-b border-rule md:min-h-132"
+  class="relative min-h-122 overflow-hidden border-b border-border md:min-h-132"
 >
   <Dither />
 
@@ -143,41 +149,45 @@
         >
           Hi, I’m Orhan
         </h1>
-        <p class="mt-1.5 text-[13.5px] tracking-[-0.012em] text-dim">
+        <p
+          class="mt-1.5 text-[13.5px] tracking-[-0.012em] text-muted-foreground"
+        >
           Software engineer in Istanbul
         </p>
 
         <div
-          class="mt-7 max-w-[52ch] space-y-3.5 text-[15px] leading-[1.6] tracking-[-0.012em] text-pretty text-dim sm:text-[16px]"
+          class="mt-7 max-w-[52ch] space-y-3.5 text-[15px] leading-[1.6] tracking-[-0.012em] text-pretty text-muted-foreground sm:text-[16px]"
         >
           <p>
             I build software at <a
               href={paketMutfakUrl}
               target="_blank"
               rel="external noopener noreferrer"
-              class="link-hover font-medium whitespace-nowrap text-foreground opacity-82 hover:opacity-100"
+              class="group font-medium whitespace-nowrap text-foreground opacity-82 transition hover:opacity-100"
               ><PaketMutfakIcon
                 class="mr-1 inline size-[0.95em] align-[-0.12em]"
-              /><span class="link-underline">Paket Mutfak</span></a
+              /><span class={underline}>Paket Mutfak</span></a
             >, from the app a courier holds at the door to the service behind it
             that keeps dispatch, orders and payments in step.
           </p>
           <p>Before this, treasury and leasing systems for banks.</p>
         </div>
 
-        <p class="mt-7 max-w-[52ch] text-[13px] text-pretty text-dim">
+        <p
+          class="mt-7 max-w-[52ch] text-[13px] text-pretty text-muted-foreground"
+        >
           If that sounds familiar, <a
             href="https://cal.com/orhantugrul/chitchat"
             target="_blank"
             rel="external noopener noreferrer"
-            class="link-hover font-medium text-foreground opacity-82 hover:opacity-100"
-            ><span class="link-underline">book a chat</span></a
+            class="group font-medium text-foreground opacity-82 transition hover:opacity-100"
+            ><span class={underline}>book a chat</span></a
           >
           or
           <a
             href="mailto:hello@orhantugrul.dev"
-            class="link-hover font-medium text-foreground opacity-82 hover:opacity-100"
-            ><span class="link-underline">say hello</span></a
+            class="group font-medium text-foreground opacity-82 transition hover:opacity-100"
+            ><span class={underline}>say hello</span></a
           >.
         </p>
       </div>
@@ -188,7 +198,7 @@
 <section class={section}>
   <span class="{label} mb-7 block">Recent work</span>
   <div
-    class="relative flex max-h-111 items-start justify-center overflow-hidden rounded-[10px] bg-panel pt-9"
+    class="relative flex max-h-111 items-start justify-center overflow-hidden rounded-[10px] bg-card pt-9"
   >
     <img
       class="w-55 light:hidden"
@@ -217,7 +227,7 @@
       <i class="{lead} after:left-0" aria-hidden="true"></i>one tap to nav
     </span>
   </div>
-  <p class="mt-4 font-mono text-[11.5px] text-dim sm:hidden">
+  <p class="mt-4 font-mono text-[11.5px] text-muted-foreground sm:hidden">
     live position · batch progress · one tap to nav
   </p>
   <div class="mt-6.5 flex items-baseline gap-3">
@@ -228,13 +238,13 @@
     holds the orders assigned to them, the route between them, and what is left
     of the batch.
   </p>
-  <p class="mt-3 max-w-[58ch] text-dim">
+  <p class="mt-3 max-w-[58ch] text-muted-foreground">
     The handover at the door is where the job used to stall. A card payment now
     reaches the terminal the courier already carries with the order attached to
     it, and the phone does not wait for the card to clear, so nobody stands at a
     door watching a spinner.
   </p>
-  <p class="mt-3 max-w-[58ch] text-dim">
+  <p class="mt-3 max-w-[58ch] text-muted-foreground">
     The money has to be right every time. When a terminal goes quiet mid
     payment, the system finds out what actually happened instead of guessing, so
     no customer is charged twice and no delivery ends with money nobody can
@@ -247,10 +257,10 @@
     <span class={label}>Writing</span>
     <a
       href={resolve("/writing")}
-      class="link-hover group flex items-center gap-1.5 font-mono text-[12px] text-dim hover:text-foreground"
+      class="group flex items-center gap-1.5 font-mono text-[12px] text-muted-foreground transition hover:text-foreground"
     >
       See all
-      <ArrowRight class="size-3.5 text-faint {rowLift}" />
+      <ArrowRight class="size-3.5 text-subtle-foreground {rowLift}" />
     </a>
   </div>
   {#if writings.length > 0}
@@ -266,7 +276,7 @@
             >
             <span class="truncate font-medium">{writingTitle}</span>
             <span class={rowMeta}>{readingTime} min</span>
-            <ArrowRight class="{rowLift} size-3.5 text-faint" />
+            <ArrowRight class="{rowLift} size-3.5 text-subtle-foreground" />
           </a>
         </li>
       {/each}
@@ -297,14 +307,15 @@
           <span class="truncate font-medium text-foreground max-sm:col-start-2"
             >{company}</span
           >
-          <span class="truncate text-dim max-sm:col-start-2 max-sm:row-start-2"
+          <span
+            class="truncate text-muted-foreground max-sm:col-start-2 max-sm:row-start-2"
             >{role}</span
           >
           <span class="{rowMeta} max-sm:col-start-3 max-sm:row-start-1"
             >{period}</span
           >
           <ArrowUpRight
-            class="{rowLift} size-3.5 text-faint max-sm:col-start-4 max-sm:row-start-1"
+            class="{rowLift} size-3.5 text-subtle-foreground max-sm:col-start-4 max-sm:row-start-1"
           />
         </a>
       </li>
@@ -341,10 +352,11 @@
                     class={[
                       "h-full w-0.5 origin-bottom transition-transform duration-300",
                       live.state === "offline"
-                        ? "scale-y-20 bg-faint"
-                        : "animate-eq",
+                        ? "scale-y-20 bg-subtle-foreground"
+                        : "animate-equalizer",
                       live.state === "playing" && "bg-[#1db954]",
-                      live.state === "paused" && "bg-dim [animation-play-state:paused]",
+                      live.state === "paused" &&
+                        "bg-muted-foreground [animation-play-state:paused]",
                     ]}
                     style:animation-delay="{delay}s"
                   ></span>
@@ -353,7 +365,9 @@
               <span
                 class={[
                   "truncate",
-                  live.state === "offline" ? "text-dim" : "text-foreground",
+                  live.state === "offline"
+                    ? "text-muted-foreground"
+                    : "text-foreground",
                 ]}
               >
                 <span class="sr-only"
@@ -367,10 +381,10 @@
               </span>
             </span>
           {:else}
-            <span class="truncate text-dim">{pathOf(href)}</span>
+            <span class="truncate text-muted-foreground">{pathOf(href)}</span>
           {/if}
           <ArrowUpRight
-            class="{rowLift} col-start-5 size-3.5 text-faint max-sm:col-start-3"
+            class="{rowLift} col-start-5 size-3.5 text-subtle-foreground max-sm:col-start-3"
           />
         </a>
       </li>

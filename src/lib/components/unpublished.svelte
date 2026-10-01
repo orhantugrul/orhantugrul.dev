@@ -28,14 +28,15 @@
       <p class={className} aria-hidden="true">
         {#if gutter}<span class="max-sm:hidden"></span>{/if}
         <span
-          class="{veil} font-mono text-[12px] whitespace-nowrap text-faint tabular-nums"
+          class="{veil} font-mono text-[12px] whitespace-nowrap text-subtle-foreground tabular-nums"
           >{date}</span
         >
-        <span class="{veil} min-w-0 truncate font-medium text-dim opacity-75"
+        <span
+          class="{veil} min-w-0 truncate font-medium text-muted-foreground opacity-75"
           >{title}</span
         >
         <span
-          class="{veil} font-mono text-[11.5px] whitespace-nowrap text-faint"
+          class="{veil} font-mono text-[11.5px] whitespace-nowrap text-subtle-foreground"
           >{time}</span
         >
       </p>

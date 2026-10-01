@@ -100,10 +100,15 @@ void main() {
     };
 
     // The ink is the canvas's own `color`, so it follows the theme tokens.
+    // Painting it onto a 1×1 canvas resolves any CSS color (oklch included)
+    // to sRGB bytes.
+    const probe = document.createElement("canvas").getContext("2d", {
+      willReadFrequently: true,
+    })!;
     const ink = () => {
-      const [r, g, b] = getComputedStyle(canvas)
-        .color.match(/\d+/g)!
-        .map(Number);
+      probe.fillStyle = getComputedStyle(canvas).color;
+      probe.fillRect(0, 0, 1, 1);
+      const [r, g, b] = probe.getImageData(0, 0, 1, 1).data;
       gl.uniform3f(uInk, r / 255, g / 255, b / 255);
       draw();
     };
@@ -163,6 +168,6 @@ void main() {
 
 <canvas
   {@attach dither}
-  class="pointer-events-none absolute inset-0 size-full text-faint opacity-0 transition-opacity duration-1000 [image-rendering:pixelated] data-ready:opacity-60"
+  class="pointer-events-none absolute inset-0 size-full text-subtle-foreground opacity-0 transition-opacity duration-1000 [image-rendering:pixelated] data-ready:opacity-60"
   aria-hidden="true"
 ></canvas>

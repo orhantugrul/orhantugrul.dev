@@ -23,7 +23,7 @@
       <a
         {href}
         aria-current={active ? "page" : null}
-        class="link-hover font-mono text-[12px] text-dim hover:text-foreground aria-[current=page]:text-foreground"
+        class="font-mono text-[12px] text-muted-foreground transition hover:text-foreground aria-[current=page]:text-foreground"
       >
         {label}
       </a>

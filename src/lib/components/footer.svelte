@@ -72,9 +72,9 @@
 
   const cell = "flex min-w-0 flex-col gap-2.5";
   const label =
-    "font-mono text-[10.5px] leading-[1.75] tracking-[0.08em] text-faint uppercase";
+    "font-mono text-[10.5px] leading-[1.75] tracking-[0.08em] text-subtle-foreground uppercase";
   const big = "font-mono text-[18px] leading-none tabular-nums";
-  const value = "font-mono text-[12px] leading-[1.6] text-dim";
+  const value = "font-mono text-[12px] leading-[1.6] text-muted-foreground";
 </script>
 
 <footer
@@ -89,7 +89,7 @@
       {@const [hours, minutes] = time.split(":")}
       <!-- The colon ticks once a second, so the clock reads as live. -->
       <span class={big}
-        >{hours}<span class="animate-tick motion-reduce:animate-none">:</span
+        >{hours}<span class="animate-blink motion-reduce:animate-none">:</span
         >{minutes}</span
       >
     {:else}
@@ -107,7 +107,7 @@
         href={commitUrl}
         target="_blank"
         rel="external noopener noreferrer"
-        class="link-hover self-start {big} hover:text-foreground"
+        class="self-start transition {big} hover:text-foreground"
         >{commit.slice(0, 7)}</a
       >
     {/if}
@@ -122,7 +122,7 @@
         href={latest.url}
         target="_blank"
         rel="external noopener noreferrer"
-        class="link-hover line-clamp-2 self-start text-[16px] leading-tight font-medium tracking-[-0.01em] hover:text-foreground"
+        class="line-clamp-2 self-start text-[16px] leading-tight font-medium tracking-[-0.01em] transition hover:text-foreground"
         >{latest.title}</a
       >
       <span class={value}
@@ -137,7 +137,7 @@
         <a
           href="/{file}"
           rel="external"
-          class="link-hover self-start hover:text-foreground">{file}</a
+          class="self-start transition hover:text-foreground">{file}</a
         >
       {/each}
     </nav>

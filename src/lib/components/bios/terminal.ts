@@ -10,7 +10,7 @@ const COLORS = {
   destructive: "oklch(70.4% 0.191 22.216)", // red-400
 };
 
-export type Color = keyof typeof COLORS;
+type Color = keyof typeof COLORS;
 /** A run of text; `right` pushes it against the last column. */
 export type Span = { text: string; color?: Color; right?: boolean };
 export type Line = { spans: Span[]; fill?: Color };
@@ -18,7 +18,7 @@ export type Line = { spans: Span[]; fill?: Color };
 export type Screen = {
   lines: Line[];
   footer?: Line;
-  cursor?: [row: number, col: number];
+  cursor?: [row: number, column: number];
   logo?: boolean;
 };
 
@@ -95,10 +95,10 @@ export class Terminal {
       context.textAlign = "left";
     }
     if (cursor && blink) {
-      const [row, col] = cursor;
+      const [row, column] = cursor;
       context.fillStyle = COLORS.foreground;
       context.fillRect(
-        paddingX + col * cellWidth,
+        paddingX + column * cellWidth,
         paddingY + row * LINE_HEIGHT + LINE_HEIGHT * 0.74,
         cellWidth,
         LINE_HEIGHT * 0.1
@@ -118,16 +118,16 @@ export class Terminal {
         LINE_HEIGHT
       );
     }
-    let col = 0;
+    let column = 0;
     for (const span of spans) {
-      if (span.right) col = this.columns - span.text.length;
+      if (span.right) column = this.columns - span.text.length;
       context.fillStyle = COLORS[span.color ?? "foreground"];
       context.fillText(
-        span.text.slice(0, Math.max(0, this.columns - col)),
-        paddingX + col * cellWidth,
+        span.text.slice(0, Math.max(0, this.columns - column)),
+        paddingX + column * cellWidth,
         y + LINE_HEIGHT / 2
       );
-      col += span.text.length;
+      column += span.text.length;
     }
   }
 }

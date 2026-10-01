@@ -1,13 +1,16 @@
+import { resolve } from "$app/paths";
 import type { Line, Screen, Span } from "./terminal";
 
 export type Visit = { path: string; columns: number; touch: boolean };
 
 /** Boot devices in priority order; the missing page is always last. */
-export const devices = (path: string) => [
-  { name: "Home", ready: true },
-  { name: "Writing", ready: true },
-  { name: path, ready: false },
-];
+export function devices(path: string) {
+  return [
+    { name: "Home", href: resolve("/") },
+    { name: "Writing", href: resolve("/writing") },
+    { name: path, href: null },
+  ];
+}
 export const DEVICE_ROW = 5;
 
 // When each part of the self-test appears, in ms from power-on. Drives spin
@@ -171,10 +174,10 @@ export function setup(
           color: highlighted ? "background" : "foreground",
         },
         {
-          text: device.ready ? "ready  " : "not found  ",
+          text: device.href ? "ready  " : "not found  ",
           color: highlighted
             ? "background"
-            : device.ready
+            : device.href
               ? "muted-foreground"
               : "destructive",
           right: true,
@@ -205,7 +208,6 @@ export function setup(
   };
 }
 
-export const booting = (name: string): Screen => ({
-  lines: [text(`Booting from ${name} ...`)],
-  cursor: [1, 0],
-});
+export function booting(name: string): Screen {
+  return { lines: [text(`Booting from ${name} ...`)], cursor: [1, 0] };
+}

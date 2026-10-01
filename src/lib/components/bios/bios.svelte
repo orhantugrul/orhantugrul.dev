@@ -14,12 +14,16 @@
   import { fonts, Terminal } from "./terminal";
 
   /** The path the visitor asked for, without its leading slash. */
-  let { path }: { path: string } = $props();
+  const { path }: { path: string } = $props();
+
+  const BOOT_DELAY = 700;
+  const LONG_PRESS = 600;
+  const CURSOR_HIDE_DELAY = 1500;
+  const CURSOR_BLINK = 530;
 
   const bios: Attachment<HTMLCanvasElement> = (canvas) => {
     const missing = "/" + path;
     const list = devices(missing);
-    const hrefs = [resolve("/"), resolve("/writing")];
     const motion = !matchMedia("(prefers-reduced-motion: reduce)").matches;
     const touch = matchMedia("(hover: none)").matches;
     const terminal = new Terminal();
@@ -44,15 +48,13 @@
     let leaving = 0;
     const boot = (deviceIndex: number) => {
       selected = deviceIndex;
-      if (!list[deviceIndex].ready) {
+      const { href } = list[deviceIndex];
+      if (!href) {
         failed = true;
         return;
       }
       mode = "boot";
-      leaving = window.setTimeout(
-        () => goto(hrefs[deviceIndex]),
-        motion ? 700 : 0
-      );
+      leaving = window.setTimeout(() => goto(href), motion ? BOOT_DELAY : 0);
     };
     const enterSetup = () => {
       mode = "setup";
@@ -97,7 +99,7 @@
         hold = 0;
         held = true;
         enterSetup();
-      }, 600);
+      }, LONG_PRESS);
     };
     const onPointerUp = (event: PointerEvent) => {
       if (held) {
@@ -118,7 +120,10 @@
     const onPointerMove = () => {
       canvas.style.cursor = "";
       clearTimeout(idle);
-      idle = window.setTimeout(() => (canvas.style.cursor = "none"), 1500);
+      idle = window.setTimeout(
+        () => (canvas.style.cursor = "none"),
+        CURSOR_HIDE_DELAY
+      );
     };
 
     // The terminal is redrawn only when the frame's content changes; the
@@ -128,7 +133,7 @@
     const tick = (now: number) => {
       frame = requestAnimationFrame(tick);
       const shown = view(now);
-      const blink = Math.floor(now / 530) % 2 === 0;
+      const blink = Math.floor(now / CURSOR_BLINK) % 2 === 0;
       const key = JSON.stringify(shown) + blink + terminal.canvas.width;
       const fresh = key !== last;
       if (fresh) {

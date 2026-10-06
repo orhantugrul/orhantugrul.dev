@@ -1,6 +1,6 @@
 /** @type {import("prettier").Config} */
 const config = {
-  trailingComma: "es5",
+  trailingComma: "all",
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
@@ -9,6 +9,7 @@ const config = {
   bracketSpacing: true,
   bracketSameLine: false,
   arrowParens: "always",
+  htmlWhitespaceSensitivity: "ignore",
   plugins: ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
   overrides: [
     {

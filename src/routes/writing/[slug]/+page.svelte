@@ -2,7 +2,7 @@
   import { resolve } from "$app/paths";
   import Link from "$lib/components/link.svelte";
   import Navigation from "$lib/components/navigation.svelte";
-  import { published } from "$lib/writings";
+  import { published } from "$lib/writing";
   import type { PageProps } from "./$types";
 
   const { data }: PageProps = $props();
@@ -30,8 +30,9 @@
   <Link
     href={resolve("/writing")}
     class="mb-6 inline-block font-mono text-xs text-subtle-foreground transition hover:text-foreground"
-    >← back</Link
   >
+    ← back
+  </Link>
   <h1 class="max-w-sm text-2xl font-medium text-balance">
     {metadata.title}
   </h1>

@@ -122,7 +122,7 @@
       clearTimeout(idle);
       idle = window.setTimeout(
         () => (canvas.style.cursor = "none"),
-        CURSOR_HIDE_DELAY
+        CURSOR_HIDE_DELAY,
       );
     };
 

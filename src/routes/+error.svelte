@@ -6,7 +6,7 @@
 
   const is404 = $derived(page.status === 404);
   const requestedPath = $derived(
-    decodeURIComponent(page.url.pathname).replace(/^\//, "") || "index"
+    decodeURIComponent(page.url.pathname).replace(/^\//, "") || "index",
   );
 </script>
 
@@ -28,8 +28,10 @@
     <p class="mt-8">
       <Link
         href={resolve("/")}
-        class="inline-block transition hover:text-foreground">← home</Link
+        class="inline-block transition hover:text-foreground"
       >
+        ← home
+      </Link>
     </p>
   </section>
 {/if}

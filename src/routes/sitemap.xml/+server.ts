@@ -1,4 +1,4 @@
-import { writings } from "$lib/writings";
+import { posts } from "$lib/writing";
 
 export const prerender = true;
 
@@ -8,7 +8,7 @@ export function GET() {
   const entries = [
     { loc: origin },
     { loc: `${origin}/writing` },
-    ...writings.map(({ slug, date }) => ({
+    ...posts.map(({ slug, date }) => ({
       loc: `${origin}/writing/${slug}`,
       lastmod: date,
     })),
@@ -18,7 +18,7 @@ export function GET() {
     .map(({ loc, lastmod }: { loc: string; lastmod?: string }) =>
       lastmod
         ? `  <url><loc>${loc}</loc><lastmod>${lastmod}</lastmod></url>`
-        : `  <url><loc>${loc}</loc></url>`
+        : `  <url><loc>${loc}</loc></url>`,
     )
     .join("\n");
 

@@ -1,22 +1,14 @@
-import { playlists } from "$lib/server/playlists";
-import { writings } from "$lib/writings";
+import { posts } from "$lib/writing";
 
 export const prerender = true;
 
 const origin = "https://orhantugrul.dev";
 
-export async function GET() {
-  const list = writings
+export function GET() {
+  const list = posts
     .map(
       ({ slug, title, description }) =>
-        `- [${title}](${origin}/writing/${slug}): ${description}`
-    )
-    .join("\n");
-
-  const mixes = (await playlists())
-    .map(
-      ({ title, note, url, tracks }) =>
-        `- [${title}](${url}): ${note ? `${note}, ` : ""}${tracks} tracks`
+        `- [${title}](${origin}/writing/${slug}): ${description}`,
     )
     .join("\n");
 
@@ -29,10 +21,6 @@ Orhan builds software at Paket Mutfak, from the app a courier holds at the door 
 ## Writing
 
 ${list || "- Nothing published yet."}
-
-## Playlists
-
-${mixes || "- None yet."}
 
 ## Elsewhere
 

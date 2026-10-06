@@ -77,7 +77,7 @@ void main() {
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW
+      gl.STATIC_DRAW,
     );
     const position = gl.getAttribLocation(program, "aPos");
     gl.enableVertexAttribArray(position);

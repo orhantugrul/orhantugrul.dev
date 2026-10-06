@@ -25,7 +25,7 @@ function count(node: MdastNode, type: string): number {
 function readingTime() {
   return (
     tree: MdastNode,
-    file: { data: { fm?: Record<string, unknown> } }
+    file: { data: { fm?: Record<string, unknown> } },
   ) => {
     const words = toString(tree).split(/\s+/).filter(Boolean).length;
     const minutes =

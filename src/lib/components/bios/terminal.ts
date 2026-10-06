@@ -69,7 +69,7 @@ export class Terminal {
   /** The row under a point in the viewport, ignoring the tube's curve. */
   rowAt(y: number, viewportHeight: number) {
     return Math.floor(
-      ((y / viewportHeight) * this.canvas.height - this.paddingY) / LINE_HEIGHT
+      ((y / viewportHeight) * this.canvas.height - this.paddingY) / LINE_HEIGHT,
     );
   }
 
@@ -90,7 +90,7 @@ export class Terminal {
       context.fillText(
         "o.",
         paddingX + this.columns * cellWidth,
-        paddingY + LINE_HEIGHT
+        paddingY + LINE_HEIGHT,
       );
       context.textAlign = "left";
     }
@@ -101,7 +101,7 @@ export class Terminal {
         paddingX + column * cellWidth,
         paddingY + row * LINE_HEIGHT + LINE_HEIGHT * 0.74,
         cellWidth,
-        LINE_HEIGHT * 0.1
+        LINE_HEIGHT * 0.1,
       );
     }
   }
@@ -115,7 +115,7 @@ export class Terminal {
         paddingX - cellWidth,
         y,
         (this.columns + 2) * cellWidth,
-        LINE_HEIGHT
+        LINE_HEIGHT,
       );
     }
     let column = 0;
@@ -125,7 +125,7 @@ export class Terminal {
       context.fillText(
         span.text.slice(0, Math.max(0, this.columns - column)),
         paddingX + column * cellWidth,
-        y + LINE_HEIGHT / 2
+        y + LINE_HEIGHT / 2,
       );
       column += span.text.length;
     }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ArrowUpRight } from "@lucide/svelte";
+  import { createQuery } from "@tanstack/svelte-query";
   import GitHubIcon from "$lib/components/icons/github.svelte";
   import LinkedInIcon from "$lib/components/icons/linkedin.svelte";
   import SpotifyIcon from "$lib/components/icons/spotify.svelte";
@@ -30,7 +31,7 @@
       label: "Spotify",
       icon: SpotifyIcon,
       href: "https://open.spotify.com/user/gntu0y8a2id5en2bh6hvxheo2",
-      handle: "/user/gntu0y8a2id5en2bh6hvxheo2",
+      handle: "/orhantugrul",
     },
   ] as const;
 
@@ -40,42 +41,17 @@
     offline: "Last played:",
   };
 
-  let playing = $state<NowPlaying | null>(null);
-  let loading = false;
-
-  async function refresh() {
-    if (loading) return;
-    loading = true;
-    try {
+  const playing = createQuery(() => ({
+    queryKey: ["spotify", "playing"],
+    queryFn: async (): Promise<NowPlaying | null> => {
       const response = await fetch("/api/spotify/playing");
-      const next: NowPlaying | null = response.ok
-        ? await response.json()
-        : null;
-      if (next) playing = next;
-    } catch {
-      // Keep whatever is on screen.
-    } finally {
-      loading = false;
-    }
-  }
-
-  $effect(() => {
-    refresh();
-    const poll = setInterval(() => {
-      if (!document.hidden) refresh();
-    }, 30_000);
-    const songEnd = setInterval(() => {
-      if (
-        playing?.state === "playing" &&
-        playing.progress + (Date.now() - playing.sampledAt) >= playing.length
-      )
-        refresh();
-    }, 1000);
-    return () => {
-      clearInterval(poll);
-      clearInterval(songEnd);
-    };
-  });
+      if (!response.ok) {
+        throw new Error(`Spotify: ${response.status}`);
+      }
+      return response.json();
+    },
+    refetchInterval: 30_000,
+  }));
 </script>
 
 <section id="connect" class="border-b border-border px-8 py-12">
@@ -86,7 +62,7 @@
   </h2>
   <ul class="space-y-1">
     {#each links as { label, href, handle, icon: Icon } (href)}
-      {@const live = Icon === SpotifyIcon ? playing : null}
+      {@const live = Icon === SpotifyIcon ? playing.data : null}
       <li>
         <Link
           {href}

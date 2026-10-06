@@ -41,6 +41,7 @@
     "wrangler": "^4.125.0"
   },
   "dependencies": {
-    "@lucide/svelte": "^1.47.0"
+    "@lucide/svelte": "^1.47.0",
+    "@tanstack/svelte-query": "^6.3.1"
   }
 }

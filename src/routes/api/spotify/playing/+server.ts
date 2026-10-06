@@ -10,8 +10,8 @@ import type { RequestHandler } from "./$types";
 export const prerender = false;
 
 // Never a public URL: Cloudflare would serve the entry straight to visitors.
-const PLAYING_KEY = "https://orhantugrul.dev/_cache/spotify/playing";
-const LAST_PLAYED_KEY = "https://orhantugrul.dev/_cache/spotify/last-played";
+const PLAYING_KEY = "https://orhantugrul.dev/_cache/spotify/playing/live";
+const LAST_PLAYED_KEY = "https://orhantugrul.dev/_cache/spotify/playing/recent";
 
 const TEN_SECONDS = 10;
 const ONE_YEAR = 31_536_000;

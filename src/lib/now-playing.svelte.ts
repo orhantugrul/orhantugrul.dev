@@ -28,7 +28,7 @@ class Player {
     this.load();
     const poll = setInterval(
       () => document.hidden || this.load(),
-      POLL_INTERVAL
+      POLL_INTERVAL,
     );
     // The song ran out before the next poll: ask what came after it.
     const songEnd = setInterval(() => {

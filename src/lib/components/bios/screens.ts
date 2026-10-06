@@ -7,7 +7,6 @@ export type Visit = { path: string; columns: number; touch: boolean };
 export function devices(path: string) {
   return [
     { name: "Home", href: resolve("/") },
-    { name: "Writing", href: resolve("/writing") },
     { name: path, href: null },
   ];
 }
@@ -22,9 +21,8 @@ const SCHEDULE = {
   memoryReady: 2050,
   drives: 2550,
   primary: 3050,
-  secondary: 3450,
-  tertiary: 5050,
-  prompt: 5750,
+  secondary: 4650,
+  prompt: 5350,
 };
 export const TEST_DONE = SCHEDULE.prompt;
 
@@ -46,7 +44,7 @@ const stamp = (path: string) => {
     .reduce(
       (hash, character) =>
         Math.imul(hash ^ character.charCodeAt(0), 16777619) >>> 0,
-      2166136261
+      2166136261,
     )
     .toString(16)
     .toUpperCase()
@@ -61,7 +59,7 @@ const stamp = (path: string) => {
     screen waiting at its prompt. */
 export function selftest(
   elapsed: number,
-  { path, columns, touch }: Visit
+  { path, columns, touch }: Visit,
 ): Screen {
   const lines: Line[] = [];
   if (elapsed < SCHEDULE.header) return { lines };
@@ -79,7 +77,7 @@ export function selftest(
   if (elapsed >= SCHEDULE.memory) {
     const progress = Math.min(
       1,
-      (elapsed - SCHEDULE.memory) / (SCHEDULE.memoryReady - SCHEDULE.memory)
+      (elapsed - SCHEDULE.memory) / (SCHEDULE.memoryReady - SCHEDULE.memory),
     );
     lines[4] = {
       spans: [
@@ -99,7 +97,7 @@ export function selftest(
     name: string,
     from: number,
     to: number,
-    found: Span[]
+    found: Span[],
   ) => {
     if (elapsed < from) return;
     const spin: Span = {
@@ -117,17 +115,14 @@ export function selftest(
     { text: "orhantugrul.dev" },
   ]);
   drive(8, "Secondary", SCHEDULE.primary, SCHEDULE.secondary, [
-    { text: "/writing" },
-  ]);
-  drive(9, "Tertiary", SCHEDULE.secondary, SCHEDULE.tertiary, [
     { text: fit(path, columns - 22) },
     { text: " not found", color: "destructive" },
   ]);
 
   const done = elapsed >= SCHEDULE.prompt;
   if (done) {
-    lines[11] = text("Page not found.");
-    lines[12] = {
+    lines[10] = text("Page not found.");
+    lines[11] = {
       spans: touch
         ? [
             { text: "Tap" },
@@ -148,14 +143,14 @@ export function selftest(
     lines,
     footer: text(stamp(path), "subtle-foreground"),
     logo: true,
-    cursor: done ? [13, 0] : undefined,
+    cursor: done ? [12, 0] : undefined,
   };
 }
 
 export function setup(
   { path, columns, touch }: Visit,
   selected: number,
-  failed: boolean
+  failed: boolean,
 ): Screen {
   const title = "CMOS Setup Utility";
   const lines: Line[] = [];
@@ -189,7 +184,7 @@ export function setup(
   if (failed) {
     lines[9] = text(
       `Boot failed: ${fit(path, columns - 28)} is empty.`,
-      "destructive"
+      "destructive",
     );
     lines[10] = text("Nothing broke. Pick another device.", "muted-foreground");
   }

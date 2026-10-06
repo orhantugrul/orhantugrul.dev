@@ -1,23 +1,10 @@
-import { playlists } from "$lib/server/playlists";
 import { writings } from "$lib/writings";
 
 export const prerender = true;
 
-const origin = "https://orhantugrul.dev";
-
-export async function GET() {
+export function GET() {
   const list = writings
-    .map(
-      ({ slug, title, description }) =>
-        `- [${title}](${origin}/writing/${slug}): ${description}`
-    )
-    .join("\n");
-
-  const mixes = (await playlists())
-    .map(
-      ({ title, note, url, tracks }) =>
-        `- [${title}](${url}): ${note ? `${note}, ` : ""}${tracks} tracks`
-    )
+    .map(({ title, description }) => `- ${title}: ${description}`)
     .join("\n");
 
   const body = `# Orhan Tugrul Sahin
@@ -29,10 +16,6 @@ Orhan builds software at Paket Mutfak, from the app a courier holds at the door 
 ## Writing
 
 ${list || "- Nothing published yet."}
-
-## Playlists
-
-${mixes || "- None yet."}
 
 ## Elsewhere
 

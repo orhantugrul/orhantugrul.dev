@@ -4,7 +4,7 @@
   import geistMono from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
   import Footer from "$lib/components/footer.svelte";
 
-  const { children, data } = $props();
+  const { children } = $props();
 </script>
 
 <svelte:head>
@@ -35,5 +35,5 @@
   <main class="flex flex-1 flex-col *:last:flex-1">
     {@render children()}
   </main>
-  <Footer latest={data.latest} />
+  <Footer />
 </div>

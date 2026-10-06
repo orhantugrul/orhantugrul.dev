@@ -77,7 +77,7 @@ void main() {
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW
+      gl.STATIC_DRAW,
     );
     const position = gl.getAttribLocation(program, "aPos");
     gl.enableVertexAttribArray(position);
@@ -143,8 +143,8 @@ void main() {
       sync();
     });
     intersection.observe(canvas);
-    const theme = new MutationObserver(ink);
-    theme.observe(document.documentElement, { attributeFilter: ["class"] });
+    const theme = matchMedia("(prefers-color-scheme: light)");
+    theme.addEventListener("change", ink);
     document.addEventListener("visibilitychange", sync);
     motion.addEventListener("change", sync);
 
@@ -156,7 +156,7 @@ void main() {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       intersection.disconnect();
-      theme.disconnect();
+      theme.removeEventListener("change", ink);
       document.removeEventListener("visibilitychange", sync);
       motion.removeEventListener("change", sync);
       gl.deleteBuffer(buffer);

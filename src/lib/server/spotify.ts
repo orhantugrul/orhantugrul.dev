@@ -9,7 +9,7 @@ let token: { value: string; expires: number } | null = null;
 
 export async function accessToken(
   secrets: Required<Secrets>,
-  fetcher: typeof fetch
+  fetcher: typeof fetch,
 ) {
   if (token && token.expires > Date.now() + 60_000) return token.value;
   const response = await fetcher("https://accounts.spotify.com/api/token", {

@@ -75,7 +75,7 @@ export type Tube = {
     source: HTMLCanvasElement,
     fresh: boolean,
     seconds: number,
-    motion: boolean
+    motion: boolean,
   ): void;
   dispose(): void;
 };
@@ -132,7 +132,7 @@ function crt(canvas: HTMLCanvasElement, gl: WebGLRenderingContext): Tube {
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array([-1, -1, 3, -1, -1, 3]),
-    gl.STATIC_DRAW
+    gl.STATIC_DRAW,
   );
   const position = gl.getAttribLocation(program, "aPos");
   gl.enableVertexAttribArray(position);
@@ -164,7 +164,7 @@ function crt(canvas: HTMLCanvasElement, gl: WebGLRenderingContext): Tube {
           gl.RGBA,
           gl.RGBA,
           gl.UNSIGNED_BYTE,
-          source
+          source,
         );
       }
       gl.uniform2f(resolutionUniform, canvas.width, canvas.height);

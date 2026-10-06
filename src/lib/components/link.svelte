@@ -10,12 +10,16 @@
 </script>
 
 {#if href.startsWith("/")}
-  <a href={href as ResolvedPathname} {...rest}>{@render children?.()}</a>
+  <a href={href as ResolvedPathname} {...rest}>
+    {@render children?.()}
+  </a>
 {:else}
   <a
     {href}
     target={href.startsWith("https:") ? "_blank" : undefined}
     rel="external"
-    {...rest}>{@render children?.()}</a
+    {...rest}
   >
+    {@render children?.()}
+  </a>
 {/if}

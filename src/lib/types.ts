@@ -16,13 +16,3 @@ export type NowPlaying = {
   progress: number;
   sampledAt: number;
 };
-
-export type Playlist = {
-  number: number;
-  title: string;
-  note: string;
-  url: `https://${string}`;
-  started: string;
-  updated: string;
-  tracks: number;
-};

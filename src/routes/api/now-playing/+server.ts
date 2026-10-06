@@ -16,7 +16,7 @@ function shape(
   track: Track,
   state: NowPlaying["state"],
   progress: number,
-  sampledAt: number
+  sampledAt: number,
 ): NowPlaying {
   return {
     state,
@@ -29,7 +29,7 @@ function shape(
 
 async function ask(
   secrets: Secrets,
-  fetcher: typeof fetch
+  fetcher: typeof fetch,
 ): Promise<NowPlaying | null> {
   if (
     !secrets.SPOTIFY_CLIENT_ID ||
@@ -45,7 +45,7 @@ async function ask(
   // 204 means nothing is loaded in any player; a podcast has no `album`.
   const current = await fetcher(
     "https://api.spotify.com/v1/me/player/currently-playing",
-    { headers: authorizationHeaders }
+    { headers: authorizationHeaders },
   );
   // Rate limited or failing: don't spend a second call finding out again.
   if (current.status >= 400) throw new Error(`player: ${current.status}`);
@@ -60,13 +60,13 @@ async function ask(
         body.item,
         body.is_playing ? "playing" : "paused",
         body.progress_ms ?? 0,
-        Date.now()
+        Date.now(),
       );
   }
 
   const recent = await fetcher(
     "https://api.spotify.com/v1/me/player/recently-played?limit=1",
-    { headers: authorizationHeaders }
+    { headers: authorizationHeaders },
   );
   if (!recent.ok) return null;
   const body: { items: { track: Track; played_at: string }[] } =
@@ -103,7 +103,7 @@ export const GET: RequestHandler = async ({ platform, fetch }) => {
   if (fresh) return json(await fresh.json(), { headers });
 
   let answer = await ask((platform?.env ?? {}) as Secrets, fetch).catch(
-    () => null
+    () => null,
   );
 
   if (answer) {

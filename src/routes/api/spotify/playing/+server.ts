@@ -9,8 +9,10 @@ import type { RequestHandler } from "./$types";
 
 export const prerender = false;
 
-const PLAYING_KEY = "https://orhantugrul.dev/api/spotify/playing";
-const LAST_PLAYED_KEY = "https://orhantugrul.dev/api/spotify/playing/last";
+// Never a public URL: Cloudflare would serve the entry straight to visitors.
+const LIVE_CACHE_KEY = "https://orhantugrul.dev/_cache/spotify/playing/live";
+const RECENT_CACHE_KEY =
+  "https://orhantugrul.dev/_cache/spotify/playing/recent";
 
 const TEN_SECONDS = 10;
 const ONE_YEAR = 31_536_000;
@@ -66,7 +68,7 @@ export const GET: RequestHandler = async ({ platform }) => {
 
   const cache = platform.caches.default as unknown as Cache;
 
-  const cached = await cache.match(PLAYING_KEY);
+  const cached = await cache.match(LIVE_CACHE_KEY);
   if (cached) {
     return json(await cached.json(), NO_STORE);
   }
@@ -76,8 +78,8 @@ export const GET: RequestHandler = async ({ platform }) => {
     if (playing) {
       platform.ctx.waitUntil(
         Promise.all([
-          cache.put(PLAYING_KEY, cacheFor(playing, TEN_SECONDS)),
-          cache.put(LAST_PLAYED_KEY, cacheFor(playing, ONE_YEAR)),
+          cache.put(LIVE_CACHE_KEY, cacheFor(playing, TEN_SECONDS)),
+          cache.put(RECENT_CACHE_KEY, cacheFor(playing, ONE_YEAR)),
         ]),
       );
       return json(playing, NO_STORE);
@@ -86,13 +88,13 @@ export const GET: RequestHandler = async ({ platform }) => {
     console.error(error);
   }
 
-  const last = await cache.match(LAST_PLAYED_KEY);
+  const last = await cache.match(RECENT_CACHE_KEY);
   const offline: NowPlaying | null = last
     ? { ...(await last.json()), state: "offline", progress: 0 }
     : null;
 
   platform.ctx.waitUntil(
-    cache.put(PLAYING_KEY, cacheFor(offline, TEN_SECONDS)),
+    cache.put(LIVE_CACHE_KEY, cacheFor(offline, TEN_SECONDS)),
   );
   return json(offline, NO_STORE);
 };

@@ -1,5 +1,15 @@
 import type { Component } from "svelte";
-import type { Post, PostMetadata } from "$lib/types";
+
+export type PostMetadata = {
+  title: string;
+  description: string;
+  date: string;
+  readingTime: number;
+};
+
+export type Post = PostMetadata & {
+  slug: string;
+};
 
 function slugOf(path: string): string {
   return path.split("/").pop()!.replace(".md", "");

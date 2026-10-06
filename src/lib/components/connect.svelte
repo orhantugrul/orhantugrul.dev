@@ -5,7 +5,7 @@
   import SpotifyIcon from "$lib/components/icons/spotify.svelte";
   import XIcon from "$lib/components/icons/x.svelte";
   import Link from "$lib/components/link.svelte";
-  import { player } from "$lib/now-playing.svelte";
+  import type { NowPlaying } from "$lib/spotify";
 
   const links = [
     {
@@ -40,7 +40,42 @@
     offline: "Last played:",
   };
 
-  $effect(() => player.use());
+  let playing = $state<NowPlaying | null>(null);
+  let loading = false;
+
+  async function refresh() {
+    if (loading) return;
+    loading = true;
+    try {
+      const response = await fetch("/api/spotify/playing");
+      const next: NowPlaying | null = response.ok
+        ? await response.json()
+        : null;
+      if (next) playing = next;
+    } catch {
+      // Keep whatever is on screen.
+    } finally {
+      loading = false;
+    }
+  }
+
+  $effect(() => {
+    refresh();
+    const poll = setInterval(() => {
+      if (!document.hidden) refresh();
+    }, 30_000);
+    const songEnd = setInterval(() => {
+      if (
+        playing?.state === "playing" &&
+        playing.progress + (Date.now() - playing.sampledAt) >= playing.length
+      )
+        refresh();
+    }, 1000);
+    return () => {
+      clearInterval(poll);
+      clearInterval(songEnd);
+    };
+  });
 </script>
 
 <section id="connect" class="border-b border-border px-8 py-12">
@@ -51,7 +86,7 @@
   </h2>
   <ul class="space-y-1">
     {#each links as { label, href, handle, icon: Icon } (href)}
-      {@const live = Icon === SpotifyIcon ? player.data : null}
+      {@const live = Icon === SpotifyIcon ? playing : null}
       <li>
         <Link
           {href}

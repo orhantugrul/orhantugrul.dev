@@ -143,8 +143,8 @@ void main() {
       sync();
     });
     intersection.observe(canvas);
-    const theme = matchMedia("(prefers-color-scheme: light)");
-    theme.addEventListener("change", ink);
+    const theme = new MutationObserver(ink);
+    theme.observe(document.documentElement, { attributeFilter: ["class"] });
     document.addEventListener("visibilitychange", sync);
     motion.addEventListener("change", sync);
 
@@ -156,7 +156,7 @@ void main() {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       intersection.disconnect();
-      theme.removeEventListener("change", ink);
+      theme.disconnect();
       document.removeEventListener("visibilitychange", sync);
       motion.removeEventListener("change", sync);
       gl.deleteBuffer(buffer);

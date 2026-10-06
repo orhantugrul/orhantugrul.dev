@@ -1,10 +1,31 @@
+import { posts } from "$lib/writing";
+
 export const prerender = true;
 
 export function GET() {
+  const origin = "https://orhantugrul.dev";
+
+  const entries = [
+    { loc: origin },
+    { loc: `${origin}/writing` },
+    ...posts.map(({ slug, date }) => ({
+      loc: `${origin}/writing/${slug}`,
+      lastmod: date,
+    })),
+  ];
+
+  const urls = entries
+    .map(({ loc, lastmod }: { loc: string; lastmod?: string }) =>
+      lastmod
+        ? `  <url><loc>${loc}</loc><lastmod>${lastmod}</lastmod></url>`
+        : `  <url><loc>${loc}</loc></url>`,
+    )
+    .join("\n");
+
   const sitemap = [
     `<?xml version="1.0" encoding="UTF-8"?>`,
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-    `  <url><loc>https://orhantugrul.dev</loc></url>`,
+    urls,
     `</urlset>`,
   ].join("\n");
 

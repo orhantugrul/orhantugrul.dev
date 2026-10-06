@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scheme-light-dark motion-safe:scroll-smooth">
+<html lang="en" class="scheme-dark motion-safe:scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,6 +15,18 @@
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script>
+      // Runs before first paint so the theme never flashes. Dark is the
+      // default; `.light` applies only when it was picked with the toggle.
+      try {
+        if (localStorage.getItem("theme") === "light") {
+          document.documentElement.classList.add("light");
+          document.documentElement.style.colorScheme = "light";
+        }
+      } catch (error) {
+        // Storage blocked; stay on the dark default.
+      }
+    </script>
     %sveltekit.head%
   </head>
   <body

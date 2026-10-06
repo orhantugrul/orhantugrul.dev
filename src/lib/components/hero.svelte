@@ -1,13 +1,17 @@
 <script lang="ts">
   import PaketMutfakIcon from "$lib/components/icons/paket-mutfak.svelte";
   import Link from "$lib/components/link.svelte";
+  import Navigation from "$lib/components/navigation.svelte";
   import Dither from "./dither.svelte";
 </script>
 
 <header class="relative overflow-hidden border-b border-border">
   <Dither />
   <div class="relative z-2 flex min-h-120 flex-col px-8 md:min-h-128">
-    <div class="flex flex-1 flex-col justify-center py-12 md:py-16">
+    <div class="flex h-16 shrink-0 items-center justify-end">
+      <Navigation />
+    </div>
+    <div class="flex flex-1 flex-col justify-center pb-12 md:pb-16">
       <h1 class="text-2xl font-medium sm:text-3xl">Hi, I’m Orhan</h1>
       <p class="mt-1.5 text-sm text-muted-foreground">
         Software engineer in Istanbul

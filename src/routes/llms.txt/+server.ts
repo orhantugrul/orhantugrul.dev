@@ -1,10 +1,15 @@
-import { writings } from "$lib/writings";
+import { posts } from "$lib/writing";
 
 export const prerender = true;
 
+const origin = "https://orhantugrul.dev";
+
 export function GET() {
-  const list = writings
-    .map(({ title, description }) => `- ${title}: ${description}`)
+  const list = posts
+    .map(
+      ({ slug, title, description }) =>
+        `- [${title}](${origin}/writing/${slug}): ${description}`,
+    )
     .join("\n");
 
   const body = `# Orhan Tugrul Sahin

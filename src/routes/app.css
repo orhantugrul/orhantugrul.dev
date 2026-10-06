@@ -2,7 +2,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/geist-mono";
 
-@custom-variant light (@media (prefers-color-scheme: light));
+@custom-variant light (&:where(.light, .light *));
 
 :root {
   --background: var(--color-zinc-950);
@@ -17,19 +17,17 @@
   --selection: color-mix(in srgb, var(--color-blue-400) 30%, transparent);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: var(--color-zinc-100);
-    --foreground: var(--color-zinc-900);
-    --muted-foreground: var(--color-zinc-600);
-    --subtle-foreground: var(--color-zinc-400);
-    --border: color-mix(in srgb, var(--foreground) 12%, transparent);
-    --card: var(--color-zinc-50);
-    --muted: var(--color-zinc-200);
-    --ring: var(--color-blue-700);
-    --prose-foreground: var(--color-zinc-700);
-    --selection: color-mix(in srgb, var(--color-blue-700) 16%, transparent);
-  }
+.light {
+  --background: var(--color-zinc-100);
+  --foreground: var(--color-zinc-900);
+  --muted-foreground: var(--color-zinc-600);
+  --subtle-foreground: var(--color-zinc-400);
+  --border: color-mix(in srgb, var(--foreground) 12%, transparent);
+  --card: var(--color-zinc-50);
+  --muted: var(--color-zinc-200);
+  --ring: var(--color-blue-700);
+  --prose-foreground: var(--color-zinc-700);
+  --selection: color-mix(in srgb, var(--color-blue-700) 16%, transparent);
 }
 
 @theme {

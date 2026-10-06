@@ -187,5 +187,6 @@
     <h1>Page not found</h1>
     <p>/{path} could not be found.</p>
     <a href={resolve("/")}>Continue to the home page</a>
+    <a href={resolve("/writing")}>Read the writing</a>
   </div>
 </div>

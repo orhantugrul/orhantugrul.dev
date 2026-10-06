@@ -7,6 +7,7 @@ export type Visit = { path: string; columns: number; touch: boolean };
 export function devices(path: string) {
   return [
     { name: "Home", href: resolve("/") },
+    { name: "Writing", href: resolve("/writing") },
     { name: path, href: null },
   ];
 }
@@ -21,8 +22,9 @@ const SCHEDULE = {
   memoryReady: 2050,
   drives: 2550,
   primary: 3050,
-  secondary: 4650,
-  prompt: 5350,
+  secondary: 3450,
+  tertiary: 5050,
+  prompt: 5750,
 };
 export const TEST_DONE = SCHEDULE.prompt;
 
@@ -115,14 +117,17 @@ export function selftest(
     { text: "orhantugrul.dev" },
   ]);
   drive(8, "Secondary", SCHEDULE.primary, SCHEDULE.secondary, [
+    { text: "/writing" },
+  ]);
+  drive(9, "Tertiary", SCHEDULE.secondary, SCHEDULE.tertiary, [
     { text: fit(path, columns - 22) },
     { text: " not found", color: "destructive" },
   ]);
 
   const done = elapsed >= SCHEDULE.prompt;
   if (done) {
-    lines[10] = text("Page not found.");
-    lines[11] = {
+    lines[11] = text("Page not found.");
+    lines[12] = {
       spans: touch
         ? [
             { text: "Tap" },
@@ -143,7 +148,7 @@ export function selftest(
     lines,
     footer: text(stamp(path), "subtle-foreground"),
     logo: true,
-    cursor: done ? [12, 0] : undefined,
+    cursor: done ? [13, 0] : undefined,
   };
 }
 

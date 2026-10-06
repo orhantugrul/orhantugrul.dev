@@ -1,11 +1,11 @@
-export type WritingMetadata = {
+export type PostMetadata = {
   title: string;
   description: string;
   date: string;
   readingTime: number;
 };
 
-export type Writing = WritingMetadata & {
+export type Post = PostMetadata & {
   slug: string;
 };
 

@@ -219,3 +219,11 @@
     border-top: 1px solid var(--border);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}

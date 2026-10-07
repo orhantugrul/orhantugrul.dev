@@ -4,12 +4,25 @@
   import geistMono from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
   import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
   import { browser } from "$app/environment";
+  import { onNavigate } from "$app/navigation";
+  import { page } from "$app/state";
   import Footer from "$lib/components/footer.svelte";
 
   const { children } = $props();
 
   const queryClient = new QueryClient({
     defaultOptions: { queries: { enabled: browser } },
+  });
+
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
   });
 </script>
 
@@ -28,11 +41,12 @@
   <meta name="author" content="Orhan Tugrul Sahin" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta
-    property="og:site_name"
-    content="Orhan Tugrul Sahin — Software Engineer"
-  />
+  <meta property="og:site_name" content="Orhan Tugrul" />
   <meta property="og:locale" content="en_US" />
+  <link
+    rel="canonical"
+    href="https://orhantugrul.dev{page.url.pathname.replace(/\/$/, '')}"
+  />
 </svelte:head>
 
 <QueryClientProvider client={queryClient}>

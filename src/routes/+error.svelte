@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-  <title>{page.status} — {is404 ? "Not found" : "Something went wrong"}</title>
+  <title>{page.status} / {is404 ? "Not found" : "Something went wrong"}</title>
   <meta name="robots" content="noindex" />
 </svelte:head>
 

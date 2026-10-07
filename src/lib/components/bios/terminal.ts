@@ -88,7 +88,7 @@ export class Terminal {
       context.fillStyle = COLORS.foreground;
       context.textAlign = "right";
       context.fillText(
-        "o.",
+        "ot",
         paddingX + this.columns * cellWidth,
         paddingY + LINE_HEIGHT,
       );

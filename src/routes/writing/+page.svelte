@@ -5,7 +5,7 @@
   import Navigation from "$lib/components/navigation.svelte";
   import { drafts, posts, published } from "$lib/writing";
 
-  const title = "Writing — Orhan Tugrul Sahin";
+  const title = "Writing / Orhan Tugrul";
   const description =
     posts.length > 0
       ? "Notes to my future self, published by accident."

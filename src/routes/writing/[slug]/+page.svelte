@@ -8,7 +8,7 @@
   const { data }: PageProps = $props();
 
   const metadata = $derived(data.metadata);
-  const title = $derived(`${metadata.title} — Orhan Tugrul Sahin`);
+  const title = $derived(`${metadata.title} / Orhan Tugrul`);
   const url = $derived(`https://orhantugrul.dev/writing/${data.slug}`);
 </script>
 

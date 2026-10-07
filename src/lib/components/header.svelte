@@ -12,7 +12,7 @@
       <Navigation />
     </div>
     <div class="flex flex-1 flex-col justify-center pb-12 md:pb-16">
-      <h1 class="text-2xl font-medium sm:text-3xl">Hi, I’m Orhan</h1>
+      <h1 class="text-2xl font-medium sm:text-3xl">Orhan Tugrul</h1>
       <p class="mt-1.5 text-sm text-muted-foreground">
         Software engineer in Istanbul
       </p>

@@ -12,9 +12,9 @@ export function GET() {
     )
     .join("\n");
 
-  const body = `# Orhan Tugrul Sahin
+  const body = `# Orhan Tugrul
 
-> Software engineer in Istanbul building thoughtful products and dependable systems.
+> Software engineer in Istanbul, building the courier app and payments behind Paket Mutfak. Before that, treasury and leasing systems for banks.
 
 Orhan builds software at Paket Mutfak, from the app a courier holds at the door to the service behind it that keeps dispatch, orders and payments in step. Before that, treasury and leasing systems for banks.
 

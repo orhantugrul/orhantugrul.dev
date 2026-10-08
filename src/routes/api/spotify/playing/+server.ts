@@ -39,6 +39,7 @@ async function getPlaying(
     return {
       state: current.is_playing ? "playing" : "paused",
       track: current.item.name,
+      artist: current.item.artists.map(({ name }) => name).join(", "),
       length: current.item.duration_ms,
       progress: current.progress_ms ?? 0,
       sampledAt: Date.now(),
@@ -55,6 +56,7 @@ async function getPlaying(
   return {
     state: "offline",
     track: last.track.name,
+    artist: last.track.artists.map(({ name }) => name).join(", "),
     length: last.track.duration_ms,
     progress: 0,
     sampledAt: Date.parse(last.played_at),

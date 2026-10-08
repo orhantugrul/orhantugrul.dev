@@ -1,11 +1,16 @@
 <script lang="ts">
   import { Moon, Sun } from "@lucide/svelte";
 
-  function toggleTheme() {
+  function applyTheme() {
     const root = document.documentElement;
     const light = root.classList.toggle("light");
     root.style.colorScheme = light ? "light" : "dark";
     localStorage.setItem("theme", light ? "light" : "dark");
+  }
+
+  function toggleTheme() {
+    if (!document.startViewTransition) return applyTheme();
+    document.startViewTransition(applyTheme);
   }
 </script>
 

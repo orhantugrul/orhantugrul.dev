@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ArrowUpRight } from "@lucide/svelte";
   import { createQuery } from "@tanstack/svelte-query";
+  import type { Attachment } from "svelte/attachments";
   import GitHubIcon from "$lib/components/icons/github.svelte";
   import LinkedInIcon from "$lib/components/icons/linkedin.svelte";
   import SpotifyIcon from "$lib/components/icons/spotify.svelte";
@@ -39,6 +40,20 @@
     playing: "Now playing:",
     paused: "Paused:",
     offline: "Last played:",
+  };
+
+  const glide: Attachment<HTMLElement> = (clip) => {
+    const text = clip.firstElementChild as HTMLElement;
+    const observer = new ResizeObserver(() => {
+      const overflow = text.offsetWidth - clip.clientWidth;
+      const shift = overflow > 0 ? overflow + 24 : 0;
+      clip.toggleAttribute("data-overflows", overflow > 0);
+      clip.style.setProperty("--shift", `-${shift}px`);
+      clip.style.setProperty("--glide", `${shift / 40}s`);
+    });
+    observer.observe(clip);
+    observer.observe(text);
+    return () => observer.disconnect();
   };
 
   const playing = createQuery(() => ({
@@ -97,14 +112,28 @@
               </span>
               <span
                 class={[
-                  "truncate",
+                  "min-w-0 overflow-hidden whitespace-nowrap data-overflows:mask-r-from-[calc(100%-2.5rem)] data-overflows:group-hover:mask-r-from-[calc(100%-1.5rem)] data-overflows:group-hover:mask-l-from-[calc(100%-1.5rem)]",
                   live.state === "offline"
                     ? "text-muted-foreground"
                     : "text-foreground",
                 ]}
+                {@attach glide}
               >
-                <span class="sr-only">{stateLabels[live.state]}</span>
-                {live.track}
+                <span
+                  class="inline-block transition-transform duration-400 ease-out group-hover:delay-350 group-hover:duration-(--glide) group-hover:ease-linear motion-safe:group-hover:translate-x-(--shift)"
+                >
+                  <span class="sr-only">{stateLabels[live.state]}</span>
+                  {live.track}
+                  {#if live.artist}
+                    <span
+                      class={live.state === "offline"
+                        ? "text-subtle-foreground"
+                        : "text-muted-foreground"}
+                    >
+                      · {live.artist}
+                    </span>
+                  {/if}
+                </span>
               </span>
             </span>
           {:else}

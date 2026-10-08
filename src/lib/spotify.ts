@@ -1,6 +1,7 @@
 export type NowPlaying = {
   state: "playing" | "paused" | "offline";
   track: string;
+  artist: string;
   length: number;
   progress: number;
   sampledAt: number;
@@ -8,6 +9,7 @@ export type NowPlaying = {
 
 export type Track = {
   name: string;
+  artists: { name: string }[];
   duration_ms: number;
   album?: object;
 };
